@@ -25,6 +25,8 @@ services:
     container_name: jerk-webserver
     restart: unless-stopped
     tty: true
+    depends_on:
+      - app
     ports:
       - "8088:80"
       - "4434:433"
