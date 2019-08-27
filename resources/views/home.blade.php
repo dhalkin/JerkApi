@@ -3,18 +3,15 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+        <div class="col-md-10">
+            <div class="card bg-light mb-3">
+                <div class="card-header">
+                    <span class="float-left">Dashboard</span>
+                    <span class="float-right"><button type="button" class="btn btn-primary">Settings</button></span>
+                </div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
-                    You are logged in!
                 </div>
             </div>
         </div>

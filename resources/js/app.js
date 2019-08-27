@@ -29,5 +29,27 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
+    // data: {
+    //     isMobileView: window.app.clientWidth < 400,
+    //     hasError: false
+    // }
+
+    methods: {
+
+    },
+
+    computed: {
+        isMobileViewOne: function () {
+            return {
+                straight100: window.app.clientWidth < 400,
+            }
+        },
+        isMobileViewFormControl: function () {
+            return {
+                'form-control-sm': window.app.clientWidth < 400,
+            }
+        }
+    }
 });

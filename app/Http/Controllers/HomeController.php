@@ -25,4 +25,34 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * Show the profile.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function profile()
+    {
+        return view('home');
+    }
+
+    /**
+     * Show the studios.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function studios()
+    {
+        return view('studios');
+    }
+
+    /**
+     * Show profile.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function userprofile()
+    {
+        return view('profile');
+    }
 }
