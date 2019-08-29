@@ -36,12 +36,8 @@ const app = new Vue({
     //     hasError: false
     // }
 
-    methods: {
-
-    },
-
     computed: {
-        isMobileViewOne: function () {
+        isMobileViewImg: function () {
             return {
                 straight100: window.app.clientWidth < 400,
             }
@@ -49,6 +45,11 @@ const app = new Vue({
         isMobileViewFormControl: function () {
             return {
                 'form-control-sm': window.app.clientWidth < 400,
+            }
+        },
+        isMobileViewFormLabel: function () {
+            return {
+                'col-form-label-sm': window.app.clientWidth < 400,
             }
         }
     }

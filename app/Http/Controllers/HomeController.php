@@ -55,4 +55,24 @@ class HomeController extends Controller
     {
         return view('profile');
     }
+
+    /**
+     * Show profile.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function branches()
+    {
+        return view('branches');
+    }
+
+    /**
+     * Show profile.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function trainers()
+    {
+        return view('trainers');
+    }
 }

@@ -38,13 +38,10 @@
                                 <a class="nav-link" href="{{ route('home') }}">{{ __('Dashboard') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('studios') }}">{{ __('My Studios') }}</a>
+                                <a class="nav-link" href="{{ route('branches') }}">{{ __('Branches') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Branches') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Trainers') }}</a>
+                                <a class="nav-link" href="{{ route('trainers') }}">{{ __('Trainers') }}</a>
                             </li>
                         @endauth
                     </ul>

@@ -49222,7 +49222,7 @@ var app = new Vue({
   //     hasError: false
   // }
   computed: {
-    isMobileViewOne: function isMobileViewOne() {
+    isMobileViewImg: function isMobileViewImg() {
       return {
         straight100: window.app.clientWidth < 400
       };
@@ -49230,6 +49230,11 @@ var app = new Vue({
     isMobileViewFormControl: function isMobileViewFormControl() {
       return {
         'form-control-sm': window.app.clientWidth < 400
+      };
+    },
+    isMobileViewFormLabel: function isMobileViewFormLabel() {
+      return {
+        'col-form-label-sm': window.app.clientWidth < 400
       };
     }
   }

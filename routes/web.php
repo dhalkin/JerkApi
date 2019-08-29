@@ -22,3 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile', 'HomeController@userprofile')->name('profile');
 
 Route::get('/studios', 'HomeController@studios')->name('studios');
+
+Route::get('/branches', 'HomeController@branches')->name('branches');
+
+Route::get('/trainers', 'HomeController@trainers')->name('trainers');
