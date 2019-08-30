@@ -11,18 +11,16 @@
 |
 */
 
+// unauthorized page
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// SPA routes, views by vue
+Route::get('/{app_page}', 'HomeController@index')
+    ->where('app_page', '^(home|company|branches|trainers|clients|profile)$');
 
-Route::get('/profile', 'HomeController@userprofile')->name('profile');
 
-Route::get('/studios', 'HomeController@studios')->name('studios');
 
-Route::get('/branches', 'HomeController@branches')->name('branches');
-
-Route::get('/trainers', 'HomeController@trainers')->name('trainers');

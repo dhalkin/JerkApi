@@ -1,0 +1,39 @@
+
+import Home from './components/Home';
+import Company from './components/Company';
+import Branches from './components/Branches';
+import Trainers from './components/Trainers';
+import Customers from './components/Customers';
+import Profile from './components/Profile';
+
+export default {
+
+    mode: 'history',
+
+    routes:[
+        {
+            path: '/home',
+            component: Home
+        },
+        {
+            path: '/company',
+            component: Company
+        },
+        {
+            path: '/branches',
+            component: Branches
+        },
+        {
+            path: '/trainers',
+            component: Trainers
+        },
+        {
+            path: '/customers',
+            component: Customers
+        },
+        {
+            path: '/profile',
+            component: Profile
+        }
+    ]
+}

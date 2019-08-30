@@ -7,7 +7,13 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import routes from './routes'
+
+//window.Vue = require('vue');
+
+Vue.use(VueRouter);
 
 /**
  * The following block of code may be used to automatically register your
@@ -28,13 +34,10 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
+let app = new Vue({
     el: '#app',
 
-    // data: {
-    //     isMobileView: window.app.clientWidth < 400,
-    //     hasError: false
-    // }
+    router: new VueRouter(routes),
 
     computed: {
         isMobileViewImg: function () {

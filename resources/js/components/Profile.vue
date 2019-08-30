@@ -1,7 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
+<template>
+    <div class="container">
 
         <!-- to show card as card on deck -->
         <div class="card-deck">
@@ -114,5 +112,16 @@
             </div>
 
         </div>
-</div>
-@endsection
+    </div>
+</template>
+
+<script>
+    export default {
+
+        mounted() {
+            console.log('Profile mounted.')
+        },
+
+
+    }
+</script>
