@@ -4,8 +4,7 @@
             <div class="col-md-10">
                 <div class="card bg-light mb-3">
                     <div class="card-header">
-                        <span class="float-left">Dashboard</span>
-                        <span class="float-right"><button type="button" class="btn btn-primary">Settings</button></span>
+                        @lang('Dashboard')
                     </div>
 
                     <div class="card-body">
@@ -76,6 +75,7 @@
     export default {
         mounted() {
             console.log('Home mounted.')
-        }
+        },
+
     }
 </script>
