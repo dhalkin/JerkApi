@@ -4,7 +4,7 @@
             <div class="col-md-10">
                 <div class="card bg-light mb-3">
                     <div class="card-header">
-                        Trainers
+                        {{ trans('Trainers')}}
                     </div>
 
                     <div class="card-body">

@@ -4,7 +4,7 @@
             <div class="col-md-10">
                 <div class="card bg-light mb-3">
                     <div class="card-header">
-                        @lang('Dashboard')
+                        {{ trans('Dashboard') }}
                     </div>
 
                     <div class="card-body">

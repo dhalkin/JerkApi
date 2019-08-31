@@ -28,16 +28,23 @@ Vue.use(VueRouter);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+Vue.prototype.trans = (string, args) => {
+    let value = _.get(window.i18n, string);
+    if (typeof value !== 'undefined') return value;
+
+    return string;
+};
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 let app = new Vue({
     el: '#app',
 
     router: new VueRouter(routes),
+
 
     computed: {
         isMobileViewImg: function () {
@@ -57,3 +64,4 @@ let app = new Vue({
         }
     }
 });
+

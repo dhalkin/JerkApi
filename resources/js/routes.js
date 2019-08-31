@@ -10,6 +10,8 @@ export default {
 
     mode: 'history',
 
+    linkActiveClass: 'active',
+
     routes:[
         {
             path: '/home',

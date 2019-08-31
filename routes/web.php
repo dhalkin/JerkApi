@@ -25,5 +25,33 @@ Route::get('/{app_page}', 'HomeController@index')
 // switch language
 Route::get('lang/{locale}', 'LocalizationController@index');
 
+// Collect lang for SPA pages
+Route::get('/js/lang.js', function () {
+    $strings = Cache::rememberForever('lang.js', function () {
+        $lang = config('app.locale');
+
+        $files   = glob(resource_path('lang/' . $lang . '/*.php'));
+        $strings = [];
+
+        foreach ($files as $file) {
+            $name           = basename($file, '.php');
+            $strings[$name] = require $file;
+        }
+
+        $files = glob(resource_path('lang/' . $lang . '.json'));
+        foreach ($files as $file) {
+            $addStrings = json_decode(file_get_contents($file), true);
+            foreach ($addStrings as $index => $string) {
+                $strings[$index] = $string;
+            }
+        }
+
+        return $strings;
+    });
+
+    header('Content-Type: text/javascript');
+    echo('window.i18n = ' . json_encode($strings) . ';');
+    exit();
+})->name('assets.lang');
 
 
