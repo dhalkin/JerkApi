@@ -25,3 +25,17 @@ Route::group([
         Route::get('user', 'AuthController@user');
     });
 });
+
+//Route::get('timezones', function(){
+//
+//    return [
+//        'name'=> 'Olalala',
+//        'note'=> 'It\'s ok'
+//    ];
+//});
+
+Route::get('timezones', 'CatalogController@timezones');
+
+
+
+
