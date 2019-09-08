@@ -26,6 +26,14 @@ Route::group([
     });
 });
 
+Route::group([
+    'middleware' => 'auth:api'
+], function() {
+    Route::get('timezones', 'CatalogController@timezones');
+    Route::get('company', 'CompanyController@index');
+    Route::post('company', 'CompanyController@storeCompany');
+});
+
 //Route::get('timezones', function(){
 //
 //    return [
@@ -34,7 +42,7 @@ Route::group([
 //    ];
 //});
 
-Route::get('timezones', 'CatalogController@timezones');
+
 
 
 

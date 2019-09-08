@@ -50,6 +50,20 @@ Vue.prototype.trans = (string, args) => {
     return string;
 };
 
+// Seems like we get some Error class, but it doesn't work yet
+class Errors {
+
+    constructor() {
+        this.errors = {};
+    }
+
+    get(field) {
+        if (this.errors[field]) {
+            return this.errors[field][0];
+        }
+    }
+}
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -59,7 +73,6 @@ let app = new Vue({
     el: '#app',
 
     router: new VueRouter(routes),
-
 
     computed: {
         isMobileViewImg: function () {
