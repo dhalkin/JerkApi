@@ -72,9 +72,20 @@
 </template>
 
 <script>
+
     export default {
+
+        props: ['someData'],
+
+        data() {
+            return {
+                errors: ''
+            }
+        },
+
+
         mounted() {
-            console.log('Home mounted.')
+            console.log('Home mounted.');
         },
 
     }

@@ -23,13 +23,13 @@
 <body>
     <!-- Application -->
     <div id="app">
-
+        
         @include('menu')
 
         <main class="py-4">
             {{-- This comment will not be present in the rendered HTML --}}
             @auth
-                <router-view></router-view>
+                <router-view some-data="{{ Auth::user()->api_token }}"></router-view>
             @endauth
 
             @guest
@@ -39,6 +39,5 @@
         </main>
     </div>
     <!-- End of Application -->
-
 </body>
 </html>

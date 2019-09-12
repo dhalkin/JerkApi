@@ -65,7 +65,12 @@
 </template>
 
 <script>
+
+
+
     export default {
+
+        props: ['someData'],
 
         data() {
             return {
@@ -79,18 +84,20 @@
         },
 
         mounted() {
-            console.log('Company mounted.')
+            console.log('Company mounted.');
         },
 
         created() {
-
-            axios.get('/api/timezones?api_token=gMFlmHKD4x6Y87C7ISSlDFouO2wgcLcfLOs89N4fj5ymWcuudxCQtWER5IVw')
+            // need some solution
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.someData;
+            // get timezones
+            axios.get('/api/timezones')
                 .then(response => response.data)
                 .then(data => {
                     this.timezones = data;
                 });
-
-            axios.get('/api/company?api_token=gMFlmHKD4x6Y87C7ISSlDFouO2wgcLcfLOs89N4fj5ymWcuudxCQtWER5IVw')
+            // get company
+            axios.get('/api/company')
                 .then(response => response.data)
                 .then(data => {
                     this.name = data.name;
@@ -103,7 +110,7 @@
         methods:{
 
             onSubmit(){
-                axios.post('/api/company?api_token=gMFlmHKD4x6Y87C7ISSlDFouO2wgcLcfLOs89N4fj5ymWcuudxCQtWER5IVw', this.$data)
+                axios.post('/api/company', this.$data)
                     .then(response => alert('Success'))
                     .catch(error => {
                         console.log(error.response)
