@@ -10,17 +10,17 @@
                     <div class="card-body">
 
                         <div class="row justify-content-between ml-1 mr-1">
-                            <div class="col-5 shadow-sm p-3">
-                                <div class="media">
-                                    <img src="/pictures/100x100.jpg" class="align-self-start rounded-circle mr-4">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Logo</h5>
-                                        <p>Put a logo for your organization, it will be easier for your customers. <br/>
-                                            You can select .jpg, .png file.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="col-5 shadow-sm p-3">-->
+<!--                                <div class="media">-->
+<!--                                    <img src="/pictures/100x100.jpg" class="align-self-start rounded-circle mr-4">-->
+<!--                                    <div class="media-body">-->
+<!--                                        <h5 class="mt-0">Logo</h5>-->
+<!--                                        <p>Put a logo for your organization, it will be easier for your customers. <br/>-->
+<!--                                            You can select .jpg, .png file.-->
+<!--                                        </p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <div class="col-6 shadow-sm p-3">
                                 <div class="media">
@@ -28,7 +28,7 @@
                                     <div class="media-body">
                                         <h5 class="mt-0">Your current time</h5>
                                         <p>Select the time zone where is your business located, this is necessary for the scheduler to work correctly.</p>
-                                        <select class="form-control" id="timezone" name="timezone" v-model="timezone">
+                                        <select class="form-control" id="timezone" name="timezone" v-model="timezone" v-on:change="pickTimezone">
                                             <option v-for="item in timezones" v-bind:value="item.id">
                                                 {{ item.zone }}
                                             </option>
@@ -65,8 +65,6 @@
 </template>
 
 <script>
-
-
 
     export default {
 
@@ -110,11 +108,24 @@
         methods:{
 
             onSubmit(){
-                axios.post('/api/company', this.$data)
+                axios.post('/api/company', this.prepareSubmit())
                     .then(response => alert('Success'))
                     .catch(error => {
                         console.log(error.response)
                     })
+            },
+
+            prepareSubmit(){
+                return {
+                    name: this.name,
+                    location: this.location,
+                    email: this.email,
+                    timezone: this.timezone
+                }
+            },
+
+            pickTimezone(){
+
             }
         }
     }

@@ -10,10 +10,10 @@ require('./bootstrap');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
-
-//window.Vue = require('vue');
+import VueLoading from 'vuejs-loading-plugin'
 
 Vue.use(VueRouter);
+Vue.use(VueLoading);
 
 /**
  * The following block of code may be used to automatically register your
@@ -71,8 +71,21 @@ class Errors {
  */
 let app = new Vue({
     el: '#app',
-
     router: new VueRouter(routes),
+
+    beforeCreate: function () {
+        // before a request is made start the progress
+        axios.interceptors.request.use(config => {
+            this.$loading(true);
+            return config
+        });
+
+        // before a response is returned stop nprogress
+        axios.interceptors.response.use(response => {
+            this.$loading(false);
+            return response
+        });
+    },
 
     computed: {
         isMobileViewImg: function () {
