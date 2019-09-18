@@ -11,9 +11,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
 import VueLoading from 'vuejs-loading-plugin'
+import VueFlashMessage from 'vue-flash-message/src';
+
 
 Vue.use(VueRouter);
 Vue.use(VueLoading);
+Vue.use(VueFlashMessage);
 
 /**
  * The following block of code may be used to automatically register your
@@ -80,9 +83,11 @@ let app = new Vue({
             return config
         });
 
-        // before a response is returned stop nprogress
+        // before a response is returned stop progress
         axios.interceptors.response.use(response => {
             this.$loading(false);
+            console.log(response);
+            this.showFlashMessage(response);
             return response
         });
     },
@@ -102,6 +107,26 @@ let app = new Vue({
             return {
                 'col-form-label-sm': window.app.clientWidth < 400,
             }
+        }
+    },
+
+    methods: {
+        showFlashMessage(response){
+
+
+            switch (response.status) {
+                case 200:
+                case 201:
+                    this.flash(response.statusText, 'success', {timeout: 3000});
+                    break;
+                case 400:
+                case 404:
+                    this.flash(response.statusText, 'error', {timeout: 3000});
+                    break;
+                default:
+                    this.flash(response.statusText, 'info', {timeout: 3000});
+            }
+
         }
     }
 });

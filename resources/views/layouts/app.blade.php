@@ -23,6 +23,7 @@
 <body>
     <!-- Application -->
     <div id="app">
+        <flash-message transition-name="flash-transition" class="flashpool"></flash-message>
         
         @include('menu')
 

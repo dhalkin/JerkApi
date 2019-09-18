@@ -109,7 +109,9 @@
 
             onSubmit(){
                 axios.post('/api/company', this.prepareSubmit())
-                    .then(response => alert('Success'))
+                    .then(response => {
+                        console.log(response)
+                    })
                     .catch(error => {
                         console.log(error.response)
                     })
