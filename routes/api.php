@@ -35,6 +35,7 @@ Route::group([
     Route::post('company', 'CompanyController@storeCompany');
    
     Route::get('branches', 'BranchController@index');
+    Route::get('halls', 'HallController@index');
 });
 
 //Route::get('timezones', function(){

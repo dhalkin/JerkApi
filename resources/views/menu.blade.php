@@ -20,6 +20,9 @@
                     <router-link class="nav-link" to="/branches">{{ __('Branches') }}</router-link>
                 </li>
                 <li class="nav-item">
+                    <router-link class="nav-link" to="/halls">{{ __('Halls') }}</router-link>
+                </li>
+                <li class="nav-item">
                     <router-link class="nav-link" to="/trainers">{{ __('Trainers') }}</router-link>
                 </li>
                 <li class="nav-item">

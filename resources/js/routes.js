@@ -2,6 +2,7 @@
 import Home from './components/Home';
 import Company from './components/Company';
 import Branches from './components/Branches';
+import Halls from './components/Halls';
 import Trainers from './components/Trainers';
 import Customers from './components/Customers';
 import Profile from './components/Profile';
@@ -24,6 +25,10 @@ export default {
         {
             path: '/branches',
             component: Branches
+        },
+        {
+            path: '/halls',
+            component: Halls
         },
         {
             path: '/trainers',

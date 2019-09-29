@@ -20,7 +20,7 @@ Auth::routes();
 
 // SPA routes, views by vue
 Route::get('/{app_page}', 'HomeController@index')
-    ->where('app_page', '^(home|company|branches|trainers|customers|profile)$');
+    ->where('app_page', '^(home|company|branches|halls|trainers|customers|profile)$');
 
 // switch language
 Route::get('lang/{locale}', 'LocalizationController@index');

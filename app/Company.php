@@ -19,4 +19,9 @@ class Company extends Model
     {
         return $this->hasMany('App\Branch', 'company_id', 'id');
     }
+    
+    public function halls()
+    {
+        return $this->hasMany('App\Hall', 'company_id', 'id');
+    }
 }
