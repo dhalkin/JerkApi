@@ -9,51 +9,63 @@
 
                     <div class="card-body">
 
-                        <div class="row justify-content-between ml-1 mr-1">
-<!--                            <div class="col-5 shadow-sm p-3">-->
-<!--                                <div class="media">-->
-<!--                                    <img src="/pictures/100x100.jpg" class="align-self-start rounded-circle mr-4">-->
-<!--                                    <div class="media-body">-->
-<!--                                        <h5 class="mt-0">Logo</h5>-->
-<!--                                        <p>Put a logo for your organization, it will be easier for your customers. <br/>-->
-<!--                                            You can select .jpg, .png file.-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                        <div class="d-sm-flex">
 
-                            <div class="col-6 shadow-sm p-3">
-                                <div class="media">
-                                    <h1 class="align-self-start mr-4">12:13</h1>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Your current time</h5>
-                                        <p>Select the time zone where is your business located, this is necessary for the scheduler to work correctly.</p>
-                                        <select class="form-control" id="timezone" name="timezone" v-model="timezone" v-on:change="pickTimezone">
-                                            <option v-for="item in timezones" v-bind:value="item.id">
-                                                {{ item.zone }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
+                            <div class="mr-5">
+                                <span class="h1">
+                                    <span>{{hours}}</span>
+                                    <span class="blink_me">:</span>
+                                    <span>{{minutes}}</span>
+                                </span>
+                                <br />
+                                <span class="h4">{{fullDate}}</span>
+                            </div>
+
+
+                            <div class="">
+                                <label class="col-form-label" for="timezone">Timezone *</label>
+                                <select class="form-control" id="timezone" name="timezone" v-model="timezone" v-on:change="pickTimezone">
+                                    <option v-for="item in timezones" v-bind:value="item.name">
+                                        {{ item.zone }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
 
-                        <form method="POST" action="/company" @submit.prevent="onSubmit">
-                        <div class="form-group">
-                            <fieldset>
-                                <label class="col-form-label" for="company-name" v-bind:class="isMobileViewFormLabel">Company name *</label>
-                                <input class="form-control mb-2" v-bind:class="isMobileViewFormControl" id="name" name="name" type="text" v-model="name" required>
-<!--                                <span class="is-invalid" v-text="errors.get('name')"></span>-->
+                        <form method="POST" action="/company" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
+                            <div class="form-group">
 
-                                <label class="control-label" for="location" v-bind:class="isMobileViewFormLabel">Location</label>
-                                <input class="form-control mb-2" v-bind:class="isMobileViewFormControl" id="location" type="text" v-model="location">
+                            <label class="col-form-label" for="company-name">Company name *</label>
+                            <input class="form-control mb-2"
+                                   id="name" name="name" type="text"
+                                   v-model="name"
+                                   v-bind:class="{ 'is-invalid': errors.has('name') }" required>
+                            <div class="invalid-feedback" v-if="errors.has('name')" v-text="errors.get('name')"></div>
 
-                                <label class="control-label" for="email" v-bind:class="isMobileViewFormLabel">Email</label>
-                                <input class="form-control mb-2" v-bind:class="isMobileViewFormControl" id="email" type="email" v-model="email">
+                            <label class="control-label" for="location">Location</label>
+                            <input class="form-control mb-2"
+                                   id="location" name="location" type="text"
+                                   v-model="location"
+                                   v-bind:class="{ 'is-invalid': errors.has('location') }"
+                                   v-bind:placeholder="trans('Country, City, Street..')">
+                            <div class="invalid-feedback" v-if="errors.has('location')" v-text="errors.get('location')"></div>
 
-                            </fieldset>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
+                            <label class="control-label" for="email">Email</label>
+                            <input class="form-control mb-2"
+                                   id="email" name="email" type="email"
+                                   v-model="email"
+                                   v-bind:class="{ 'is-invalid': errors.has('email') }"
+                                   placeholder="company@domain.test">
+                            </div>
+                            <div class="invalid-feedback" v-if="errors.has('email')" v-text="errors.get('email')"></div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary w-100">{{ trans('Submit') }}</button>
+                                </div>
+                            </div>
                         </form>
 
                     </div>
@@ -66,9 +78,9 @@
 
 <script>
 
-    export default {
+        export default {
 
-        props: ['someData'],
+        props: ['apiToken'],
 
         data() {
             return {
@@ -77,17 +89,24 @@
                 location: '',
                 email: '',
                 timezone: '',
-                errors: ''
+                errors: new Errors(),
+                hours:'',
+                minutes:'',
+                fullDate:'',
+                week: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+                uiTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone // set initial timezone
             }
         },
 
         mounted() {
-            console.log('Company mounted.');
+            let timerID = setInterval(this.updateTime, 10000);
         },
 
         created() {
             // need some solution
-            axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.someData;
+            // if (this.errors.hasOwnProperty(field))
+
+            axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.apiToken;
             // get timezones
             axios.get('/api/timezones')
                 .then(response => response.data)
@@ -101,20 +120,52 @@
                     this.name = data.name;
                     this.location = data.location;
                     this.email = data.email;
-                    this.timezone = data.timezone
+                    this.timezone = data.timezone;
+
+                    if(!data.timezone) {
+                        this.timezone = this.uiTimezone;
+                    }
+
+                    this.updateTime();
                 });
         },
 
         methods:{
-
+            // save the company
             onSubmit(){
+                this.errors.clearAll();
                 axios.post('/api/company', this.prepareSubmit())
                     .then(response => {
-                        console.log(response)
+                        this.flash(this.trans('Saved'), 'success', {
+                            timeout: 3000
+                        });
                     })
                     .catch(error => {
-                        console.log(error.response)
-                    })
+                        if (error.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+
+                            // show flash with
+                            this.flash(error.response.data.message, 'warning', {
+                                timeout: 3000
+                            });
+
+                            this.errors.record(error.response.data.errors);
+
+                            // console.log(error.response.data);
+                            // console.log(error.response.status);
+                            // console.log(error.response.headers);
+                        } else if (error.request) {
+                            // The request was made but no response was received
+                            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                            // http.ClientRequest in node.js
+                            console.log(error.request);
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.log('Error', error.message);
+                        }
+                        console.log(error.config);
+                    });
             },
 
             prepareSubmit(){
@@ -127,8 +178,62 @@
             },
 
             pickTimezone(){
+                this.updateTime();
+            },
 
+            updateTime(){
+                let cd = new Date().toLocaleString("en-US", {timeZone: this.timezone});
+                cd = new Date(cd);
+                this.hours = this.zeroPadding(cd.getHours(), 2);
+                this.minutes = this.zeroPadding(cd.getMinutes(), 2);
+                this.fullDate = this.zeroPadding(cd.getDate(), 2) + '-' +
+                    this.zeroPadding(cd.getMonth(), 2) + '-' + cd.getFullYear() + ' ' +
+                    this.week[cd.getDay()];
+            },
+
+            zeroPadding(num, digit) {
+                var zero = '';
+                for(var i = 0; i < digit; i++) {
+                    zero += '0';
+                }
+                return (zero + num).slice(-digit);
             }
+
         }
     }
+
+    // that's something...
+        class Errors {
+
+            constructor() {
+                this.errors = {};
+            }
+
+            get(field) {
+                if (this.errors[field]) {
+                    return this.errors[field][0];
+                }
+            }
+
+            has(field){
+                return this.errors.hasOwnProperty(field);
+            }
+
+            any(){
+                return Object.keys(this.errors).length > 0;
+            }
+
+            record(errors) {
+                this.errors = errors;
+            }
+
+            clear(field) {
+                delete this.errors[field]
+            }
+
+            clearAll(){
+                this.errors = {};
+            }
+        }
+
 </script>

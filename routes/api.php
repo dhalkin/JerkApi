@@ -30,8 +30,11 @@ Route::group([
     'middleware' => 'auth:api'
 ], function() {
     Route::get('timezones', 'CatalogController@timezones');
+    
     Route::get('company', 'CompanyController@index');
     Route::post('company', 'CompanyController@storeCompany');
+   
+    Route::get('branches', 'BranchController@index');
 });
 
 //Route::get('timezones', function(){

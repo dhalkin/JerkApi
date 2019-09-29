@@ -30,7 +30,7 @@
         <main class="py-4">
             {{-- This comment will not be present in the rendered HTML --}}
             @auth
-                <router-view some-data="{{ Auth::user()->api_token }}"></router-view>
+                <router-view api-token="{{ Auth::user()->api_token }}"></router-view>
             @endauth
 
             @guest

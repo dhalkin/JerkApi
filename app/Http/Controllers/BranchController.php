@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Company;
 
-class CompanyController extends Controller
+class BranchController extends Controller
 {
 
     public function index(Request $request)
     {
         $company = $request->user()->company;
         
-        return $company->toJson();
+        return $company->branches;
+        
     }
 
     public function storeCompany(Request $request)

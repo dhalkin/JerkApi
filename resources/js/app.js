@@ -15,7 +15,15 @@ import VueFlashMessage from 'vue-flash-message/src';
 
 
 Vue.use(VueRouter);
-Vue.use(VueLoading);
+//Vue.use(VueLoading);
+Vue.use(VueLoading, {
+    //dark: true, // default false
+    //text: 'Ladataan', // default 'Loading'
+   // loading: true, // default false
+    //customLoader: myVueComponent, // replaces the spinner and text with your own
+    //background: 'rgb(255,255,255)', // set custom background
+    //classes: ['myclass'] // array, object or string
+});
 Vue.use(VueFlashMessage);
 
 /**
@@ -53,20 +61,6 @@ Vue.prototype.trans = (string, args) => {
     return string;
 };
 
-// Seems like we get some Error class, but it doesn't work yet
-class Errors {
-
-    constructor() {
-        this.errors = {};
-    }
-
-    get(field) {
-        if (this.errors[field]) {
-            return this.errors[field][0];
-        }
-    }
-}
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -81,14 +75,25 @@ let app = new Vue({
         axios.interceptors.request.use(config => {
             this.$loading(true);
             return config
+        }, error => {
+            console.log(error);
         });
 
         // before a response is returned stop progress
         axios.interceptors.response.use(response => {
+            // Any status code that lie within the range of 2xx cause this function to trigger
+            // Do something with response data
             this.$loading(false);
-            console.log(response);
-            this.showFlashMessage(response);
+            //console.log(response);
+            //this.showFlashMessage(response);
             return response
+        }, error => {
+            // Any status codes that falls outside the range of 2xx cause this function to trigger
+            // Do something with response error
+            //console.log(error);
+            //this.showFlashMessage(error);
+            this.$loading(false);
+            return Promise.reject(error);
         });
     },
 
@@ -111,23 +116,7 @@ let app = new Vue({
     },
 
     methods: {
-        showFlashMessage(response){
 
-
-            switch (response.status) {
-                case 200:
-                case 201:
-                    this.flash(response.statusText, 'success', {timeout: 3000});
-                    break;
-                case 400:
-                case 404:
-                    this.flash(response.statusText, 'error', {timeout: 3000});
-                    break;
-                default:
-                    this.flash(response.statusText, 'info', {timeout: 3000});
-            }
-
-        }
     }
 });
 
