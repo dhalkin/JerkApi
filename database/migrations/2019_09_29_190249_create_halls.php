@@ -15,7 +15,7 @@ class CreateHalls extends Migration
     {
         Schema::create('halls', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('unique_id', 40)->unique();
+            $table->string('unique_id', 32)->unique();
             $table->bigInteger('company_id');
             $table->string('name');
             $table->string('address');

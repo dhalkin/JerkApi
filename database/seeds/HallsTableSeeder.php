@@ -20,7 +20,7 @@ class HallsTableSeeder extends Seeder
     {
         foreach ($this->timezones as $name => $zone){
             DB::table('halls')->insert([
-                'unique_id' => Str::uuid()->toString(),
+                'unique_id' => md5(microtime()),
                 'company_id' => 1,
                 'name' => $name,
                 'address' => $zone,

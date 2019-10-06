@@ -15,13 +15,8 @@ class Hall extends Model
         parent::boot();
         
         self::creating(function ($model) {
-            sleep(1);
+            $model->unique_id = md5(microtime());
         });
-        
-        self::created(function ($model) {
-            sleep(1);
-        });
-        
     }
     
     public function preSave()

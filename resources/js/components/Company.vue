@@ -11,7 +11,7 @@
 
                         <div class="d-sm-flex">
 
-                            <div class="mr-5">
+                            <div class="mr-5" style="min-width: 175px; min-height: 75px">
                                 <span class="h1">
                                     <span>{{hours}}</span>
                                     <span class="blink_me">:</span>
@@ -22,9 +22,9 @@
                             </div>
 
 
-                            <div class="">
+                            <div class="w-100">
                                 <label class="col-form-label" for="timezone">Timezone *</label>
-                                <select class="form-control" id="timezone" name="timezone" v-model="timezone" v-on:change="pickTimezone">
+                                <select class="form-control w-100" id="timezone" name="timezone" v-model="timezone" v-on:change="pickTimezone">
                                     <option v-for="item in timezones" v-bind:value="item.name">
                                         {{ item.zone }}
                                     </option>
@@ -78,9 +78,11 @@
 
 <script>
 
-        export default {
+    import Errors from "./utils/Errors.vue";
+    export default {
 
         props: ['apiToken'],
+        mixins: [Errors],
 
         data() {
             return {
@@ -89,10 +91,9 @@
                 location: '',
                 email: '',
                 timezone: '',
-                errors: new Errors(),
-                hours:'',
-                minutes:'',
-                fullDate:'',
+                hours: '00',
+                minutes: '00',
+                fullDate:'01-06-1976 TUE',
                 week: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
                 uiTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone // set initial timezone
             }
@@ -100,34 +101,62 @@
 
         mounted() {
             let timerID = setInterval(this.updateTime, 10000);
-        },
-
-        created() {
-            // need some solution
-            // if (this.errors.hasOwnProperty(field))
 
             axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.apiToken;
-            // get timezones
-            axios.get('/api/timezones')
-                .then(response => response.data)
-                .then(data => {
-                    this.timezones = data;
-                });
-            // get company
-            axios.get('/api/company')
-                .then(response => response.data)
-                .then(data => {
-                    this.name = data.name;
-                    this.location = data.location;
-                    this.email = data.email;
-                    this.timezone = data.timezone;
+            // check local storage
+            if (localStorage.timezones) {
+                this.timezones = JSON.parse(localStorage.timezones);
+            } else {
+                axios.get('/api/timezones')
+                    .then(response => {
+                       this.timezones = response.data;
+                    });
+            }
 
-                    if(!data.timezone) {
+            axios.get('/api/company')
+                .then(response => {
+                    this.name = response.data.name;
+                    this.location = response.data.location;
+                    this.email = response.data.email;
+                    this.timezone = response.data.timezone;
+
+                    if (!response.data.timezone) {
                         this.timezone = this.uiTimezone;
                     }
 
                     this.updateTime();
                 });
+
+            // axios.all([
+            //     axios.get('/api/timezones'),
+            //     axios.get('/api/company')
+            // ]).then(responseArr => {
+            //
+            //     this.timezones = responseArr[0].data;
+            //     this.name = responseArr[1].data.name;
+            //     this.location = responseArr[1].data.location;
+            //     this.email = responseArr[1].data.email;
+            //     this.timezone = responseArr[1].data.timezone;
+            //
+            //     if (!responseArr[1].data.timezone) {
+            //         this.timezone = this.uiTimezone;
+            //     }
+            //
+            //     this.updateTime();
+
+            //});
+
+        },
+        watch: {
+            timezones(newTimezones) {
+                // const parsed = JSON.stringify(newTimezones);
+                // localStorage.setItem('timezones', parsed);
+                localStorage.timezones = JSON.stringify(newTimezones);
+            }
+        },
+
+        created() {
+
         },
 
         methods:{
@@ -201,39 +230,5 @@
 
         }
     }
-
-    // that's something...
-        class Errors {
-
-            constructor() {
-                this.errors = {};
-            }
-
-            get(field) {
-                if (this.errors[field]) {
-                    return this.errors[field][0];
-                }
-            }
-
-            has(field){
-                return this.errors.hasOwnProperty(field);
-            }
-
-            any(){
-                return Object.keys(this.errors).length > 0;
-            }
-
-            record(errors) {
-                this.errors = errors;
-            }
-
-            clear(field) {
-                delete this.errors[field]
-            }
-
-            clearAll(){
-                this.errors = {};
-            }
-        }
 
 </script>

@@ -89,9 +89,7 @@ let app = new Vue({
             return response
         }, error => {
             // Any status codes that falls outside the range of 2xx cause this function to trigger
-            // Do something with response error
-            //console.log(error);
-            //this.showFlashMessage(error);
+            this.showFlashMessage(error.response);
             this.$loading(false);
             return Promise.reject(error);
         });
@@ -116,7 +114,24 @@ let app = new Vue({
     },
 
     methods: {
-
+        showFlashMessage(response) {
+            switch (response.status) {
+                case 400:
+                case 401:
+                    // need to logout user and redirect
+                case 402:
+                case 403:
+                case 404:
+                case 500:
+                    console.log(response);
+                    this.flash(response.statusText, 'error', {
+                        timeout: 3000
+                    });
+                    break;
+                default:
+                    console.log(response);
+            }
+        }
     }
 });
 

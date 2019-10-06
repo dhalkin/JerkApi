@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class BranchesTableSeeder extends Seeder
 {
@@ -20,7 +19,7 @@ class BranchesTableSeeder extends Seeder
     {
         foreach ($this->timezones as $name => $zone){
             DB::table('branches')->insert([
-                'unique_id' => Str::uuid()->toString(),
+                'unique_id' => md5(microtime()),
                 'company_id' => 1,
                 'name' => $name,
                 'address' => $zone,

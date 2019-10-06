@@ -36,6 +36,9 @@ Route::group([
    
     Route::get('branches', 'BranchController@index');
     Route::get('halls', 'HallController@index');
+    Route::get('hall/{uniqueId?}', 'HallController@getHall')
+        ->where('uniqueId', '[a-z0-9]{32}');
+    Route::post('hall/create', 'HallController@createHall');
 });
 
 //Route::get('timezones', function(){

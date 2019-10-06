@@ -22,6 +22,9 @@ Auth::routes();
 Route::get('/{app_page}', 'HomeController@index')
     ->where('app_page', '^(home|company|branches|halls|trainers|customers|profile)$');
 
+Route::get('/hall/{uniqueId}', 'HomeController@index')
+    ->where('uniqueId', '[a-z0-9]{32}');
+
 // switch language
 Route::get('lang/{locale}', 'LocalizationController@index');
 
