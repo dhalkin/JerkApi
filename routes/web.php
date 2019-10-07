@@ -20,7 +20,7 @@ Auth::routes();
 
 // SPA routes, views by vue
 Route::get('/{app_page}', 'HomeController@index')
-    ->where('app_page', '^(home|company|branches|halls|trainers|customers|profile)$');
+    ->where('app_page', '^(home|company|halls|trainers|customers|profile)$');
 
 Route::get('/hall/{uniqueId}', 'HomeController@index')
     ->where('uniqueId', '[a-z0-9]{32}');

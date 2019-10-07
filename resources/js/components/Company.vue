@@ -18,7 +18,7 @@
                                     <span>{{minutes}}</span>
                                 </span>
                                 <br />
-                                <span class="h4">{{fullDate}}</span>
+                                <span class="h5">{{fullDate}}</span>
                             </div>
 
 
@@ -78,11 +78,11 @@
 
 <script>
 
-    import Errors from "./utils/Errors.vue";
+    import Errors from "./utils/Errors";
+    import RequestHelper from "./utils/RequestHelper";
     export default {
 
-        props: ['apiToken'],
-        mixins: [Errors],
+        mixins: [Errors, RequestHelper],
 
         data() {
             return {
@@ -102,7 +102,6 @@
         mounted() {
             let timerID = setInterval(this.updateTime, 10000);
 
-            axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.apiToken;
             // check local storage
             if (localStorage.timezones) {
                 this.timezones = JSON.parse(localStorage.timezones);
@@ -134,29 +133,13 @@
             //
             //     this.timezones = responseArr[0].data;
             //     this.name = responseArr[1].data.name;
-            //     this.location = responseArr[1].data.location;
-            //     this.email = responseArr[1].data.email;
-            //     this.timezone = responseArr[1].data.timezone;
-            //
-            //     if (!responseArr[1].data.timezone) {
-            //         this.timezone = this.uiTimezone;
-            //     }
-            //
-            //     this.updateTime();
-
             //});
 
         },
         watch: {
             timezones(newTimezones) {
-                // const parsed = JSON.stringify(newTimezones);
-                // localStorage.setItem('timezones', parsed);
                 localStorage.timezones = JSON.stringify(newTimezones);
             }
-        },
-
-        created() {
-
         },
 
         methods:{
@@ -170,30 +153,7 @@
                         });
                     })
                     .catch(error => {
-                        if (error.response) {
-                            // The request was made and the server responded with a status code
-                            // that falls out of the range of 2xx
-
-                            // show flash with
-                            this.flash(error.response.data.message, 'warning', {
-                                timeout: 3000
-                            });
-
-                            this.errors.record(error.response.data.errors);
-
-                            // console.log(error.response.data);
-                            // console.log(error.response.status);
-                            // console.log(error.response.headers);
-                        } else if (error.request) {
-                            // The request was made but no response was received
-                            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                            // http.ClientRequest in node.js
-                            console.log(error.request);
-                        } else {
-                            // Something happened in setting up the request that triggered an Error
-                            console.log('Error', error.message);
-                        }
-                        console.log(error.config);
+                        this.processErr(error);
                     });
             },
 

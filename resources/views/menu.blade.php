@@ -17,9 +17,6 @@
                     <router-link class="nav-link" to="/company">{{ __('My Company') }}</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/branches">{{ __('Branches') }}</router-link>
-                </li>
-                <li class="nav-item">
                     <router-link class="nav-link" to="/halls">{{ __('Halls') }}</router-link>
                 </li>
                 <li class="nav-item">

@@ -33,12 +33,13 @@ Route::group([
     
     Route::get('company', 'CompanyController@index');
     Route::post('company', 'CompanyController@storeCompany');
-   
-    Route::get('branches', 'BranchController@index');
+    
     Route::get('halls', 'HallController@index');
     Route::get('hall/{uniqueId?}', 'HallController@getHall')
         ->where('uniqueId', '[a-z0-9]{32}');
     Route::post('hall/create', 'HallController@createHall');
+    Route::post('hall/{uniqueId?}', 'HallController@storeHall')
+        ->where('uniqueId', '[a-z0-9]{32}');
 });
 
 //Route::get('timezones', function(){
