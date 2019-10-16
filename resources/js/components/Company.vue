@@ -24,7 +24,7 @@
 
                             <div class="w-100">
                                 <label class="col-form-label" for="timezone">Timezone *</label>
-                                <select class="form-control w-100" id="timezone" name="timezone" v-model="timezone" v-on:change="pickTimezone">
+                                <select class="form-control w-100" id="timezone" name="timezone" v-model="company.timezone" v-on:change="pickTimezone">
                                     <option v-for="item in timezones" v-bind:value="item.name">
                                         {{ item.zone }}
                                     </option>
@@ -32,20 +32,20 @@
                             </div>
                         </div>
 
-                        <form method="POST" action="/company" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
+                        <form method="POST" name="company" action="/company" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
                             <div class="form-group">
 
                             <label class="col-form-label" for="company-name">Company name *</label>
                             <input class="form-control mb-2"
                                    id="name" name="name" type="text"
-                                   v-model="name"
+                                   v-model="company.name"
                                    v-bind:class="{ 'is-invalid': errors.has('name') }" required>
                             <div class="invalid-feedback" v-if="errors.has('name')" v-text="errors.get('name')"></div>
 
                             <label class="control-label" for="location">Location</label>
                             <input class="form-control mb-2"
                                    id="location" name="location" type="text"
-                                   v-model="location"
+                                   v-model="company.location"
                                    v-bind:class="{ 'is-invalid': errors.has('location') }"
                                    v-bind:placeholder="trans('Country, City, Street..')">
                             <div class="invalid-feedback" v-if="errors.has('location')" v-text="errors.get('location')"></div>
@@ -53,7 +53,7 @@
                             <label class="control-label" for="email">Email</label>
                             <input class="form-control mb-2"
                                    id="email" name="email" type="email"
-                                   v-model="email"
+                                   v-model="company.email"
                                    v-bind:class="{ 'is-invalid': errors.has('email') }"
                                    placeholder="company@domain.test">
                             </div>
@@ -63,7 +63,12 @@
                                 <div class="col-6">
                                 </div>
                                 <div class="col-6">
-                                    <button type="submit" class="btn btn-primary w-100">{{ trans('Submit') }}</button>
+                                    <button type="submit"
+                                            class="btn btn-primary w-100"
+                                            v-text="trans('Submit')"
+                                            v-bind:class="{ 'disabled': !this.isFormDirty }"
+                                            :disabled="!this.isFormDirty">
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -80,22 +85,21 @@
 
     import Errors from "./utils/Errors";
     import RequestHelper from "./utils/RequestHelper";
+
     export default {
 
         mixins: [Errors, RequestHelper],
 
         data() {
             return {
+                company:{},
                 timezones: [],
-                name: '',
-                location: '',
-                email: '',
-                timezone: '',
                 hours: '00',
                 minutes: '00',
                 fullDate:'01-06-1976 TUE',
                 week: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
-                uiTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone // set initial timezone
+                uiTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, // set initial timezone,
+                isDirty:false,
             }
         },
 
@@ -112,19 +116,20 @@
                     });
             }
 
+
             axios.get('/api/company')
                 .then(response => {
-                    this.name = response.data.name;
-                    this.location = response.data.location;
-                    this.email = response.data.email;
-                    this.timezone = response.data.timezone;
+                    this.company = response.data;
 
-                    if (!response.data.timezone) {
-                        this.timezone = this.uiTimezone;
+                    if (typeof response.data.timezone === 'undefined') {
+                        this.company.timezone = this.uiTimezone;
                     }
-
+                    // put to local storage, in purpose to check dirty status
+                    localStorage.company = JSON.stringify(this.company);
                     this.updateTime();
+
                 });
+
 
             // axios.all([
             //     axios.get('/api/timezones'),
@@ -136,9 +141,31 @@
             //});
 
         },
+
+        // hack to axios route
+        beforeRouteLeave (to, from, next) {
+
+            // dirty check
+            if(this.isFormDirty){
+                console.log('dirty');
+                // modal question
+                this.$bvModal.show('okCancelModal');
+
+                next(false);
+            }else{
+                next();
+            }
+        },
+
         watch: {
             timezones(newTimezones) {
                 localStorage.timezones = JSON.stringify(newTimezones);
+            }
+        },
+
+        computed: {
+            isFormDirty: function () {
+                return localStorage.company !== JSON.stringify(this.company);
             }
         },
 
@@ -151,6 +178,9 @@
                         this.flash(this.trans('Saved'), 'success', {
                             timeout: 3000
                         });
+                        localStorage.company = JSON.stringify(this.company);
+                       // it might be needed
+                       this.$recompute("isFormDirty");
                     })
                     .catch(error => {
                         this.processErr(error);
@@ -159,10 +189,10 @@
 
             prepareSubmit(){
                 return {
-                    name: this.name,
-                    location: this.location,
-                    email: this.email,
-                    timezone: this.timezone
+                    name: this.company.name,
+                    location: this.company.location,
+                    email: this.company.email,
+                    timezone: this.company.timezone
                 }
             },
 
@@ -171,7 +201,7 @@
             },
 
             updateTime(){
-                let cd = new Date().toLocaleString("en-US", {timeZone: this.timezone});
+                let cd = new Date().toLocaleString("en-US", {timeZone: this.company.timezone});
                 cd = new Date(cd);
                 this.hours = this.zeroPadding(cd.getHours(), 2);
                 this.minutes = this.zeroPadding(cd.getMinutes(), 2);
@@ -187,7 +217,6 @@
                 }
                 return (zero + num).slice(-digit);
             }
-
         }
     }
 

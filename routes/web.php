@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/{app_page}', 'HomeController@index')
     ->where('app_page', '^(home|company|halls|trainers|customers|profile)$');
 
+// need that for link to the site, seems it will be the same for all entities
 Route::get('/hall/{uniqueId}', 'HomeController@index')
     ->where('uniqueId', '[a-z0-9]{32}');
 

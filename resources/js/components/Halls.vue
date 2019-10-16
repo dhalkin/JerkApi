@@ -44,7 +44,7 @@
                                            id="name" name="name" type="text"
                                            v-model="name"
                                            v-bind:class="{ 'is-invalid': errors.has('name') }"
-                                           v-bind:placeholder="trans('Name')">
+                                           v-bind:placeholder="trans('Name')" required>
                                     <div class="invalid-feedback" v-if="errors.has('name')" v-text="errors.get('name')"></div>
                                 </div>
                                 <div class="col-5">
@@ -52,7 +52,7 @@
                                            id="address" name="address" type="text"
                                            v-model="address"
                                            v-bind:class="{ 'is-invalid': errors.has('address') }"
-                                           v-bind:placeholder="trans('Address')">
+                                           v-bind:placeholder="trans('Address')" required>
                                     <div class="invalid-feedback" v-if="errors.has('address')" v-text="errors.get('address')"></div>
                                 </div>
                                 <div class="col-2">
@@ -105,7 +105,7 @@
                         this.flash(this.trans('Saved'), 'success', {
                             timeout: 3000
                         });
-                        this.$router.push({ path: '/hall/' + response.data.uuid});
+                        this.goToHall(response.data.uuid);
                     })
                     .catch(error => {
                         this.processErr(error);
@@ -119,6 +119,5 @@
                 }
             }
         }
-
     }
 </script>

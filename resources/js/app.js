@@ -12,6 +12,8 @@ import VueRouter from 'vue-router'
 import routes from './routes'
 import VueLoading from 'vuejs-loading-plugin'
 import VueFlashMessage from 'vue-flash-message/src';
+import ModalPlugin  from 'bootstrap-vue';
+
 
 
 Vue.use(VueRouter);
@@ -25,7 +27,7 @@ Vue.use(VueLoading, {
     //classes: ['myclass'] // array, object or string
 });
 Vue.use(VueFlashMessage);
-
+Vue.use(ModalPlugin);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
