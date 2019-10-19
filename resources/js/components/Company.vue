@@ -144,14 +144,33 @@
 
         // hack to axios route
         beforeRouteLeave (to, from, next) {
-
             // dirty check
             if(this.isFormDirty){
                 console.log('dirty');
-                // modal question
-                this.$bvModal.show('okCancelModal');
+                this.$bvModal.msgBoxConfirm('You have unsaved data. Want to leave the page and lose data?', {
+                    title: this.trans('Please Confirm'),
+                    size: 'sm',
+                    okVariant: 'danger',
+                    okTitle: 'YES, Leave',
+                    cancelTitle: 'NO, Stay on this page',
+                    footerClass: 'p-2',
+                    hideHeaderClose: false,
+                    centered: true,
+                    noCloseOnBackdrop: true,
+                    hideBackdrop: true,
+                    contentClass: 'shadow',
+                    headerBgVariant: 'dark',
+                    headerTextVariant: 'light'
+                }).then(value => {
+                    if (value === true){
+                        next();
+                    }else{
+                        next(false)
+                    }
+                }).catch(err => {
+                    next(false);
+                });
 
-                next(false);
             }else{
                 next();
             }

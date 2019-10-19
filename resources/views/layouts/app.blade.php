@@ -24,7 +24,7 @@
     <!-- Application -->
     <div id="app">
         <flash-message transition-name="flash-transition" class="flashpool"></flash-message>
-        <b-modal id="okCancelModal"></b-modal>
+      
         @include('menu')
 
         <main class="py-4">
