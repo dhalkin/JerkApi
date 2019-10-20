@@ -42,4 +42,14 @@ class HallController extends Controller
         return response()->json( ['uuid'=> $hall->unique_id]);
     }
     
+    public function updateHall(Request $request, $uuid)
+    {
+        //@todo user rights, update mechanizm
+    
+        Hall::where('unique_id', $uuid)
+            ->update([
+                'active' => $request->get('active')
+            ]);
+    }
+    
 }

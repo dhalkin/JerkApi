@@ -40,6 +40,8 @@ Route::group([
     Route::post('hall/create', 'HallController@createHall');
     Route::post('hall/{uniqueId?}', 'HallController@storeHall')
         ->where('uniqueId', '[a-z0-9]{32}');
+    Route::post('hall/{uniqueId?}/update', 'HallController@updateHall')
+        ->where('uniqueId', '[a-z0-9]{32}');
 });
 
 //Route::get('timezones', function(){

@@ -3,16 +3,17 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card bg-light mb-3">
-                    <div class="card-header" v-text="trans('Halls')"></div>
-                    <div class="card-body">
+                    <div class="card-header text-left h5" v-text="trans('Halls')"></div>
+                    <div class="card-body p-0">
 
                         <transition>
                         <table class="table table-striped table-sm" v-if="this.halls.length > 0">
-                            <thead class="thead-light">
+                            <thead class="thead-dark">
                             <tr>
                                 <th scope="col">{{trans('Name')}}</th>
                                 <th scope="col">{{trans('Address')}}</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col" class="text-md-right">{{trans('Active')}}</th>
+                                <th scope="col" class="text-md-right">{{trans('Actions')}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -25,17 +26,25 @@
                                     {{hall.address}}
                                 </td>
                                 <td class="text-md-right">
-                                    <button class="btn btn-primary btn-sm" @click="goToHall(hall.unique_id)">
-                                        {{ trans('Edit') }}
-                                    </button>
+                                    <div class="custom-control custom-switch">
+                                    <input
+                                        type="checkbox"
+                                        class="custom-control-input"
+                                        :id="hall.unique_id"
+                                        v-model="hall.active"
+                                        @change="setActiveStatus(hall.unique_id, hall.active)">
+                                    <label class="custom-control-label" :for="hall.unique_id"></label>
+                                </div>
+                                </td>
+                                <td class="text-md-right">
+                                    <button class="btn btn-secondary btn-sm" @click="goToHall(hall.unique_id)" v-text="trans('Edit')"></button>
+                                    <button class="btn btn-danger btn-sm" @click="goToHall(hall.unique_id)" v-text="trans('Delete')"></button>
                                 </td>
                             </tr>
-
                             </tbody>
                         </table>
-                        <p class="h3" v-else v-text="trans('Nothing to show')"></p>
+                        <p class="h3 p-3" v-else v-text="trans('Nothing to show')"></p>
                         </transition>
-
 
                         <form method="POST" action="/hall" @submit.prevent="createHall" @keydown="errors.clear($event.target.name)">
                             <div class="d-sm-flex">
@@ -96,6 +105,28 @@
 
             goToHall(uuid){
                 this.$router.push({ path: '/hall/' + uuid})
+            },
+
+            setActiveStatus(uuid, status){
+                axios.post('/api/hall/' + uuid + '/update', this.prepareData(uuid))
+                    .then(response => {
+                        this.flash(this.trans('Saved'), 'success', {
+                            timeout: 3000
+                        });
+
+                    })
+                    .catch(error => {
+                        this.processErr(error);
+                    });
+            },
+
+            prepareData(uuid){
+                let edithall = this.halls.find(o => o.unique_id === uuid);
+                if( typeof edithall === 'object' && edithall !== null){
+                    return { active:edithall.active };
+                }
+
+                return null;
             },
 
             createHall(){

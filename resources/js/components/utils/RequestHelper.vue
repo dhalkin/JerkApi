@@ -11,11 +11,13 @@
                     // that falls out of the range of 2xx
 
                     // show flash with
-                    this.flash(error.response.data.message, 'warning', {
-                        timeout: 3000
-                    });
+                    if(error.response.data.message){
+                        this.flash(error.response.data.message, 'warning', {
+                            timeout: 3000
+                        });
+                    }
 
-                    this.errors.record(error.response.data.errors);
+                    //this.errors.record(error.response.data.errors);
 
                     // console.log(error.response.data);
                     // console.log(error.response.status);
