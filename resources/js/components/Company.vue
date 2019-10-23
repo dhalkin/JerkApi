@@ -65,9 +65,7 @@
                                 <div class="col-6">
                                     <button type="submit"
                                             class="btn btn-primary w-100"
-                                            v-text="trans('Submit')"
-                                            v-bind:class="{ 'disabled': !this.isFormDirty }"
-                                            :disabled="!this.isFormDirty">
+                                            v-text="trans('Save')">
                                     </button>
                                 </div>
                             </div>
@@ -146,7 +144,6 @@
         beforeRouteLeave (to, from, next) {
             // dirty check
             if(this.isFormDirty){
-                console.log('dirty');
                 this.$bvModal.msgBoxConfirm('You have unsaved data. Want to leave the page and lose data?', {
                     title: this.trans('Please Confirm'),
                     size: 'sm',
@@ -197,9 +194,6 @@
                         this.flash(this.trans('Saved'), 'success', {
                             timeout: 3000
                         });
-                        localStorage.company = JSON.stringify(this.company);
-                       // it might be needed
-                       this.$recompute("isFormDirty");
                     })
                     .catch(error => {
                         this.processErr(error);

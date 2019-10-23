@@ -38,7 +38,7 @@
                                 </td>
                                 <td class="text-md-right">
                                     <button class="btn btn-secondary btn-sm" @click="goToHall(hall.unique_id)" v-text="trans('Edit')"></button>
-                                    <button class="btn btn-danger btn-sm" @click="goToHall(hall.unique_id)" v-text="trans('Delete')"></button>
+<!--                                    <button class="btn btn-danger btn-sm" @click="goToHall(hall.unique_id)" v-text="trans('Delete')"></button>-->
                                 </td>
                             </tr>
                             </tbody>
@@ -102,9 +102,13 @@
         },
 
         methods: {
-
             goToHall(uuid){
                 this.$router.push({ path: '/hall/' + uuid})
+            },
+
+            // ???
+            deleteHall(uuid){
+
             },
 
             setActiveStatus(uuid, status){
