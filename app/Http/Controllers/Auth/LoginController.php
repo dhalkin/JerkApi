@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/app/company';
 
     /**
      * Create a new controller instance.
@@ -61,5 +61,4 @@ class LoginController extends Controller
     {
         return array_merge($request->only($this->username(), 'password'), ['active'=>'1']);
     }
-    
 }

@@ -13,7 +13,7 @@ class CompaniesTableSeeder extends Seeder
     {
         DB::table('companies')->insert([
             'user_id' => 1,
-            'name' => "Nena's Company",
+            'name' => "Hena's Company",
             'location' => "Ukraine, Kyiv, Lomonosova str",
             'timezone' => "Europe/Kiev",
         ]);

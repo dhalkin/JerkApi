@@ -6,6 +6,8 @@
  */
 
 require('./bootstrap');
+require('./plugins/perfect-scrollbar.jquery.min');
+require('./paper-dashboard');
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -14,10 +16,8 @@ import VueLoading from 'vuejs-loading-plugin'
 import VueFlashMessage from 'vue-flash-message/src';
 import ModalPlugin  from 'bootstrap-vue';
 
-
-
 Vue.use(VueRouter);
-//Vue.use(VueLoading);
+
 Vue.use(VueLoading, {
     //dark: true, // default false
     //text: 'Ladataan', // default 'Loading'
@@ -28,6 +28,7 @@ Vue.use(VueLoading, {
 });
 Vue.use(VueFlashMessage);
 Vue.use(ModalPlugin);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

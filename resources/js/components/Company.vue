@@ -1,11 +1,17 @@
 <template>
-    <div class="container">
+    <div class="main-panel">
+    <!-- Top Navbar -->
+        <top-nav-bar v-bind:csrf="this.csrf" v-bind:title="trans('My Company')"></top-nav-bar>
+    <!-- End Navbar -->
+
+    <div class="content">
+
         <div class="row justify-content-center">
 
             <div class="col-md-10">
 
-                <div class="card bg-light mb-3">
-                    <div class="card-header text-left h5">{{ trans('Company Settings') }}</div>
+                <div class="card card-user">
+                    <div class="card-header text-left h5" v-text="trans('Company Settings')"></div>
 
                     <div class="card-body">
 
@@ -76,6 +82,9 @@
 
             </div>
         </div>
+
+    </div>
+    <footer-bar></footer-bar>
     </div>
 </template>
 
@@ -83,10 +92,12 @@
 
     import Errors from "./utils/Errors";
     import RequestHelper from "./utils/RequestHelper";
+    import TopNavBar from "./layout/TopNavBar";
+    import FooterBar from "./layout/FooterBar";
 
     export default {
-
-        mixins: [Errors, RequestHelper],
+        components: {TopNavBar, FooterBar},
+        mixins: [Errors, RequestHelper, TopNavBar],
 
         data() {
             return {
@@ -142,7 +153,7 @@
 
         // hack to axios route
         beforeRouteLeave (to, from, next) {
-            // dirty check
+            // dirty check  !! disputable
             if(this.isFormDirty){
                 this.$bvModal.msgBoxConfirm('You have unsaved data. Want to leave the page and lose data?', {
                     title: this.trans('Please Confirm'),

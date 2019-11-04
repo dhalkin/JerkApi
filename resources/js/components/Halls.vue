@@ -1,4 +1,38 @@
 <template>
+    <div class="main-panel">
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+
+            <div class="navbar-wrapper">
+                <!-- for mobile fiew -->
+                <div class="navbar-toggle">
+                    <button type="button" class="navbar-toggler">
+                        <span class="navbar-toggler-bar bar1"></span>
+                        <span class="navbar-toggler-bar bar2"></span>
+                        <span class="navbar-toggler-bar bar3"></span>
+                    </button>
+                </div>
+                <span class="navbar-brand" v-text="trans('You need to log in to continue')"></span>
+            </div>
+
+            <div class="navbar-wrapper justify-content-end">
+                <a class="ml-2" href="/lang/ru">Ru</a>
+                <a class="ml-2" href="/lang/en">En</a>
+
+                <a class="ml-3" v-text="trans('Logout')" href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                </a>
+                <form id="logout-form" action="/'logout" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="content">
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -75,6 +109,21 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    </div>
+
+    <footer class="footer footer-black">
+        <div class="container-fluid">
+            <div class="pull-left">
+                <a class="" href="/" v-text="trans('Back')"></a>
+            </div>
+            <div class="copyright pull-right">
+                &copy; 2019 made with <i class="fa fa-heart heart"></i> by <a href="/">DanceZilla</a>
+            </div>
+        </div>
+    </footer>
+
     </div>
 </template>
 

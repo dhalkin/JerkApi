@@ -18,9 +18,12 @@ class CreateCompaniesTable extends Migration
             $table->bigInteger('user_id');
 
             $table->string('name');
-            $table->string('location')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('address')->nullable();
             $table->string('timezone')->nullable();
+            $table->text('about')->nullable();
 
             $table->timestamps();
         });
