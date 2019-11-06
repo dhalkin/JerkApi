@@ -10,16 +10,11 @@ class Company extends Model
     
     protected $hidden = ['id', 'user_id', 'created_at', 'updated_at'];
     
-    protected $fillable = ['user_id', 'name', 'location', 'timezone'];
+    protected $fillable = ['user_id', 'name'];
 
     public function user()
     {
         return $this->hasOne('App\User', 'id', 'user_id');
-    }
-    
-    public function branches()
-    {
-        return $this->hasMany('App\Branch', 'company_id', 'id');
     }
     
     public function halls()

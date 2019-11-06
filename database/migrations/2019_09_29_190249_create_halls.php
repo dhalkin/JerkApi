@@ -14,13 +14,22 @@ class CreateHalls extends Migration
     public function up()
     {
         Schema::create('halls', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->string('unique_id', 32)->unique();
-            $table->bigInteger('company_id');
-            $table->string('name');
-            $table->string('address');
+            $table->bigInteger('company_id')->unsigned();
+            $table->string('name', 99);
+            $table->string('address')->nullable();
             $table->boolean('active')->default(true);
+            $table->text('about')->nullable();
             $table->timestamps();
+            
+        });
+    
+        Schema::table('halls', function($table) {
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('CASCADE');
         });
     }
 

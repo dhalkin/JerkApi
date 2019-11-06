@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimezonesTable extends Migration
+class CreateRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateTimezonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('timezones', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('zone');
+        Schema::create('roles', function (Blueprint $table) {
+            $table->tinyIncrements('id')->unsigned();
+            $table->string('name', 96);
         });
     }
 
@@ -27,6 +26,6 @@ class CreateTimezonesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('timezones');
+        Schema::dropIfExists('roles');
     }
 }
