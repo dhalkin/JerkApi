@@ -18,12 +18,12 @@
 
                 <top-nav-lang></top-nav-lang>
 
-                <a class="nav-link btn-magnify" href="/app/profile">
+                <router-link class="nav-link btn-magnify" name="Profile" to="/profile">
                     <i class="nc-icon nc-circle-10"></i>
                     <p>
                         <span class="d-lg d-md-block" v-text="trans('Profile')"></span>
                     </p>
-                </a>
+                </router-link>
 
                 <logout-form v-bind:csrf="this.csrf"></logout-form>
 
