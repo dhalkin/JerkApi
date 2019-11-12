@@ -8,34 +8,16 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+.navbar-wrapper > .user > .avatar {
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    float: left;
+    z-index: 5;
+    margin-right: 10px;
+    border-radius: 50%;
+    margin-left: 23px;
 }
-
-//label {
-//    display: inline-block;
-//    margin-bottom: 0.1rem;
-//}
-//
-//.responsive {
-//    width: 100%;
-//    height: auto;
-//}
-//
-//.min200 {
-//    min-width: 200px;
-//    align-content: inherit;
-//}
-//
-//.img-fluid {
-//    max-width: 100%;
-//    height: auto;
-//}
-//
-//.straight100 {
-//    width: 100px !important;
-//}
 
 //flash style
 .flashpool {

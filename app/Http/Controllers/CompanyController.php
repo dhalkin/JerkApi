@@ -19,15 +19,19 @@ class CompanyController extends Controller
     {
 
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'zip' => 'numeric'
         ]);
 
         Company::where('user_id', $request->user()->id)
             ->update([
                 'name' => $request->get('name'),
-                'location' => $request->get('location'),
-                'email' => $request->get('email'),
-                'timezone' => $request->get('timezone')
+                'address' => $request->get('address'),
+                'city' => $request->get('city'),
+                'country' => $request->get('country'),
+                'zip' => $request->get('zip'),
+                'about' => $request->get('about'),
+                'timezone' => $request->get('timezone'),
             ]);
 
     }

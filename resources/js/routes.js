@@ -1,5 +1,3 @@
-
-//import Home from './components/Home';
 import Company from './components/Company';
 import Halls from './components/Halls';
 import HallsEditor from './components/HallsEditor';
@@ -29,27 +27,33 @@ export default {
         // },
         {
             path: '/company',
-            component: Company
+            component: Company,
+            name: 'Company',
         },
         {
             path: '/halls',
-            component: Halls
+            component: Halls,
+            name: 'Halls'
         },
         {
             path: '/hall/:hallUui',
-            component: HallsEditor
+            component: HallsEditor,
+            name: 'HallsEditor'
         },
         {
             path: '/trainers',
-            component: Trainers
+            component: Trainers,
+            name: 'Trainers',
         },
         {
             path: '/customers',
-            component: Customers
+            component: Customers,
+            name: 'Customers',
         },
         {
             path: '/profile',
-            component: Profile
+            component: Profile,
+            name: 'Profile'
         }
     ]
 }

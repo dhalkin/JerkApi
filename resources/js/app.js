@@ -1,10 +1,12 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
+require('popper.js');
+require('jquery');
 require('./bootstrap');
 require('./plugins/perfect-scrollbar.jquery.min');
 require('./paper-dashboard');
@@ -15,6 +17,7 @@ import routes from './routes'
 import VueLoading from 'vuejs-loading-plugin'
 import VueFlashMessage from 'vue-flash-message/src';
 import ModalPlugin  from 'bootstrap-vue';
+import SideMenu from "./components/layout/SideMenu";
 
 Vue.use(VueRouter);
 
@@ -64,6 +67,10 @@ Vue.prototype.trans = (string, args) => {
     return string;
 };
 
+Vue.prototype.capitalize = function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+};
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -72,7 +79,7 @@ Vue.prototype.trans = (string, args) => {
 let app = new Vue({
     el: '#app',
     router: new VueRouter(routes),
-
+    components: {SideMenu},
     beforeCreate: function () {
         // before a request is made start the progress
         axios.interceptors.request.use(config => {

@@ -15,16 +15,13 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/paper-dashboard.css') }}" rel="stylesheet" />
-
-    <!-- Scripts -->
-    <script src="{{ asset('/js/non-auth-app.js') }}"></script>
     
 </head>
 <body class="">
     <!-- Application -->
     <div class="wrapper">
 <!--        <flash-message transition-name="flash-transition" class="flashpool"></flash-message>-->
-        <div class="sidebar" data-background-color="dark" data-active-color="danger">
+        <div class="sidebar" data-color="brown" data-active-color="danger">
             <div class="sidebar-wrapper">
                 <div class="logo text-md-center font-weight-bold">
                     <a href="{{ url('/') }}" class="simple-text logo-normal">
@@ -33,13 +30,13 @@
                 </div>
                 <!--  -->
                 <ul class="nav">
-                    <li>
+                    <li class="{{ Request::is('login') ? 'active' : '' }}">
                         <a href="{{ route('login') }}">
                             <i class="nc-icon nc-single-02"></i>
                             <p>{{ __('Login') }}</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ Request::is('register') ? 'active' : '' }}">
                         <a href="{{ route('register') }}">
                             <i class="nc-icon nc-user-run"></i>
                             <p>{{ __('Register') }}</p>
@@ -94,4 +91,6 @@
     </div>
     <!-- End of Application -->
 </body>
+<!-- Scripts -->
+<script src="{{ asset('/js/non-auth-app.js') }}"></script>
 </html>

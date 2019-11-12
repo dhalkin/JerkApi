@@ -23,30 +23,7 @@
     
     <flash-message transition-name="flash-transition" class="flashpool"></flash-message>
    
-    <div class="sidebar" data-background-color="dark" data-active-color="danger">
-        <div class="sidebar-wrapper">
-            <div class="logo text-md-center font-weight-bold">
-                <a href="{{ url('/') }}" class="simple-text logo-normal">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </div>
-            <!--  -->
-            <ul class="nav">
-                <li>
-                    <router-link to="/company">
-                        <i class="nc-icon nc-single-02"></i>
-                        <p>{{ __('My Company') }}</p>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/halls">
-                        <i class="nc-icon nc-single-02"></i>
-                        <p>{{ __('Halls') }}</p>
-                    </router-link>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <side-menu app-name="{{ config('app.name', 'Dancezilla') }}" app-url="{{ url('/') }}"></side-menu>
     
     <router-view api-token="{{ Auth::user()->api_token }}" csrf="{{ Session::token() }}"></router-view>
 

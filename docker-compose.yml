@@ -28,7 +28,7 @@ services:
     depends_on:
       - app
     ports:
-      - "8088:80"
+      - "4488:80"
       - "4434:433"
     volumes:
       - ./:/var/www

@@ -5,65 +5,106 @@
     <!-- End Navbar -->
 
     <div class="content">
-
-        <div class="row justify-content-center">
-
+        <div class="row">
             <div class="col-md-10">
 
-                <div class="card card-user">
-                    <div class="card-header text-left h5" v-text="trans('Company Settings')"></div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" v-text="trans('Company Settings')"></h4>
+                    </div>
 
                     <div class="card-body">
 
-                        <div class="d-sm-flex">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-sm-flex">
 
-                            <div class="mr-5" style="min-width: 175px; min-height: 75px">
-                                <span class="h1">
-                                    <span>{{hours}}</span>
-                                    <span class="blink_me">:</span>
-                                    <span>{{minutes}}</span>
-                                </span>
-                                <br />
-                                <span class="h5">{{fullDate}}</span>
-                            </div>
+                                    <div class="mr-5" style="min-width: 175px; min-height: 75px">
+                                        <span class="h1">
+                                            <span>{{hours}}</span>
+                                            <span class="blink_me">:</span>
+                                            <span>{{minutes}}</span>
+                                        </span>
+                                        <br/>
+                                        <span class="h5">{{fullDate}}</span>
+                                    </div>
 
-
-                            <div class="w-100">
-                                <label class="col-form-label" for="timezone">Timezone *</label>
-                                <select class="form-control w-100" id="timezone" name="timezone" v-model="company.timezone" v-on:change="pickTimezone">
-                                    <option v-for="item in timezones" v-bind:value="item.name">
-                                        {{ item.zone }}
-                                    </option>
-                                </select>
+                                    <div class="w-100">
+                                        <label class="col-form-label" for="timezone">Timezone *</label>
+                                        <select class="form-control w-100" id="timezone" name="timezone"
+                                                v-model="company.timezone" v-on:change="pickTimezone">
+                                            <option v-for="item in timezones" v-bind:value="item.name">
+                                                {{ item.zone }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <form method="POST" name="company" action="/company" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
-                            <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
 
-                            <label class="col-form-label" for="company-name">Company name *</label>
-                            <input class="form-control mb-2"
-                                   id="name" name="name" type="text"
-                                   v-model="company.name"
-                                   v-bind:class="{ 'is-invalid': errors.has('name') }" required>
-                            <div class="invalid-feedback" v-if="errors.has('name')" v-text="errors.get('name')"></div>
+                                        <input-text
+                                            v-bind:label="trans('Company name') + ' *'"
+                                            v-model.trim="company.name"
+                                            v-bind:errors="errors"
+                                            name="name"
+                                            required="required">
+                                        </input-text>
 
-                            <label class="control-label" for="location">Location</label>
-                            <input class="form-control mb-2"
-                                   id="location" name="location" type="text"
-                                   v-model="company.location"
-                                   v-bind:class="{ 'is-invalid': errors.has('location') }"
-                                   v-bind:placeholder="trans('Country, City, Street..')">
-                            <div class="invalid-feedback" v-if="errors.has('location')" v-text="errors.get('location')"></div>
+                                        <input-text
+                                            v-bind:label="trans('Address')"
+                                            v-model.trim="company.address"
+                                            v-bind:errors="errors"
+                                            name="address">
+                                        </input-text>
 
-                            <label class="control-label" for="email">Email</label>
-                            <input class="form-control mb-2"
-                                   id="email" name="email" type="email"
-                                   v-model="company.email"
-                                   v-bind:class="{ 'is-invalid': errors.has('email') }"
-                                   placeholder="company@domain.test">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="invalid-feedback" v-if="errors.has('email')" v-text="errors.get('email')"></div>
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input-text
+                                        v-bind:label="trans('City')"
+                                        v-model.trim="company.city"
+                                        v-bind:errors="errors"
+                                        v-bind:name="'city'">
+                                    </input-text>
+                                </div>
+                                <div class="col-md-5">
+                                    <input-text
+                                        v-bind:label="trans('Country')"
+                                        v-model.trim="company.country"
+                                        v-bind:errors="errors"
+                                        v-bind:name="'country'">
+                                    </input-text>
+                                </div>
+                                <div class="col-md-2">
+                                    <input-text
+                                        v-bind:label="trans('Postal code')"
+                                        v-model.trim="company.zip"
+                                        v-bind:errors="errors"
+                                        v-bind:name="'zip'">
+                                    </input-text>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                <label v-text="trans('About')"></label>
+                                <div class="form-group">
+                                    <textarea
+                                        class="form-control"
+                                        v-bind:placeholder="trans('About Company')"
+                                        v-model.trim="company.about">
+                                    </textarea>
+                                </div>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-6">
@@ -82,7 +123,6 @@
 
             </div>
         </div>
-
     </div>
     <footer-bar></footer-bar>
     </div>
@@ -94,14 +134,15 @@
     import RequestHelper from "./utils/RequestHelper";
     import TopNavBar from "./layout/TopNavBar";
     import FooterBar from "./layout/FooterBar";
+    import InputText from "./elements/InputText";
 
     export default {
-        components: {TopNavBar, FooterBar},
+        components: {TopNavBar, FooterBar, InputText},
         mixins: [Errors, RequestHelper, TopNavBar],
 
         data() {
             return {
-                company:{},
+                company:{name:'', address:'', city:'', country:'', zip:'', about:''},
                 timezones: [],
                 hours: '00',
                 minutes: '00',
@@ -110,6 +151,10 @@
                 uiTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, // set initial timezone,
                 isDirty:false,
             }
+        },
+
+        created() {
+
         },
 
         mounted() {
@@ -130,7 +175,10 @@
                 .then(response => {
                     this.company = response.data;
 
-                    if (typeof response.data.timezone === 'undefined') {
+                    if (
+                        typeof response.data.timezone === 'undefined' ||
+                        !response.data.timezone
+                    ) {
                         this.company.timezone = this.uiTimezone;
                     }
                     // put to local storage, in purpose to check dirty status
@@ -191,9 +239,7 @@
         },
 
         computed: {
-            isFormDirty: function () {
-                return localStorage.company !== JSON.stringify(this.company);
-            }
+
         },
 
         methods:{
@@ -214,9 +260,12 @@
             prepareSubmit(){
                 return {
                     name: this.company.name,
-                    location: this.company.location,
-                    email: this.company.email,
-                    timezone: this.company.timezone
+                    address: this.company.address,
+                    city: this.company.city,
+                    timezone: this.company.timezone,
+                    country: this.company.country,
+                    zip: this.company.zip,
+                    about: this.company.about
                 }
             },
 
