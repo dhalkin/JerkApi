@@ -12,18 +12,22 @@
                     </button>
                 </div>
                 <span class="navbar-brand" v-text="this.title"></span>
+
+                <span class="top-create-new-form">
+                  <button class="btn btn-sm btn-info" id="create-new-button"
+                          data-toggle="modal" data-target="#createNewEntity">
+                      <span class="btn-label">
+                    <i class="nc-icon nc-button-play"></i>
+                  </span>
+                  {{trans('Create new')}}
+                </button>
+                </span>
+
             </div>
 
             <div class="row navbar-wrapper justify-content-end">
 
                 <top-nav-lang></top-nav-lang>
-
-                <router-link class="nav-link btn-magnify" name="Profile" to="/profile">
-                    <i class="nc-icon nc-circle-10"></i>
-                    <p>
-                        <span class="d-lg d-md-block" v-text="trans('Profile')"></span>
-                    </p>
-                </router-link>
 
                 <logout-form v-bind:csrf="this.csrf"></logout-form>
 

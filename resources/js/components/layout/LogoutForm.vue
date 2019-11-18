@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-1">
         <a class="nav-link btn-magnify" href="#" @click="letItGo($event)">
             <i class="nc-icon nc-button-power"></i>
             <p>
@@ -19,6 +19,7 @@
         methods: {
             letItGo(e) {
                 e.preventDefault();
+                // need check with user before
                 document.getElementById('logout-form').submit();
             }
         }

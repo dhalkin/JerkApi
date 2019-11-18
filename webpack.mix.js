@@ -23,5 +23,6 @@ mix.js('resources/js/non-auth-app.js', 'public/js');
 mix.copy('resources/css/paper-dashboard.css', 'public/css/paper-dashboard.css')
     .copy('resources/css/montseratt.css', 'public/css/montseratt.css')
     .copy('resources/css/awesome.css', 'public/css/awesome.css')
+    //.copy('resources/css/jquery.dataTables.min.css', 'public/css/jquery.dataTables.min.css')
     .copy('resources/fonts/fontawesome-webfont.woff2', 'public/fonts/fontawesome-webfont.woff2')
     .copy('resources/fonts/nucleo-icons.woff2', 'public/fonts/nucleo-icons.woff2');

@@ -34,6 +34,9 @@ Route::group([
     Route::get('company', 'CompanyController@index');
     Route::post('company', 'CompanyController@storeCompany');
     
+    Route::get('profile', 'ProfileController@index');
+    Route::post('profile', 'ProfileController@storeProfile');
+    
     Route::get('halls', 'HallController@index');
     Route::get('hall/{uniqueId?}', 'HallController@getHall')
         ->where('uniqueId', '[a-z0-9]{32}');
