@@ -12,14 +12,14 @@ class ProfileController extends Controller
     {
         return $request->user()->toJson();
     }
-
-    public function storeCompany(Request $request)
+    
+    public function storeProfile(Request $request)
     {
         $this->validate($request, [
             'first_name' => 'required',
             'email' => 'email|required'
         ]);
-
+    
         User::where('id', $request->user()->id)
             ->update([
                 'first_name' => $request->get('first_name'),
@@ -27,6 +27,6 @@ class ProfileController extends Controller
                 'phone' => $request->get('phone'),
                 'email' => $request->get('email'),
             ]);
-
+        
     }
 }

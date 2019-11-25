@@ -11,7 +11,6 @@
     
     <link href="{{ asset('css/montseratt.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/awesome.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" />
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />

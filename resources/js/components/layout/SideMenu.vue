@@ -13,7 +13,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <a data-toggle="collapse" href="#staffs" aria-expanded="true">
+                    <a data-toggle="collapse" href="#staffs" aria-expanded="false">
                         <i class="nc-icon nc-layout-11"></i>
                         <p>{{trans('Staff')}}<b class="caret"></b></p>
                     </a>
@@ -74,6 +74,9 @@
         mounted() {
             // set current active
             $('a[name="' + this.$router.history.current.name + '"]').parent('li').addClass('active');
+            // dont forget about sub-route
+
+
             // hide side panel after click on route link
             this.$router.afterEach((to, from) => {
 

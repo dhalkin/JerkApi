@@ -18,14 +18,14 @@
                             <div class="col">
                                 <div class="d-sm-flex">
 
-                                    <div class="mr-5" style="min-width: 175px; min-height: 75px">
-                        <span class="h1">
-                            <span>{{hours}}</span>
-                            <span class="blink_me">:</span>
-                            <span>{{minutes}}</span>
-                        </span>
-                                        <br/>
-                                        <span class="h5">{{fullDate}}</span>
+                                    <div class="mr-3" style="min-width: 175px; min-height: 75px">
+                                        <span class="h2">
+                                            <span>{{hours}}</span>
+                                            <span class="blink_me">:</span>
+                                            <span>{{minutes}}</span>
+                                        </span>
+                                            <br/>
+                                            <span class="h6">{{fullDate}}</span>
                                     </div>
 
                                     <div class="w-100">
@@ -95,12 +95,12 @@
                                 <div class="col">
                                     <label v-text="trans('About')"></label>
                                     <div class="form-group">
-                    <textarea
-                        class="form-control"
-                        v-bind:placeholder="trans('About Company')"
-                        v-model.trim="company.about"
-                        name="about">
-                    </textarea>
+                                        <textarea
+                                            class="form-control"
+                                            v-bind:placeholder="trans('About Company')"
+                                            v-model.trim="company.about"
+                                            name="about">
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +133,8 @@
                                         v-bind:label="trans('First Name')"
                                         v-model.trim="user.first_name"
                                         v-bind:errors="errors"
-                                        name="first_name">
+                                        name="first_name"
+                                        required="required">
                                     </input-text>
                                 </div>
                                 <div class="col">
@@ -176,6 +177,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
             </div>
@@ -205,7 +207,6 @@
                 fullDate:'01-06-1976 TUE',
                 week: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
                 uiTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone, // set initial timezone,
-                isDirty:false,
             }
         },
 
@@ -216,8 +217,8 @@
         mounted() {
             let timerID = setInterval(this.updateTime, 10000);
 
-            // check local storage
-            if (localStorage.timezones) {
+            // check local storage and get timezones
+            if (localStorage.timezones && localStorage.timezones.lenght > 0) {
                 this.timezones = JSON.parse(localStorage.timezones);
             } else {
                 axios.get('/api/timezones')
@@ -225,7 +226,7 @@
                        this.timezones = response.data;
                     });
             }
-
+            // get company
             axios.get('/api/company')
                 .then(response => {
                     this.company = response.data;
@@ -239,7 +240,7 @@
                     this.updateTime();
 
                 });
-
+            // get profile
             axios.get('/api/profile')
                 .then(response => {
                     this.user = response.data;

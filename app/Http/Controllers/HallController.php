@@ -30,16 +30,27 @@ class HallController extends Controller
             'name' => 'required',
             'address' => 'required'
         ]);
-        
-        $hall = new Hall();
+      
+        if($uuid = $request->get('unique_id')){
+            $hall =  Hall::where('unique_id', $uuid)->first();
+            $result = 'updated';
+            if(!$hall){
+                abort(404);
+            }
+        }else{
+            $hall = new Hall();
+            $result = 'created';
+        }
+      
         $hall->name = $request->get('name');
         $hall->address = $request->get('address');
+        $hall->about = $request->get('about');
     
         $company = $request->user()->company;
         $hall->company_id = $company->id;
         $company->halls()->save($hall);
     
-        return response()->json( ['uuid'=> $hall->unique_id]);
+        return response()->json( ['uuid'=> $hall->unique_id, 'result'=> $result]);
     }
     
     public function updateHall(Request $request, $uuid)

@@ -47,6 +47,7 @@
                 element.css('position','absolute');
                 element.css('margin-top','10px');
                 element.css('padding','0');
+                element.css('min-width','0');
 
                 return true;
             }

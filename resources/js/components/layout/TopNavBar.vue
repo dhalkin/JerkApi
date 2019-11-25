@@ -13,14 +13,14 @@
                 </div>
                 <span class="navbar-brand" v-text="this.title"></span>
 
-                <span class="top-create-new-form">
-                  <button class="btn btn-sm btn-info" id="create-new-button"
-                          data-toggle="modal" data-target="#createNewEntity">
-                      <span class="btn-label">
+                <span class="top-create-new-form" v-if="createNew">
+                    <button class="btn btn-sm btn-info" id="create-new-button"
+                          @click="$emit('click-create-new')"
+                    ><span class="btn-label">
                     <i class="nc-icon nc-button-play"></i>
-                  </span>
-                  {{trans('Create new')}}
-                </button>
+                    </span>
+                    {{trans('Create new')}}
+                    </button>
                 </span>
 
             </div>
@@ -43,7 +43,7 @@
     import TopNavLang from "./TopNavLang";
 
     export default {
-        props: ['csrf', 'title'],
+        props: ['csrf', 'title', 'createNew'],
         components: {LogoutForm, TopNavLang},
     }
 </script>
