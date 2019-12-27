@@ -61,4 +61,14 @@ class LoginController extends Controller
     {
         return array_merge($request->only($this->username(), 'password'), ['active'=>'1']);
     }
+    
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'email';
+    }
 }

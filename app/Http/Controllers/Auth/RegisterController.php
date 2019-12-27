@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Company;
+use App\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -69,8 +70,9 @@ class RegisterController extends Controller
             'first_name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'api_token' => Str::random(60),
+           // 'api_token' => Str::random(60),
             'active' => true,
+            'role_id' => Role::ROLE_OWNER
         ]);
         
         $company = Company::create([

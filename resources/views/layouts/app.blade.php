@@ -19,10 +19,10 @@
 </head>
 <body>
 <!-- Application -->
-<div id="app" class="wrapper">
+<div id="app">
     
     <flash-message transition-name="flash-transition" class="flashpool"></flash-message>
-   
+    
     <side-menu app-name="{{ config('app.name', 'Dancezilla') }}" app-url="{{ url('/') }}"></side-menu>
     
     <router-view api-token="{{ Auth::user()->api_token }}" csrf="{{ Session::token() }}"></router-view>
@@ -31,5 +31,6 @@
 <!-- End of Application -->
 </body>
 <!-- Scripts -->
+<script src="{{ asset('/js/lang.js') }}"></script>
 <script src="{{ asset('/js/app.js') }}"></script>
 </html>

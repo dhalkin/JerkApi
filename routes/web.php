@@ -18,6 +18,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('login-again', 'Auth\LoginAgainController@login')->name('login-again');
+Route::post('logout-again', 'Auth\LoginAgainController@logout');
+Route::post('register-again', 'Auth\LoginAgainController@register');
+
 // SPA routes, views by vue
 Route::get('/app/{app_page}', 'HomeController@index')
     ->where('app_page', '^(company|halls|trainers|customers|profile)$');
@@ -28,6 +32,15 @@ Route::get('/app/{app_page}', 'HomeController@index')
 
 // switch language
 Route::get('lang/{locale}', 'LocalizationController@index');
+
+// Fresh start calendar schedule, public
+Route::get('company/{uniqueId?}/public-schedule', 'ScheduleController@show')
+    ->where('uniqueId', '[a-z0-9]{32}');
+Route::post('company/{uniqueId?}/public-schedule', 'ScheduleController@show')
+    ->where('uniqueId', '[a-z0-9]{32}');
+
+Route::get('session', 'ScheduleController@session');
+
 
 // Collect lang for SPA pages
 Route::get('/js/lang.js', function () {

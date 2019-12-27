@@ -13,5 +13,17 @@
     "Remember Me": "Запомнить меня",
     "Register": "Регистрация",
     "Name": "Имя",
-    "Confirm Password": "Подтвердить пароль"
+    "Confirm Password": "Подтвердить пароль",
+    "Phone": "Телефон",
+    "Your Name": "Ваше Имя",
+    "Get started": "Зарегистрироваться",
+    "Enter Password": "Введите пароль",
+    "Timetable": "Расписание",
+    "Welcome aboard!": "Добро пожаловать!",
+    "Only Ukrainian phone numbers": "Только номера Украины",
+    "Successfully logged": "Успешный вход в систему",
+    "Successfully logged out": "Всего хорошего",
+    "Want to log out?": "Хотите выйти?",
+    "Yes, good to go!": "Да, вперед!"
+
 }

@@ -221,13 +221,13 @@
             if (localStorage.timezones && localStorage.timezones.lenght > 0) {
                 this.timezones = JSON.parse(localStorage.timezones);
             } else {
-                axios.get('/api/timezones')
+                axios.get('/api/timezones', {withCredentials: true})
                     .then(response => {
                        this.timezones = response.data;
                     });
             }
             // get company
-            axios.get('/api/company')
+            axios.get('/api/company', {withCredentials: true})
                 .then(response => {
                     this.company = response.data;
 
@@ -241,7 +241,7 @@
 
                 });
             // get profile
-            axios.get('/api/profile')
+            axios.get('/api/profile', {withCredentials: true})
                 .then(response => {
                     this.user = response.data;
                 });

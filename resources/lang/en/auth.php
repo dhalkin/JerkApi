@@ -16,5 +16,6 @@ return [
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'not_active' => 'User is not active',
+    'duplicate_tel' => 'Entered phone already exists in our database, log into your account.'
 
 ];
