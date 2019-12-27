@@ -70,14 +70,14 @@ class RegisterController extends Controller
             'first_name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-           // 'api_token' => Str::random(60),
+            'api_token' => Str::random(60),
             'active' => true,
             'role_id' => Role::ROLE_OWNER
         ]);
         
         $company = Company::create([
             'user_id' => $user->id,
-            'name' => $user->name . '\'s Company'
+            'name' => $user->name . 's Company'
         ]);
         
         return $user;

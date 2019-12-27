@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Role;
-use App\User;
+use App\RolesCompanyUser;
+use App\CompanyUser;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +41,17 @@ class LoginAgainController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('web2');
+    }
+    
     /**
      * Validate the user login request.
      *
@@ -151,7 +162,7 @@ class LoginAgainController extends Controller
             'password' => 'required|string'
         ]);
         // unique phone
-        $isset = User::where('phone', $request->phone)->first();
+        $isset = CompanyUser::where('phone', $request->phone)->first();
         if($isset){
             return response()->json([
                 'message' => trans('auth.duplicate_tel'),
@@ -159,13 +170,13 @@ class LoginAgainController extends Controller
             ], 409);
         }
     
-        $user = new User([
+        $user = new CompanyUser([
             'first_name' => $request->name,
             'phone' => $request->phone,
             'password' => bcrypt($request->password),
             'api_token' => Str::random(60),
             'active' => true,
-            'role_id' => Role::ROLE_STUDENT
+            'role_id' => RolesCompanyUser::ROLE_STUDENT
         ]);
     
         // and login in a hurry

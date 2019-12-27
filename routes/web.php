@@ -39,6 +39,9 @@ Route::get('company/{uniqueId?}/public-schedule', 'ScheduleController@show')
 Route::post('company/{uniqueId?}/public-schedule', 'ScheduleController@show')
     ->where('uniqueId', '[a-z0-9]{32}');
 
+Route::get('company/{uniqueId?}/events', 'ScheduleController@events')
+    ->where('uniqueId', '[a-z0-9]{32}');
+
 Route::get('session', 'ScheduleController@session');
 
 
