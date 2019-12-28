@@ -35,7 +35,10 @@
             >
         </calendar-header>
 
-        <calendar></calendar>
+        <calendar
+            :lang=lang
+        >
+        </calendar>
     </div>
 </template>
 
@@ -46,17 +49,18 @@
     import Modal from "./UIComponents/Modal"
     import FormRegister from "./elements/FormRegister";
     import FormLogin from "./elements/FormLogin";
+    import ErrorHelper from "./utils/ErrorHelper";
 
 export default {
-    props: ['companyUid'],
+    props: ['companyUid', 'companyName'],
     components: {FormLogin, FormRegister, Calendar, CalendarHeader, Modal},
+    mixins:[ErrorHelper],
     data() {
         return {
             lang: this.$parent.lang,
             showRegister: false,
             showLogin: false,
             events: [],
-            companyName: 'Danilova Dance',
             userLogged: false,
             apiToken: '',
             csrf: '',
@@ -83,6 +87,7 @@ export default {
                     axios.defaults.headers.common['X-CSRF-TOKEN'] = data.csrf;
                     this.apiToken = data.apiToken;
                     this.csrf = data.csrf;
+                    this.getEvents();
                 });
         },
         clearSession() {
@@ -91,6 +96,17 @@ export default {
             // delete axios.defaults.headers.common['Authorization'];
             // delete axios.defaults.headers.common['X-CSRF-TOKEN'];
 
+        },
+        getEvents() {
+            axios.get('/company/' + this.companyUid + '/events')
+                .then(response => response.data)
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(error => {
+
+                    this.processErr(error);
+                });
         }
     }
 }

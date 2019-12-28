@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent ref="goLogin" method="post">
+    <form @submit.prevent ref="goLogin" method="post" z>
     <div class="row">
         <div class="col">
 

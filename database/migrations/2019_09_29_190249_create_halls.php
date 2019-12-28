@@ -21,7 +21,6 @@ class CreateHalls extends Migration
             $table->string('address')->nullable();
             $table->boolean('active')->default(true);
             $table->text('about')->nullable();
-            $table->timestamps();
             
         });
     

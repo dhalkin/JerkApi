@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent ref="goRegister" method="post">
+    <form @submit.prevent ref="goRegister" method="post" action="/fakelogin">
     <div class="row">
         <div class="col">
             <fg-input

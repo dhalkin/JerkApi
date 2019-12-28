@@ -36,8 +36,8 @@ Route::get('lang/{locale}', 'LocalizationController@index');
 // Fresh start calendar schedule, public
 Route::get('company/{uniqueId?}/public-schedule', 'ScheduleController@show')
     ->where('uniqueId', '[a-z0-9]{32}');
-Route::post('company/{uniqueId?}/public-schedule', 'ScheduleController@show')
-    ->where('uniqueId', '[a-z0-9]{32}');
+Route::post('fakelogin', 'FakeController@login')
+    ->name('fakelogin');
 
 Route::get('company/{uniqueId?}/events', 'ScheduleController@events')
     ->where('uniqueId', '[a-z0-9]{32}');

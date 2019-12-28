@@ -21,7 +21,8 @@
 <div id="app" class="wrapper">
     <notifications transition-name="list" transition-mode="out-in"></notifications>
     <public-schedule
-        company-uid="{{ $company }}"
+        company-uid="{{ $companyUid }}"
+        company-name="{{ $companyName }}"
     >
     </public-schedule>
 </div>

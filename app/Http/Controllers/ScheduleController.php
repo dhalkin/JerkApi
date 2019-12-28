@@ -30,8 +30,10 @@ class ScheduleController extends Controller
             ->firstOrFail();
         
         return view('schedule',
-            ["company" => $uniqueId,
-                "title"=> $company->name. " - " . trans('timetable')
+            [
+                "companyUid" => $uniqueId,
+                "title" => $company->name . ' - ' . trans('timetable'),
+                "companyName"=> $company->name
             ]);
     }
     
@@ -39,6 +41,8 @@ class ScheduleController extends Controller
     public function events(Request $request)
     {
         $data = [];
+        
+        
         $data['csrf'] = $request->session()->token();
     
         

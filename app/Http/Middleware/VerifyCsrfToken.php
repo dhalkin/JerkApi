@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        '/company/*/public-schedule'
+        '/company/*/public-schedule',
+        '/fakelogin'
     ];
 }
