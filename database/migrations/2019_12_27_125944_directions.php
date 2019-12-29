@@ -17,6 +17,7 @@ class Directions extends Migration
         Schema::create('directions', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('company_id')->unsigned();
+            $table->bigInteger('trainer_id')->unsigned()->nullable();
             $table->string('name', 99);
             $table->text('about')->nullable();
         
@@ -28,6 +29,14 @@ class Directions extends Migration
                 ->on('companies')
                 ->onDelete('CASCADE');
         });
+    
+        Schema::table('directions', function($table) {
+            $table->foreign('trainer_id')
+                ->references('id')
+                ->on('company_users')
+                ->onDelete('CASCADE');
+        });
+        
     }
 
     /**

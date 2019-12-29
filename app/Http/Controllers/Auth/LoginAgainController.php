@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\RolesCompanyUser;
 use App\CompanyUser;
+use App\Company;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -159,8 +160,20 @@ class LoginAgainController extends Controller
         $request->validate([
             'name' => 'required|string',
             'phone' => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'companyUid' =>'required|string'
         ]);
+        
+        // is there a right company
+        $company = Company::where('unique_id', '=', $request->get('companyUid'))
+            ->first();
+        if(!$company){
+            return response()->json([
+                'message' => trans('auth.unknown_company'),
+                'type' => 'warning'
+            ], 409);
+        }
+        
         // unique phone
         $isset = CompanyUser::where('phone', $request->phone)->first();
         if($isset){
@@ -172,13 +185,14 @@ class LoginAgainController extends Controller
     
         $user = new CompanyUser([
             'first_name' => $request->name,
+            'company_id' => $company->getAttributes()['id'],
             'phone' => $request->phone,
             'password' => bcrypt($request->password),
             'api_token' => Str::random(60),
             'active' => true,
             'role_id' => RolesCompanyUser::ROLE_STUDENT
         ]);
-    
+        
         // and login in a hurry
         if ($user->save()) {
             if (true !== $this->guard()->attempt(

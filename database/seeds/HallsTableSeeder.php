@@ -19,8 +19,11 @@ class HallsTableSeeder extends Seeder
     {
         foreach ($this->groups as $role){
             DB::table('halls')->insert([
+                'unique_id' => md5(microtime()),
+                'company_id' => FirstCompanySeeder::COMPANY_ID,
                 'name' => $role[0],
                 'address' => $role[1],
+                'active' => true
             ]);
         }
     }

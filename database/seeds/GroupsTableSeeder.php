@@ -29,7 +29,7 @@ class GroupsTableSeeder extends Seeder
         foreach ($this->groups as $role){
             DB::table('groups')->insert([
                 'name' => $role,
-                'company_id' => 1,
+                'company_id' => FirstCompanySeeder::COMPANY_ID,
                 'direction_id' => rand(1, 9),
                 'duration_min' => 60,
                 'max_person' => 12

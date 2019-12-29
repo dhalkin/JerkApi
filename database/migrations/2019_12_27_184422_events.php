@@ -18,11 +18,24 @@ class Events extends Migration
             $table->dateTime('start');
             $table->dateTime('finish');
             $table->bigInteger('group_id')->unsigned();
+            $table->bigInteger('hall_id')->unsigned();
             $table->bigInteger('trainer_one_id')->unsigned()->nullable();
             $table->bigInteger('trainer_two_id')->unsigned()->nullable();
-            $table->bigInteger('hall_id')->unsigned();
             $table->boolean('active')->default(true);
             $table->text('note')->nullable();
+        });
+    
+        Schema::table('events', function($table) {
+            $table->foreign('trainer_one_id')
+                ->references('id')
+                ->on('company_users')
+                ->onDelete('CASCADE');
+        });
+        Schema::table('events', function($table) {
+            $table->foreign('trainer_two_id')
+                ->references('id')
+                ->on('company_users')
+                ->onDelete('CASCADE');
         });
     }
 

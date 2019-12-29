@@ -22,7 +22,7 @@ class CompanyUser extends Authenticatable
         'id', 'password', 'remember_token', 'api_token', 'created_at', 'updated_at'
     ];
     
-    protected $fillable = ['first_name', 'email', 'phone', 'role_id', 'password', 'api_token', 'active'];
+    protected $fillable = ['first_name', 'company_id', 'email', 'phone', 'role_id', 'password', 'api_token', 'active'];
 
     /**
      * The attributes that should be cast to native types.
@@ -41,4 +41,13 @@ class CompanyUser extends Authenticatable
     {
         return $this->hasOne('App\RolesCompanyUser', 'id', 'role_id');
     }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function company()
+    {
+        return $this->hasOne('App\Company', 'id', 'company_id');
+    }
+    
 }

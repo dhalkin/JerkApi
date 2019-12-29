@@ -32,12 +32,21 @@
                                     <span v-else>
                                         <ul class="navbar-nav" style="flex-direction: row">
                                             <li class="nav-item">
-                                            <a href="" class="nav-link"
-                                               @click.prevent="logout"
-                                            >
-                                                <i class="nc-icon nc-user-run"></i> {{trans('Logout')}}
-                                            </a>
-                                        </li>
+
+                                               <a href="" class="nav-link disabled pr-3"
+                                                  @click.prevent
+                                               >
+                                                    <i class="nc-icon nc-tap-01"></i> {{userName}}
+                                                </a>
+
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="" class="nav-link"
+                                                   @click.prevent="logout"
+                                                >
+                                                    <i class="nc-icon nc-user-run"></i> {{trans('Logout')}}
+                                                </a>
+                                            </li>
                                         </ul>
                                     </span>
                                 </div>
@@ -55,7 +64,7 @@
 
     export default {
         mixins: [ErrorHelper],
-        props: ['companyName', 'userLogged'],
+        props: ['companyName', 'userLogged', 'userName'],
         data() {
             return {
             }

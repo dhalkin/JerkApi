@@ -53,7 +53,7 @@
     import ErrorHelper from "../utils/ErrorHelper";
 
     export default {
-
+        props:['companyUid'],
         mixins: [ErrorHelper],
         directives: {mask},
         data() {
@@ -112,7 +112,8 @@
                 return {
                     name: this.model.name,
                     phone: this.model.tel.replace(/[^\d]/g, ''),
-                    password: this.model.password
+                    password: this.model.password,
+                    companyUid: this.companyUid
                 }
             },
             register() {

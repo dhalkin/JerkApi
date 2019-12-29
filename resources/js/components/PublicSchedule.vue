@@ -9,6 +9,7 @@
                 v-on:wannaCloseModal="showRegister = false"
                 v-on:wannaOpenModal="showRegister = true"
                 v-on:userRegistered="getSession"
+                :company-uid="companyUid"
             >
             </form-register>
         </modal>
@@ -22,6 +23,7 @@
                 v-on:wannaCloseModal="showLogin = false"
                 v-on:wannaOpenModal="showLogin = true"
                 v-on:userLoggedIn="getSession"
+                :company-uid="companyUid"
             >
             </form-login>
         </modal>
@@ -32,6 +34,7 @@
             v-on:user-logout="getSession"
             v-bind:company-name="companyName"
             v-bind:user-logged="userLogged"
+            v-bind:user-name="userName"
             >
         </calendar-header>
 
@@ -62,6 +65,7 @@ export default {
             showLogin: false,
             events: [],
             userLogged: false,
+            userName: '',
             apiToken: '',
             csrf: '',
         }
@@ -87,6 +91,7 @@ export default {
                     axios.defaults.headers.common['X-CSRF-TOKEN'] = data.csrf;
                     this.apiToken = data.apiToken;
                     this.csrf = data.csrf;
+                    this.userName = data.userName;
                     this.getEvents();
                 });
         },

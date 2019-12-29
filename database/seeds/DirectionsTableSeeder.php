@@ -27,7 +27,7 @@ class DirectionsTableSeeder extends Seeder
         foreach ($this->directions as $role){
             DB::table('directions')->insert([
                 'name' => $role,
-                'company_id' => 1
+                'company_id' => FirstCompanySeeder::COMPANY_ID
             ]);
         }
     }

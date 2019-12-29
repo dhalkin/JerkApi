@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent ref="goLogin" method="post" z>
+    <form @submit.prevent ref="goLogin" method="post" action="/fakelogin">
     <div class="row">
         <div class="col">
 
@@ -45,6 +45,7 @@
     import ErrorHelper from "../utils/ErrorHelper";
 
     export default {
+        props:['companyUid'],
         mixins: [ErrorHelper],
         directives: {mask},
         data(){
@@ -97,7 +98,8 @@
             prepareData() {
                 return {
                     phone: this.model.tel.replace(/[^\d]/g, ''),
-                    password: this.model.password
+                    password: this.model.password,
+                    companyUid: this.companyUid
                 }
             },
             login() {

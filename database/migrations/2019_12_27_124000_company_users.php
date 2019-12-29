@@ -15,6 +15,7 @@ class CompanyUsers extends Migration
     {
         Schema::create('company_users', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
+            $table->bigInteger('company_id')->unsigned();
             $table->string('first_name', 96);
             $table->string('second_name', 96)->nullable();
             $table->string('phone', 36)
@@ -41,6 +42,13 @@ class CompanyUsers extends Migration
             $table->foreign('role_id')
                 ->references('id')
                 ->on('roles_company_users')
+                ->onDelete('CASCADE');
+        });
+    
+        Schema::table('company_users', function($table) {
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
                 ->onDelete('CASCADE');
         });
     }

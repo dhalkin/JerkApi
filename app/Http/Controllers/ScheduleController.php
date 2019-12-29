@@ -17,6 +17,7 @@ class ScheduleController extends Controller
         if($user = Auth::guard('web2')->user())
         {
             $data['apiToken'] = $user->getAttributes()['api_token'];
+            $data['userName'] = $user->getAttributes()['first_name'];
         }
         $data['csrf'] = $request->session()->token();
         
@@ -36,6 +37,7 @@ class ScheduleController extends Controller
                 "companyName"=> $company->name
             ]);
     }
+    
     
     
     public function events(Request $request)
