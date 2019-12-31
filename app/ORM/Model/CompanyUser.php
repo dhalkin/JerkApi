@@ -1,15 +1,17 @@
 <?php
 
-namespace App;
+namespace App\ORM\Model;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class CompanyUser extends Authenticatable
 {
     use HasApiTokens, Notifiable;
+    
+    protected $guard = 'web2';
 
     /**
      * The attributes that should be hidden for arrays.
@@ -20,7 +22,7 @@ class User extends Authenticatable
         'id', 'password', 'remember_token', 'api_token', 'created_at', 'updated_at'
     ];
     
-    protected $fillable = ['first_name', 'email', 'phone', 'role_id', 'password', 'api_token', 'active'];
+    protected $fillable = ['first_name', 'company_id', 'email', 'phone', 'role_id', 'password', 'api_token', 'active'];
 
     /**
      * The attributes that should be cast to native types.
@@ -31,19 +33,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function company()
-    {
-        return $this->hasOne('App\Company', 'user_id', 'id');
-    }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function role()
     {
-        return $this->hasOne('App\Role', 'id', 'role_id');
+        return $this->hasOne('App\RolesCompanyUser', 'id', 'role_id');
     }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'id', 'company_id');
+    }
+    
 }

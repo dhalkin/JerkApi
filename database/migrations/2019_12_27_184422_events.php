@@ -15,6 +15,7 @@ class Events extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
+            $table->bigInteger('company_id')->unsigned();
             $table->dateTime('start');
             $table->dateTime('finish');
             $table->bigInteger('group_id')->unsigned();
@@ -25,6 +26,27 @@ class Events extends Migration
             $table->text('note')->nullable();
         });
     
+        Schema::table('events', function($table) {
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('CASCADE');
+        });
+    
+        Schema::table('events', function($table) {
+            $table->foreign('group_id')
+                ->references('id')
+                ->on('groups')
+                ->onDelete('CASCADE');
+        });
+    
+        Schema::table('events', function($table) {
+            $table->foreign('hall_id')
+                ->references('id')
+                ->on('halls')
+                ->onDelete('CASCADE');
+        });
+        
         Schema::table('events', function($table) {
             $table->foreign('trainer_one_id')
                 ->references('id')

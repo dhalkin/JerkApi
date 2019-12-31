@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\ORM\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,11 +28,11 @@ class Company extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User', 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function halls()
     {
-        return $this->hasMany('App\Hall', 'company_id', 'id');
+        return $this->hasMany(Hall::class, 'company_id', 'id');
     }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
+use App\ORM\Model\Company;
+use App\ORM\Model\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use App\Transformers\CalendarTransformer;
 
 class ScheduleController extends Controller
 {
@@ -43,12 +46,22 @@ class ScheduleController extends Controller
     public function events(Request $request)
     {
         $data = [];
+    
+        $now =  Carbon::now();
+        $weekStart = Carbon::now()->startOfWeek();
+        $weekEnd = Carbon::now()->endOfWeek();
         
+        $events = Event::with(['group','hall'])->where('start', '>=', $weekStart)
+            ->where('finish', '<=', $weekEnd)->get();
         
         $data['csrf'] = $request->session()->token();
-    
+        $data['events'] = $events;
+        
+        // prepare
+        
         
         return response()->json($data);
+        return (new CalendarTransformer())->transform($user);
     }
 
 }

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\RolesCompanyUser;
-use App\CompanyUser;
-use App\Company;
+use App\ORM\Model\RolesCompanyUser;
+use App\ORM\Model\CompanyUser;
+use App\ORM\Model\Company;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -96,9 +96,10 @@
                 let $calendar = new Calendar(this.$refs.calendar, {
                     header: {
                         left: 'title',
-                        center: 'month,agendaWeek,agendaDay',
+                       // center: 'month,agendaWeek,agendaDay',
                         right: 'prev,next,today'
                     },
+                    defaultView: 'agendaWeek',
                     defaultDate: today,
                     selectable: true,
                     selectHelper: true,
@@ -165,6 +166,7 @@
                     events: self.events
                 });
                 $calendar.render();
+                console.log('cal')
             }
         },
         mounted() {
