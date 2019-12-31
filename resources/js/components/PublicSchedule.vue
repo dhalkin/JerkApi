@@ -40,6 +40,7 @@
 
         <calendar
             :lang=lang
+            :events=events
         >
         </calendar>
     </div>
@@ -106,7 +107,7 @@ export default {
             axios.get('/company/' + this.companyUid + '/events')
                 .then(response => response.data)
                 .then(data => {
-                    console.log(data)
+                    this.events = data.data;
                 })
                 .catch(error => {
 

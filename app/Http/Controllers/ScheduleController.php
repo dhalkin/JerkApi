@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Transformers\CalendarTransformer;
+use App\Http\Resources\EventResource;
 
 class ScheduleController extends Controller
 {
@@ -57,11 +58,6 @@ class ScheduleController extends Controller
         $data['csrf'] = $request->session()->token();
         $data['events'] = $events;
         
-        // prepare
-        
-        
-        return response()->json($data);
-        return (new CalendarTransformer())->transform($user);
+        return EventResource::collection($events);
     }
-
 }
