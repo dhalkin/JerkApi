@@ -8,8 +8,10 @@ class Event extends Model
 {
     
     public $timestamps = false;
+    public $personalStatus = false;
     protected $hidden = ['id', 'company_id', 'group_id', 'hall_id'];
     protected $table = 'events';
+    
     
     public function group()
     {
@@ -19,5 +21,16 @@ class Event extends Model
     public function hall()
     {
         return $this->hasOne(Hall::class, 'id', 'hall_id');
+    }
+    
+    
+    public function getPersonalStatus(): bool
+    {
+        return $this->personalStatus;
+    }
+    
+    public function setPersonalStatus(bool $personalStatus)
+    {
+        $this->personalStatus = $personalStatus;
     }
 }

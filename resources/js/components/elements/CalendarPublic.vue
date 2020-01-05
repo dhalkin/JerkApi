@@ -1,3 +1,4 @@
+import swal from "sweetalert2";
 <template>
     <div class="container-fluid">
         <div class="row">
@@ -35,7 +36,7 @@
 </template>
 <script>
 
-    import swal from 'sweetalert2'
+    //import {swal} from 'vue-sweetalert2'
     import FullCalendar from '@fullcalendar/vue'
     import dayGridPlugin from '@fullcalendar/daygrid'
     import timeGridPlugin from '@fullcalendar/timegrid'
@@ -54,7 +55,7 @@
 
     export default {
 
-        props: ['lang', 'events', 'userName'],
+        props: ['lang', 'events', 'userName', 'companyUid'],
         components: {FullCalendar},
         data() {
             return {
@@ -89,16 +90,14 @@
         methods: {
             eventRender(info) {
 
-                let title = '<span class="group">' + info.event.title + '</span><br>';
+                let title = (info.event._def.extendedProps.personalStatus) ? '<span class="check text-success"><i class="nc-icon nc-check-2"></i></span>' : '';
+                title += '<span class="group">' + info.event.title + '</span><br>';
                    // title += '<span class="trainer">' + info.event._def.extendedProps.trainer + '</span><br>';
                     title += '<span class="hall">' + info.event._def.extendedProps.hall + '</span><br>';
                     title += '<span class="people-stats">' + this.trans('Places left') + ' : ' + info.event._def.extendedProps.peopleStats + '</span>';
 
                 info.el.childNodes[0].childNodes[1].innerHTML = title;
 
-                // console.log(info.event.title);
-                // console.log(info.event._def.extendedProps);
-                // console.log(info.view.style);
                 // console.log(info.isStart);
                 // console.log(info.isEnd);
                 // console.log(info.isMirror);
@@ -120,19 +119,22 @@
                 eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Address')+':</div><div class="col text-left">'+info.event._def.extendedProps.hallAddress+'</div></div>';
                 eventInfo += '<div class="row mb-2"><div class="col-5 text-right">'+this.trans('Places left')+':</div><div class="col text-left">'+info.event._def.extendedProps.peopleStats+'</div></div>';
 
-                let invitation ='<div class="text-danger small mark">'+ this.trans('You need register or log in to your account')+'</div>';
+                let invitation ='<div class="text-danger small mark p-2">'+ this.trans('You need register or log in to your account')+'</div>';
+                let userChecked = info.event._def.extendedProps.personalStatus;
 
                 this.$swal({
-                    title: this.trans('Join the Event'),
+                    title: (userChecked) ? this.trans('You are applied on event') : this.trans('Join the Event'),
                     showCancelButton: true,
-                    confirmButtonClass: 'btn btn-success btn-fill',
-                    cancelButtonClass: 'btn btn-danger btn-fill',
-                    confirmButtonText: this.trans('Yes, I want to join'),
-                    cancelButtonText: this.trans('Cancel'),
+                    confirmButtonClass: (userChecked) ? 'btn btn-danger btn-fill' : 'btn btn-success btn-fill',
+                    cancelButtonClass: 'btn btn-warning btn-fill',
+                    confirmButtonText: (userChecked) ? this.trans('I want to cancel my visit') : this.trans('Yes, I want to join'),
+                    cancelButtonText: (userChecked) ? this.trans('Close') : this.trans('Cancel'),
                     buttonsStyling: true,
                     reverseButtons: true,
                     html: eventInfo,
                     userName: this.userName,
+                    eventId: info.event.id,
+                    userChecked: userChecked,
                     onBeforeOpen: function (el) {
 
                         let div = document.createElement('div');
@@ -149,6 +151,11 @@
                                 el.children[2].removeChild(alarma)
                             }
                         }
+
+                        if(info.isEnd){
+                            this.disableButtons()
+                        }
+
                     },
                     preConfirm: function (el) {
 
@@ -156,14 +163,37 @@
                 }).then((result) => {
                     if (result.value) {
 
-                        this.$swal({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: this.trans('Congrats'),
-                            text: this.trans('Waiting for you in the classroom'),
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
+                        let data = {};
+                        data['eventId'] = info.event.id;
+                        data['checked'] = userChecked;
+
+                        axios.post('/company/' + this.companyUid + '/event-attempt', data)
+                            .then(response => response.data)
+                            .then(data => {
+
+                                this.$emit('need-refresh');
+
+                                this.$swal({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: (userChecked) ? this.trans('Done') : this.trans('Congrats'),
+                                    text: (userChecked) ? this.trans('Will be happy to seeing you again') : this.trans('Waiting for you in the classroom'),
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                })
+
+                            })
+                            .catch(error => {
+                                this.$emit('need-refresh');
+                                this.$swal({
+                                    position: 'top-end',
+                                    type: 'error',
+                                    title: this.trans('Oops'),
+                                    text: this.trans('Something went wrong. Sorry.'),
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                })
+                            });
 
                     }
                 });

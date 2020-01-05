@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\ORM\Model\Color;
+use App\ORM\Model\EventCompanyUser;
 
 class EventResource extends JsonResource
 {
@@ -15,9 +16,8 @@ class EventResource extends JsonResource
      */
     public function toArray($request)
     {
-    
         return [
-           // 'id' => $this->id,
+            'id' => $this->id,
             'title' => $this->title(), //sprintf("<strong>%s</strong>", $this->group->name),
             'start'=> $this->start,
             'end'=> $this->finish,
@@ -26,6 +26,7 @@ class EventResource extends JsonResource
             'hall' => $this->hall->name,
             'hallAddress' => $this->hall->address,
             'peopleStats' => $this->group->max_person - $this->getAttended(),
+            'personalStatus' => $this->getPersonalStatus()
         ];
     }
     

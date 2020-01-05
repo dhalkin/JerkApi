@@ -3352,7 +3352,16 @@ temporary rendered events).
 .fc-content .hall {
    }
 .fc-content .people-stats {
-  text-space: 3}
+  }
+.fc-content .check {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-weight: bold;
+  font-size:x-large;
+  float: right;
+  text-shadow: 2px 2px #1f441d;
+}
 /* overpower some of bootstrap's and jqui's styles on <a> tags */
 .fc-event,
 .fc-event:hover,

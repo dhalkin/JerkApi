@@ -79,7 +79,7 @@
                     confirmButtonClass: 'btn btn-success btn-fill',
                     cancelButtonClass: 'btn btn-danger btn-fill',
                     confirmButtonText: 'Yes, good to go!',
-                    buttonsStyling: false,
+                    buttonsStyling: true,
                     reverseButtons: true
                 }).then((result) => {
                     if (result.value) {

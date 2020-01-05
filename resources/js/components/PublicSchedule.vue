@@ -42,6 +42,8 @@
             :lang=lang
             :events=events
             :userName=userName
+            :companyUid=companyUid
+            v-on:need-refresh="getEvents"
         >
         </calendar>
     </div>
@@ -111,7 +113,6 @@ export default {
                     this.events = data.data;
                 })
                 .catch(error => {
-
                     this.processErr(error);
                 });
         }
