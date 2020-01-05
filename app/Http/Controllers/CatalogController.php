@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Timezone;
+use App\ORM\Model\Timezone;
 
 class CatalogController extends Controller
 {

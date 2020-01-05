@@ -41,6 +41,7 @@
         <calendar
             :lang=lang
             :events=events
+            :userName=userName
         >
         </calendar>
     </div>

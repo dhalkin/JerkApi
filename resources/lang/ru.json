@@ -24,6 +24,14 @@
     "Successfully logged": "Добро пожаловать!",
     "Successfully logged out": "Всего наилучшего, до свидания",
     "Want to log out?": "Хотите выйти?",
-    "Yes, good to go!": "Да, вперед!"
-
+    "Yes, good to go!": "Да, вперед!",
+    "Places left": "Осталось мест",
+    "Beginning": "Начало",
+    "Group": "Группа",
+    "Classroom": "Зал",
+    "Address": "Адрес",
+    "Yes, I want to join": "Да, хочу записаться",
+    "Cancel": "Отмена",
+    "Join the Event": "Записаться на занятие",
+    "You need register or log in to your account": "Для записи необходимо зарегистрироваться,<br/> либо войти в свой аккаунт"
 }

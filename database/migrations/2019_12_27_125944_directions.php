@@ -17,6 +17,7 @@ class Directions extends Migration
         Schema::create('directions', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('company_id')->unsigned();
+            // preferable trainer
             $table->bigInteger('trainer_id')->unsigned()->nullable();
             $table->string('name', 99);
             $table->text('about')->nullable();

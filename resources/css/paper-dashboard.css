@@ -3342,6 +3342,17 @@ temporary rendered events).
   .fc-event.event-red {
     background-color: rgba(239, 129, 87, 0.2); }
 
+.fc-bg,
+.fc-content {
+  cursor: pointer; }
+.fc-content .group {
+  font-weight: bold }
+.fc-content .trainer {
+   }
+.fc-content .hall {
+   }
+.fc-content .people-stats {
+  text-space: 3}
 /* overpower some of bootstrap's and jqui's styles on <a> tags */
 .fc-event,
 .fc-event:hover,

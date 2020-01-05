@@ -19,6 +19,7 @@ class Groups extends Migration
             $table->bigInteger('company_id')->unsigned();
             $table->string('name', 99);
             $table->bigInteger('direction_id')->unsigned();
+            $table->bigInteger('color_id')->unsigned()->default(1);
             $table->tinyInteger('max_person')->unsigned()->nullable();
             $table->integer('duration_min')->unsigned()->nullable();
             $table->text('about')->nullable();
@@ -35,6 +36,12 @@ class Groups extends Migration
             $table->foreign('direction_id')
                 ->references('id')
                 ->on('directions')
+                ->onDelete('CASCADE');
+        });
+        Schema::table('groups', function($table) {
+            $table->foreign('color_id')
+                ->references('id')
+                ->on('colors')
                 ->onDelete('CASCADE');
         });
     }

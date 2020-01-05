@@ -16,8 +16,7 @@ class FirstCompanySeeder extends Seeder
         $this->call(DirectionsTableSeeder::class);
         $this->call(GroupsTableSeeder::class);
         $this->call(HallsTableSeeder::class);
-        
-     
+        //$this->call(HallsTableSeeder::class);
     }
 }
 

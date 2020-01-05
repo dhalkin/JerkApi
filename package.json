@@ -25,6 +25,11 @@
     },
     "dependencies": {
         "@chenfengyuan/vue-carousel": "^1.0.2",
+        "@fullcalendar/core": "^4.3.1",
+        "@fullcalendar/daygrid": "^4.3.0",
+        "@fullcalendar/interaction": "^4.3.0",
+        "@fullcalendar/timegrid": "^4.3.0",
+        "@fullcalendar/vue": "^4.3.1",
         "bootstrap-vue": "^2.0.4",
         "element-ui": "^2.5.4",
         "fullcalendar": "^4.0.0-alpha.3",

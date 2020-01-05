@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\ORM\Model\User;
-use App\Model\Company;
-use App\Role;
+use App\ORM\Model\Company;
+use App\ORM\Model\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

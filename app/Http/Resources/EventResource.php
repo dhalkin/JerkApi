@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\ORM\Model\Color;
 
 class EventResource extends JsonResource
 {
@@ -16,9 +17,26 @@ class EventResource extends JsonResource
     {
     
         return [
-            'title' => $this->group->name,
+           // 'id' => $this->id,
+            'title' => $this->title(), //sprintf("<strong>%s</strong>", $this->group->name),
             'start'=> $this->start,
             'end'=> $this->finish,
+            'backgroundColor' => Color::find($this->group->color_id)->rgba,
+            'trainer' => 'Coach',
+            'hall' => $this->hall->name,
+            'hallAddress' => $this->hall->address,
+            'peopleStats' => $this->group->max_person - $this->getAttended(),
         ];
+    }
+    
+    private function title()
+    {
+        return $this->group->name;
+        
+    }
+    
+    private function getAttended()
+    {
+        return 6;
     }
 }

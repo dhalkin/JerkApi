@@ -31,6 +31,7 @@ class GroupsTableSeeder extends Seeder
                 'name' => $role,
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
                 'direction_id' => rand(1, 9),
+                'color_id' => rand(1, 9),
                 'duration_min' => 60,
                 'max_person' => 12
             ]);

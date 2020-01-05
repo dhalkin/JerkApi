@@ -13,4 +13,12 @@ class Group extends Model
     {
         return $this->belongsTo(Event::class);
     }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function color()
+    {
+        return $this->hasOne(Color::class, 'id', 'color_id');
+    }
 }
