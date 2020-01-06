@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Company;
 use Illuminate\Http\Request;
-use App\Hall;
+use App\ORM\Model\Hall;
 
 class HallController extends Controller
 {
@@ -30,14 +30,14 @@ class HallController extends Controller
             'name' => 'required',
             'address' => 'required'
         ]);
-      
-        if($uuid = $request->get('unique_id')){
-            $hall =  Hall::where('unique_id', $uuid)->first();
+    
+        if ($uuid = $request->get('unique_id')) {
+            $hall = Hall::where('unique_id', $uuid)->first();
             $result = 'updated';
-            if(!$hall){
+            if (!$hall) {
                 abort(404);
             }
-        }else{
+        } else {
             $hall = new Hall();
             $result = 'created';
         }

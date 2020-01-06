@@ -100,7 +100,11 @@ class ScheduleController extends Controller
         if($checked){
             // remove
             if($eventAttempt){
-                if($eventAttempt->delete()){
+                $trash = EventAttempt::where('event_id', '=', $eventId)
+                    ->where('company_user_id', '=', $user->id)
+                    ->delete();
+                
+                if($trash){
                     return response()->json([
                         'message' => 'Success',
                         'type' => 'success'

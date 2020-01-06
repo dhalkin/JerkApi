@@ -23,6 +23,10 @@ class Event extends Model
         return $this->hasOne(Hall::class, 'id', 'hall_id');
     }
     
+    public function trainer()
+    {
+        return $this->hasOne(CompanyUser::class, 'id', 'trainer_id');
+    }
     
     public function getPersonalStatus(): bool
     {

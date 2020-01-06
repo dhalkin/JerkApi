@@ -5,11 +5,6 @@ use Carbon\Carbon;
 
 class EventsSeeder extends Seeder
 {
-    private $directions = [
-        'Exotic pole dance',
-        'Pole Dance',
-        'Pole Kids',
-    ];
     /**
      * Run the database seeds.
      *
@@ -27,10 +22,10 @@ class EventsSeeder extends Seeder
             DB::table('events')->insert([
                 'start' => $start,
                 'finish' => $finish,
-                'group_id' => rand(1, 3),
-                'hall_id' => rand(1,3),
+                'group_id' => rand(1, 12),
+                'hall_id' => rand(1,4),
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
-                'trainer_id' =>  null,
+                'trainer_id' =>  rand(1,3),
                 'active' => true
             ]);
         
@@ -48,15 +43,38 @@ class EventsSeeder extends Seeder
             DB::table('events')->insert([
                 'start' => $start,
                 'finish' => $finish,
-                'group_id' => rand(1, 3),
-                'hall_id' => rand(1,3),
+                'group_id' => rand(1, 12),
+                'hall_id' => rand(1,4),
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
+                'trainer_id' =>  rand(1,3),
                 'active' => true
             ]);
 
-            $start = $start->addHours(2);
-            $finish = $finish->addHours(2);
+            $start = $start->addHours(4);
+            $finish = $finish->addHours(4);
         }
+    
+        $start =  Carbon::tomorrow();
+        $start->hour(11)->minute(30);
+    
+        $finish = $start->copy()->addHours(2);
+    
+        for ($x = 0; $x <= 3; $x++) {
+        
+            DB::table('events')->insert([
+                'start' => $start,
+                'finish' => $finish,
+                'group_id' => rand(1, 12),
+                'hall_id' => rand(1,4),
+                'company_id' => FirstCompanySeeder::COMPANY_ID,
+                'trainer_id' =>  null,
+                'active' => true
+            ]);
+        
+            $start = $start->addHours(3);
+            $finish = $finish->addHours(3);
+        }
+        
         
     }
 }

@@ -14,6 +14,6 @@ class EventAttempt extends Model
     public function isUserPresentOnEvent($eventId, $companyUserId)
     {
         return self::where('event_id', $eventId)
-            ->where('compamy_user_id', $companyUserId)->first() ? true : false;
+            ->where('company_user_id', $companyUserId)->first() ? true : false;
     }
 }

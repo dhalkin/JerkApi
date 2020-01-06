@@ -113,7 +113,9 @@ import swal from "sweetalert2";
                     locale: this.lang
                 });
                 let eventInfo = '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Beginning')+':</div><div class="col text-left">'+this.capitalize(startDate)+'</div></div>';
-                //html += '<div class="row"><div class="col">'+this.trans('Тренер')+'</div><div class="col">'+info.event._def.extendedProps.trainer+'</div></div>';
+                if(info.event._def.extendedProps.trainer){
+                    eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Trainer')+':</div><div class="col text-left">'+info.event._def.extendedProps.trainer+'</div></div>';
+                }
                 eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Group')+':</div><div class="col text-left">'+info.event.title+'</div></div>';
                 eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Classroom')+':</div><div class="col text-left">'+info.event._def.extendedProps.hall+'</div></div>';
                 eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Address')+':</div><div class="col text-left">'+info.event._def.extendedProps.hallAddress+'</div></div>';
