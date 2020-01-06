@@ -176,7 +176,7 @@ import swal from "sweetalert2";
                                 this.$swal({
                                     position: 'top-end',
                                     type: 'success',
-                                    title: (userChecked) ? this.trans('Done') : this.trans('Congrats'),
+                                    title: this.trans('Done'),
                                     text: (userChecked) ? this.trans('Will be happy to seeing you again') : this.trans('Waiting for you in the classroom'),
                                     showConfirmButton: false,
                                     timer: 2500

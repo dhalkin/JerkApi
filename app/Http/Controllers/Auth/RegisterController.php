@@ -75,10 +75,10 @@ class RegisterController extends Controller
             'role_id' => Role::ROLE_OWNER
         ]);
         
-        $company = Company::create([
-            'user_id' => $user->id,
-            'name' => $user->first_name . "'s Company"
-        ]);
+//        $company = Company::create([
+//            'user_id' => $user->id,
+//            'name' => $user->first_name . "'s Company"
+//        ]);
         
         return $user;
     }

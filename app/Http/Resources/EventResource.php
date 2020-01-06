@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\ORM\Model\Color;
-use App\ORM\Model\EventCompanyUser;
 
 class EventResource extends JsonResource
 {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ORM\Model\Company;
 use App\ORM\Model\Event;
-use App\ORM\Model\EventCompanyUser;
+use App\ORM\Model\EventAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -61,7 +61,7 @@ class ScheduleController extends Controller
                 $eventIds[] = $event->id;
             }
     
-            $res = EventCompanyUser::select('event_id')->whereIn('event_id', $eventIds)
+            $res = EventAttempt::select('event_id')->whereIn('event_id', $eventIds)
                 ->where('company_user_id', $user->id)->get()->toArray();
     
             $res = array_column($res, 'event_id');
@@ -73,10 +73,7 @@ class ScheduleController extends Controller
                 
             }
         }
-        
-        $data['csrf'] = $request->session()->token();
-        $data['events'] = $events;
-        
+  
         return EventResource::collection($events);
     }
     
@@ -95,15 +92,15 @@ class ScheduleController extends Controller
             ->firstOrFail();
         $eventId = $request->get('eventId');
         
-        $eventCompanyUser = EventCompanyUser::where('event_id', '=', $eventId)
+        $eventAttempt = EventAttempt::where('event_id', '=', $eventId)
             ->where('company_user_id', '=', $user->id)
             ->first();
         
         $checked =  $request->get('checked');
         if($checked){
             // remove
-            if($eventCompanyUser){
-                if($eventCompanyUser->delete()){
+            if($eventAttempt){
+                if($eventAttempt->delete()){
                     return response()->json([
                         'message' => 'Success',
                         'type' => 'success'
@@ -118,21 +115,20 @@ class ScheduleController extends Controller
             }
             
         }else{
-    
-            if($eventCompanyUser){
+            // attempt
+            if($eventAttempt){
                 return response()->json([
                     'message' => trans('auth.already_attempt'),
                     'type' => 'warning'
                 ], 409);
             }
             
-            $eventCompanyUser = new EventCompanyUser([
+            $eventAttempt = new EventAttempt([
                 'event_id' => $eventId,
                 'company_user_id' => $user->id
             ]);
-    
-            // and login in a hurry
-            if ($eventCompanyUser->save()) {
+            
+            if ($eventAttempt->save()) {
                 return response()->json([
                     'message' => 'Success',
                     'type' => 'success'

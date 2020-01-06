@@ -13,10 +13,11 @@ class FirstCompanySeeder extends Seeder
      */
     public function run()
     {
+        $this->call(CompanyTableSeeder::class);
+        $this->call(CompanyUserTableSeeder::class);
         $this->call(DirectionsTableSeeder::class);
         $this->call(GroupsTableSeeder::class);
         $this->call(HallsTableSeeder::class);
-        //$this->call(HallsTableSeeder::class);
     }
 }
 

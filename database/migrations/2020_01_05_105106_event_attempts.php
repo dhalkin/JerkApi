@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EventsCompanyUsers extends Migration
+class EventAttempts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class EventsCompanyUsers extends Migration
      */
     public function up()
     {
-        Schema::create('events_company_users', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+        Schema::create('event_attempts', function (Blueprint $table) {
             $table->bigInteger('event_id')->unsigned();
             $table->bigInteger('company_user_id')->unsigned();
             $table->boolean('visited')->default(false);
-            //$table->text('note')->nullable();
+            $table->timestamps();
+            $table->primary(array('event_id', 'company_user_id'));
         });
-        
         
     }
 
@@ -31,6 +30,6 @@ class EventsCompanyUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events_company_users');
+        Schema::dropIfExists('event_attempts');
     }
 }

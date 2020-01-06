@@ -78,7 +78,8 @@
                     showCancelButton: true,
                     confirmButtonClass: 'btn btn-success btn-fill',
                     cancelButtonClass: 'btn btn-danger btn-fill',
-                    confirmButtonText: 'Yes, good to go!',
+                    confirmButtonText: this.trans('Yes, good to go!'),
+                    cancelButtonText: this.trans('Cancel'),
                     buttonsStyling: true,
                     reverseButtons: true
                 }).then((result) => {
