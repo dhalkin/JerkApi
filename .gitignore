@@ -9,6 +9,7 @@
 /data
 .env
 pdrod.env
+routes.txt
 .phpunit.result.cache
 .idea
 Homestead.json
