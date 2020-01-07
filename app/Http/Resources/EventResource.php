@@ -32,11 +32,15 @@ class EventResource extends JsonResource
     private function title()
     {
         return $this->group->name;
-        
     }
     
     private function getAttended()
     {
-        return 6;
+        if($this->attemptUsers)
+        {
+           return $this->attemptUsers->count();
+        }
+        
+        return 0;
     }
 }

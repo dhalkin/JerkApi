@@ -1,4 +1,3 @@
-import swal from "sweetalert2";
 <template>
     <div class="container-fluid">
         <div class="row">
@@ -24,8 +23,11 @@ import swal from "sweetalert2";
                             :maxTime="maxTime"
                             :textEscape="textEscape"
                             :columnHeaderFormat="columnHeaderFormat"
+                            :nowIndicator="nowIndicator"
                             @eventRender="eventRender"
                             @eventClick="eventClick"
+                            @viewSkeletonRender="viewSkeletonRender"
+                            @datesRender="datesRender"
                         >
                         </full-calendar>
                     </div>
@@ -36,7 +38,6 @@ import swal from "sweetalert2";
 </template>
 <script>
 
-    //import {swal} from 'vue-sweetalert2'
     import FullCalendar from '@fullcalendar/vue'
     import dayGridPlugin from '@fullcalendar/daygrid'
     import timeGridPlugin from '@fullcalendar/timegrid'
@@ -48,13 +49,15 @@ import swal from "sweetalert2";
    // import EventTitle from "../UIComponents/Calendar/EventTitle";
     import { formatDate } from '@fullcalendar/core'
 
-    const today = new Date();
-    const y = today.getFullYear();
-    const m = today.getMonth();
-    const d = today.getDate();
+    const rightNowDate = new Date();
+    const lastCallDate = new Date();
+    lastCallDate.setHours(lastCallDate.getHours() + 3);
+
+    const y = rightNowDate.getFullYear();
+    const m = rightNowDate.getMonth();
+    const d = rightNowDate.getDate();
 
     export default {
-
         props: ['lang', 'events', 'userName', 'companyUid'],
         components: {FullCalendar},
         data() {
@@ -73,6 +76,7 @@ import swal from "sweetalert2";
                 firstDay: 1,
                 textEscape: false,
                 columnHeaderFormat: {weekday:'long', day: 'numeric'},
+                nowIndicator: true,
                 views: { week: {
                     titleFormat: {
                         month: 'long',
@@ -88,19 +92,28 @@ import swal from "sweetalert2";
             }
         },
         methods: {
+            datesRender(info){
+                this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
+                this.$emit('need-refresh')
+            },
+            viewSkeletonRender(info){
+                this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
+            },
             eventRender(info) {
 
                 let title = (info.event._def.extendedProps.personalStatus) ? '<span class="check text-success"><i class="nc-icon nc-check-2"></i></span>' : '';
-                title += '<span class="group">' + info.event.title + '</span><br>';
-                   // title += '<span class="trainer">' + info.event._def.extendedProps.trainer + '</span><br>';
+                //title +='<span class="expired text-danger"><i class="nc-icon nc-simple-remove"></i></span>';
+                    title += '<span class="group">' + info.event.title + '</span><br>';
                     title += '<span class="hall">' + info.event._def.extendedProps.hall + '</span><br>';
+
+                if(lastCallDate > info.event._instance.range.start){
+                    info.el.style.backgroundColor = "";
+                    //info.el.style.border = "1px solid gray";
+                    info.el.classList.add("expired-event");
+                }else{
                     title += '<span class="people-stats">' + this.trans('Places left') + ' : ' + info.event._def.extendedProps.peopleStats + '</span>';
-
+                }
                 info.el.childNodes[0].childNodes[1].innerHTML = title;
-
-                // console.log(info.isStart);
-                // console.log(info.isEnd);
-                // console.log(info.isMirror);
             },
             eventClick(info) {
                 let startDate = formatDate(info.event.start, {
@@ -112,20 +125,24 @@ import swal from "sweetalert2";
                     minute: '2-digit',
                     locale: this.lang
                 });
+
                 let eventInfo = '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Beginning')+':</div><div class="col text-left">'+this.capitalize(startDate)+'</div></div>';
+                eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Group')+':</div><div class="col text-left">'+info.event.title+'</div></div>';
                 if(info.event._def.extendedProps.trainer){
                     eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Trainer')+':</div><div class="col text-left">'+info.event._def.extendedProps.trainer+'</div></div>';
                 }
-                eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Group')+':</div><div class="col text-left">'+info.event.title+'</div></div>';
                 eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Classroom')+':</div><div class="col text-left">'+info.event._def.extendedProps.hall+'</div></div>';
                 eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Address')+':</div><div class="col text-left">'+info.event._def.extendedProps.hallAddress+'</div></div>';
                 eventInfo += '<div class="row mb-2"><div class="col-5 text-right">'+this.trans('Places left')+':</div><div class="col text-left">'+info.event._def.extendedProps.peopleStats+'</div></div>';
 
-                let invitation ='<div class="text-danger small mark p-2">'+ this.trans('You need register or log in to your account')+'</div>';
+                let invitation ='<div class="text-danger small mark p-2 w-100">'+ this.trans('You need register or log in to your account')+'</div>';
                 let userChecked = info.event._def.extendedProps.personalStatus;
 
+                let title = (userChecked) ? this.trans('You are applied on event') : this.trans('Join the Event');
+                if (lastCallDate > info.event._instance.range.start)  title = this.trans('Registration completed');
+
                 this.$swal({
-                    title: (userChecked) ? this.trans('You are applied on event') : this.trans('Join the Event'),
+                    title: title,
                     showCancelButton: true,
                     confirmButtonClass: (userChecked) ? 'btn btn-danger btn-fill' : 'btn btn-success btn-fill',
                     cancelButtonClass: 'btn btn-warning btn-fill',
@@ -133,31 +150,19 @@ import swal from "sweetalert2";
                     cancelButtonText: (userChecked) ? this.trans('Close') : this.trans('Cancel'),
                     buttonsStyling: true,
                     reverseButtons: true,
+                    showConfirmButton: (lastCallDate <= info.event._instance.range.start) && this.userName,
                     html: eventInfo,
                     userName: this.userName,
                     eventId: info.event.id,
                     userChecked: userChecked,
+                    expired: (lastCallDate > info.event._instance.range.start),
+                    footer: (!this.userName && lastCallDate < info.event._instance.range.start) ? invitation : '',
                     onBeforeOpen: function (el) {
 
-                        let div = document.createElement('div');
-                        div.setAttribute("id", "alarma");
-                        div.innerHTML = invitation.trim();
-
-                        if(!this.userName){
-                            el.children[2].children[1].disabled = true
-                            el.children[2].appendChild(div)
-                        }else{
-                            el.children[2].children[1].disabled = false
-                            let alarma = document.getElementById("alarma")
-                            if(alarma){
-                                el.children[2].removeChild(alarma)
-                            }
+                        if(this.expired){
+                            el.style.background = "rgba(163, 163, 163, 0.85) linear-gradient(90deg, rgba(255, 255, 255, .8) 50%, rgba(255, 255, 255, .9) 50%)  center center / 6em";
+                            //el.classList.add("expired-event");
                         }
-
-                        if(info.isEnd){
-                            this.disableButtons()
-                        }
-
                     },
                     preConfirm: function (el) {
 
@@ -174,7 +179,6 @@ import swal from "sweetalert2";
                             .then(data => {
 
                                 this.$emit('need-refresh');
-
                                 this.$swal({
                                     position: 'top-end',
                                     type: 'success',
@@ -219,6 +223,7 @@ import swal from "sweetalert2";
             todayButton.classList.remove('fc-button-primary');
             todayButton.classList.add('fc-state-default');
             todayButton.classList.add('fc-corner-right');
+
 
         }
     }

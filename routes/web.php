@@ -39,7 +39,7 @@ Route::get('company/{uniqueId?}/public-schedule', 'ScheduleController@show')
 Route::post('fakelogin', 'FakeController@login')
     ->name('fakelogin');
 
-Route::get('company/{uniqueId?}/events', 'ScheduleController@events')
+Route::post('company/{uniqueId?}/events', 'ScheduleController@events')
     ->where('uniqueId', '[a-z0-9]{32}');
 
 Route::post('company/{uniqueId?}/event-attempt', 'ScheduleController@attemptToJoin')

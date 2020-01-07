@@ -47,10 +47,10 @@ class ScheduleController extends Controller
         $data = [];
     
         $now =  Carbon::now();
-        $weekStart = Carbon::now()->startOfWeek();
-        $weekEnd = Carbon::now()->endOfWeek();
+        $weekStart = $request->get('start'); //Carbon::now()->startOfWeek();
+        $weekEnd = $request->get('stop'); //Carbon::now()->endOfWeek();
         
-        $events = Event::with(['group','hall'])->where('start', '>=', $weekStart)
+        $events = Event::with(['group','hall', 'attemptUsers'])->where('start', '>=', $weekStart)
             ->where('finish', '<=', $weekEnd)->get();
     
         $user = Auth::guard('web2')->user();
@@ -66,11 +66,9 @@ class ScheduleController extends Controller
     
             $res = array_column($res, 'event_id');
             foreach ($events as $event){
-                
                 if(in_array($event->getAttribute('id'), $res)){
                     $event->setPersonalStatus(true);
                 }
-                
             }
         }
   

@@ -11,6 +11,8 @@ class EventAttempt extends Model
     
     protected $fillable = ['event_id', 'company_user_id'];
     
+    
+    
     public function isUserPresentOnEvent($eventId, $companyUserId)
     {
         return self::where('event_id', $eventId)

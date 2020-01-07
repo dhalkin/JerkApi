@@ -3332,6 +3332,7 @@ temporary rendered events).
   background-color: rgba(81, 203, 206, 0.2);
   /* default BACKGROUND color */
   font-weight: normal;
+  cursor: pointer;
   /* undo jqui's ui-widget-header bold */ }
   .fc-event.event-azure {
     background-color: rgba(81, 188, 218, 0.2); }
@@ -3359,8 +3360,20 @@ temporary rendered events).
   right: 0px;
   font-weight: bold;
   font-size:x-large;
-  float: right;
   text-shadow: 2px 2px #1f441d;
+}
+.fc-content .expired {
+  position: absolute;
+  top: 0px;
+  right: 25px;
+  font-weight: bold;
+  font-size:x-large;
+  text-shadow: 1px 1px #743622;
+}
+.expired-event {
+  background: rgba(163, 163, 163, 0.35) linear-gradient(90deg,
+  rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, .4) 50%
+  ) center center / 2em;
 }
 /* overpower some of bootstrap's and jqui's styles on <a> tags */
 .fc-event,

@@ -28,6 +28,11 @@ class Event extends Model
         return $this->hasOne(CompanyUser::class, 'id', 'trainer_id');
     }
     
+    public function attemptUsers()
+    {
+        return $this->hasMany(EventAttempt::class, 'event_id', 'id');
+    }
+    
     public function getPersonalStatus(): bool
     {
         return $this->personalStatus;

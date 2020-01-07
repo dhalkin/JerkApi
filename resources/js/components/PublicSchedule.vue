@@ -44,6 +44,7 @@
             :userName=userName
             :companyUid=companyUid
             v-on:need-refresh="getEvents"
+            @range-changed="rangeChanged"
         >
         </calendar>
     </div>
@@ -72,6 +73,7 @@ export default {
             userName: '',
             apiToken: '',
             csrf: '',
+            dataRange: {start: new Date(), stop: new Date()}
         }
     },
     mounted() {
@@ -87,6 +89,9 @@ export default {
         }
     },
     methods: {
+        rangeChanged(range){
+            this.dataRange = range
+        },
         getSession() {
             axios.get('/session')
                 .then(response => response.data)
@@ -107,7 +112,7 @@ export default {
 
         },
         getEvents() {
-            axios.get('/company/' + this.companyUid + '/events')
+            axios.post('/company/' + this.companyUid + '/events', this.dataRange)
                 .then(response => response.data)
                 .then(data => {
                     this.events = data.data;
