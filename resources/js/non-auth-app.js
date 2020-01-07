@@ -3,7 +3,6 @@
 
  */
 
-require('popper.js');
 require('jquery');
 require('./bootstrap');
 require('./plugins/perfect-scrollbar.jquery.min');

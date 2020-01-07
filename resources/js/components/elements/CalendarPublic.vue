@@ -94,10 +94,12 @@
         methods: {
             datesRender(info){
                 this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
-                this.$emit('need-refresh')
+                //this.$emit('need-refresh')
+                //console.log('render')
             },
             viewSkeletonRender(info){
-                this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
+               // this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
+               // console.log('skeleton')
             },
             eventRender(info) {
 

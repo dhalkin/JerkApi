@@ -13,6 +13,10 @@ use App\Http\Resources\EventResource;
 class ScheduleController extends Controller
 {
     
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function session(Request $request)
     {
         $data = [];
@@ -28,6 +32,11 @@ class ScheduleController extends Controller
     }
     
     
+    /**
+     * @param Request $request
+     * @param $uniqueId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Request $request, $uniqueId)
     {
         $company = Company::where('unique_id', '=', $uniqueId)
@@ -42,6 +51,9 @@ class ScheduleController extends Controller
     }
     
     
+    /**
+     * @param Request $request
+     */
     public function events(Request $request)
     {
         $data = [];
@@ -70,11 +82,22 @@ class ScheduleController extends Controller
                     $event->setPersonalStatus(true);
                 }
             }
+            
+            $data['apiToken'] = $user->getAttributes()['api_token'];
+            $data['userName'] = $user->getAttributes()['first_name'];
         }
-  
-        return EventResource::collection($events);
+       
+        $data['events'] = EventResource::collection($events);
+        $data['csrf'] = $request->session()->token();
+        
+        return response()->json($data);
     }
     
+    /**
+     * @param Request $request
+     * @param $uniqueId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function attemptToJoin(Request $request, $uniqueId)
     {
         // get user

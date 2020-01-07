@@ -77,7 +77,7 @@ export default {
         }
     },
     mounted() {
-        this.getSession();
+        //this.getSession();
     },
     watch: {
         apiToken: function(val, oldVal) {
@@ -86,6 +86,9 @@ export default {
             }else {
                 this.userLogged = false
             }
+        },
+        dataRange: function (val, oldVal) {
+           this.getEvents()
         }
     },
     methods: {
@@ -115,7 +118,11 @@ export default {
             axios.post('/company/' + this.companyUid + '/events', this.dataRange)
                 .then(response => response.data)
                 .then(data => {
-                    this.events = data.data;
+                    axios.defaults.headers.common['X-CSRF-TOKEN'] = data.csrf;
+                    this.apiToken = data.apiToken;
+                    this.csrf = data.csrf;
+                    this.userName = data.userName;
+                    this.events = data.events;
                 })
                 .catch(error => {
                     this.processErr(error);
