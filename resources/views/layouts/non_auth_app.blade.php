@@ -30,18 +30,22 @@
                 </div>
                 <!--  -->
                 <ul class="nav">
+                    @if (Route::has('login'))
                     <li class="{{ Request::is('login') ? 'active' : '' }}">
                         <a href="{{ route('login') }}">
                             <i class="nc-icon nc-single-02"></i>
                             <p>{{ __('Login') }}</p>
                         </a>
                     </li>
+                    @endif
+                    @if (Route::has('register'))
                     <li class="{{ Request::is('register') ? 'active' : '' }}">
                         <a href="{{ route('register') }}">
                             <i class="nc-icon nc-user-run"></i>
                             <p>{{ __('Register') }}</p>
                         </a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>

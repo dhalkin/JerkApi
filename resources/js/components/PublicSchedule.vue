@@ -8,7 +8,7 @@
             <form-register
                 v-on:wannaCloseModal="showRegister = false"
                 v-on:wannaOpenModal="showRegister = true"
-                v-on:userRegistered="getSession"
+                v-on:userRegistered="getEvents"
                 :company-uid="companyUid"
             >
             </form-register>
@@ -22,7 +22,7 @@
             <form-login
                 v-on:wannaCloseModal="showLogin = false"
                 v-on:wannaOpenModal="showLogin = true"
-                v-on:userLoggedIn="getSession"
+                v-on:userLoggedIn="getEvents"
                 :company-uid="companyUid"
             >
             </form-login>
@@ -31,7 +31,7 @@
         <calendar-header
             v-on:click-register="showRegister = true"
             v-on:click-login="showLogin = true"
-            v-on:user-logout="getSession"
+            v-on:user-logout="getEvents"
             v-bind:company-name="companyName"
             v-bind:user-logged="userLogged"
             v-bind:user-name="userName"

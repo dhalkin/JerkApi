@@ -16,15 +16,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes();
+Auth::routes(['reset' => false, 'verify' => false, 'register'=> false]);
 
 Route::post('login-again', 'Auth\LoginAgainController@login')->name('login-again');
 Route::post('logout-again', 'Auth\LoginAgainController@logout');
 Route::post('register-again', 'Auth\LoginAgainController@register');
 
 // SPA routes, views by vue
-Route::get('/app/{app_page}', 'HomeController@index')
-    ->where('app_page', '^(company|halls|trainers|customers|profile)$');
+//Route::get('/app/{app_page}', 'HomeController@index')
+//    ->where('app_page', '^(company|halls|trainers|customers|profile)$');
 
 // need that for link to the site, seems it will be the same for all entities
 //Route::get('/hall/{uniqueId}', 'HomeController@index')
