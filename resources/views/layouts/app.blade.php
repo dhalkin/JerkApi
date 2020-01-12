@@ -23,7 +23,7 @@
     
     <flash-message transition-name="flash-transition" class="flashpool"></flash-message>
     
-    <side-menu app-name="{{ config('app.name', 'Dancezilla') }}" app-url="{{ url('/') }}"></side-menu>
+    <side-menu app-name="{{ config('app.name', 'SportStation') }}" app-url="{{ url('/') }}"></side-menu>
     
     <router-view api-token="{{ Auth::user()->api_token }}" csrf="{{ Session::token() }}"></router-view>
 

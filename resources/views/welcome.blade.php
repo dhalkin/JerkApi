@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ __('Welcome') }}</title>
+        <title>{{ __('SportStation - Welcome') }}</title>
 
         <!-- Scripts -->
         <script src="{{ asset('js/welcome.js') }}" defer></script>
@@ -18,7 +18,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">::{{ __('Home') }}</a>
+                        <a href="{{ url('/app/company') }}">::{{ __('Home') }}</a>
                     @else
                         <a href="{{ route('login') }}">::{{ __('Login') }}</a>
 

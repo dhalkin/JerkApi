@@ -85,7 +85,7 @@
                         <a class="" href="{{ url('/') }}">{{ __('Back')}}</a>
                     </div>
                     <div class="copyright pull-right">
-                        &copy; 2019 made with <i class="fa fa-heart heart"></i> by <a href="{{ url('/') }}">DanceZilla</a>
+                        &copy; 2019 made with <i class="fa fa-heart heart"></i>
                     </div>
                 </div>
             </footer>
