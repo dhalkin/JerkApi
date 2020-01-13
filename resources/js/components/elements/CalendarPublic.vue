@@ -87,6 +87,7 @@
                 },
                 views: {
                     timeGridWeek: {
+                        type: 'timeGrid',
                         titleFormat: {
                             month: 'long',
                                 day: '2-digit',
@@ -97,12 +98,12 @@
                     agendaTwoDay: {
                         type: 'timeGrid',
                         //duration: { days: 2 },
-                        buttonText: this.trans('Today | Tomorrow'),
                         titleFormat: {
-                            month: 'long',
+                            month: 'short',
                             day: '2-digit',
                             year: 'numeric'
-                        }
+                        },
+                        buttonText: this.trans('Today | Tomorrow'),
                     }
                 },
                 customButtons: {
@@ -125,6 +126,7 @@
                     'end':nextDayDate
                 });
             },
+            // call for ini
             datesRender(info){
                 this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
                 //this.$emit('need-refresh')
@@ -237,10 +239,25 @@
 
                     }
                 });
-            }
+            },
+            detectMob(){
+                if (window.innerWidth <= 800 && window.innerHeight <= 600) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
         },
         mounted() {
-            this.buttonsTune()
+            this.buttonsTune();
+            if(this.detectMob()){
+                this.$refs.fullCalendar.getApi().setOption('columnHeaderFormat',
+                    {
+                        weekday:'short',
+                        day: 'numeric'
+                    }
+                );
+            }
         }
     }
 </script>
