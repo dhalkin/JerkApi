@@ -7,10 +7,7 @@
                         <full-calendar
                             ref="fullCalendar"
                             defaultView="timeGridWeek"
-                            :header="{
-                                left: 'title',
-                                right: 'prev,next,today'
-                            }"
+                            :header="header"
                             :themeSystem="themeSystem"
                             :plugins="calendarPlugins"
                             :weekends="weekends"
@@ -24,6 +21,8 @@
                             :textEscape="textEscape"
                             :columnHeaderFormat="columnHeaderFormat"
                             :nowIndicator="nowIndicator"
+                            :views="views"
+                            :customButtons="customButtons"
                             @eventRender="eventRender"
                             @eventClick="eventClick"
                             @viewSkeletonRender="viewSkeletonRender"
@@ -48,16 +47,21 @@
 
    // import EventTitle from "../UIComponents/Calendar/EventTitle";
     import { formatDate } from '@fullcalendar/core'
+    import CalendarTuning from '../utils/CalendarTuning';
+    import EventCard from "../utils/EventCard";
 
     const rightNowDate = new Date();
-    const lastCallDate = new Date();
+    const lastCallDate = new Date(rightNowDate);
+    const nextDayDate = new Date();
     lastCallDate.setHours(lastCallDate.getHours() + 3);
+    nextDayDate.setDate(nextDayDate.getDate() + 1);
 
     const y = rightNowDate.getFullYear();
     const m = rightNowDate.getMonth();
     const d = rightNowDate.getDate();
 
     export default {
+        mixins: [CalendarTuning],
         props: ['lang', 'events', 'userName', 'companyUid'],
         components: {FullCalendar},
         data() {
@@ -77,13 +81,37 @@
                 textEscape: false,
                 columnHeaderFormat: {weekday:'long', day: 'numeric'},
                 nowIndicator: true,
-                views: { week: {
-                    titleFormat: {
-                        month: 'long',
+                header: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'timeGridWeek, myCustomButton'
+                },
+                views: {
+                    timeGridWeek: {
+                        titleFormat: {
+                            month: 'long',
+                                day: '2-digit',
+                                year: 'numeric'
+                            },
+                        buttonText: this.trans('Week'),
+                    },
+                    agendaTwoDay: {
+                        type: 'timeGrid',
+                        //duration: { days: 2 },
+                        buttonText: this.trans('Today | Tomorrow'),
+                        titleFormat: {
+                            month: 'long',
                             day: '2-digit',
                             year: 'numeric'
+                        }
                     }
-                }}
+                },
+                customButtons: {
+                    myCustomButton: {
+                        text: this.trans('Today - Tomorrow'),
+                            click: () => { this.customClick()}
+                    }
+                }
             }
         },
         watch:{
@@ -92,6 +120,12 @@
             }
         },
         methods: {
+            customClick(){
+                this.$refs.fullCalendar.getApi().changeView('agendaTwoDay', {
+                    'start':rightNowDate,
+                    'end':nextDayDate
+                });
+            },
             datesRender(info){
                 this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
                 //this.$emit('need-refresh')
@@ -104,7 +138,6 @@
             eventRender(info) {
 
                 let title = (info.event._def.extendedProps.personalStatus) ? '<span class="check text-success"><i class="nc-icon nc-check-2"></i></span>' : '';
-                //title +='<span class="expired text-danger"><i class="nc-icon nc-simple-remove"></i></span>';
                     title += '<span class="group">' + info.event.title + '</span><br>';
                     title += '<span class="hall">' + info.event._def.extendedProps.hall + '</span><br>';
 
@@ -208,25 +241,7 @@
             }
         },
         mounted() {
-
-            let leftButton = this.$refs.fullCalendar.$el.children[0].children[2].children[0].children[0];
-            leftButton.classList.remove('fc-button-primary');
-            leftButton.classList.add('fc-state-default');
-            leftButton.classList.add('fc-corner-left');
-            leftButton.children[0].classList.remove('fc-icon-chevron-left');
-            leftButton.children[0].classList.add('fc-icon-left-single-arrow');
-            let rightButton = this.$refs.fullCalendar.$el.children[0].children[2].children[0].children[1];
-            rightButton.classList.remove('fc-button-primary');
-            rightButton.classList.add('fc-state-default');
-            rightButton.classList.add('fc-corner-right');
-            rightButton.children[0].classList.remove('fc-icon-chevron-right');
-            rightButton.children[0].classList.add('fc-icon-right-single-arrow');
-            let todayButton = this.$refs.fullCalendar.$el.children[0].children[2].children[0].children[2];
-            todayButton.classList.remove('fc-button-primary');
-            todayButton.classList.add('fc-state-default');
-            todayButton.classList.add('fc-corner-right');
-
-
+            this.buttonsTune()
         }
     }
 </script>
