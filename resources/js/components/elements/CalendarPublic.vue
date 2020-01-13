@@ -48,7 +48,6 @@
    // import EventTitle from "../UIComponents/Calendar/EventTitle";
     import { formatDate } from '@fullcalendar/core'
     import CalendarTuning from '../utils/CalendarTuning';
-    import EventCard from "../utils/EventCard";
 
     const rightNowDate = new Date();
     const lastCallDate = new Date(rightNowDate);
