@@ -3530,18 +3530,18 @@ a.fc-more:hover {
 .fc-toolbar .fc-center {
   display: inline-block; }
 
-@media (max-width: 800px)
+@media screen and (max-width: 801px)
 {
-  .fc-center h2
+  .new-header-title
   {
-    font-size:24px;
+    font-size:16px
   }
 }
-@media (max-width: 1200px)
+@media screen and (min-width: 800px)
 {
-  .fc-center h2
+  .new-header-title
   {
-    font-size:16px;
+    font-size:28px;
   }
 }
 /* the things within each left/right/center section */

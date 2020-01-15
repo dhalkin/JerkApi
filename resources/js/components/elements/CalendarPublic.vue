@@ -1,36 +1,67 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10 ml-auto mr-auto">
-                <div class="card card-calendar">
-                    <div class="card-body">
-                        <full-calendar
-                            ref="fullCalendar"
-                            defaultView="timeGridWeek"
-                            :header="header"
-                            :themeSystem="themeSystem"
-                            :plugins="calendarPlugins"
-                            :weekends="weekends"
-                            :events="events"
-                            :allDaySlot="allDaySlot"
-                            :firstDay="firstDay"
-                            :locales="locales"
-                            :locale="lang"
-                            :minTime="minTime"
-                            :maxTime="maxTime"
-                            :textEscape="textEscape"
-                            :columnHeaderFormat="columnHeaderFormat"
-                            :nowIndicator="nowIndicator"
-                            :views="views"
-                            :customButtons="customButtons"
-                            @eventRender="eventRender"
-                            @eventClick="eventClick"
-                            @viewSkeletonRender="viewSkeletonRender"
-                            @datesRender="datesRender"
-                        >
-                        </full-calendar>
+    <div class="row">
+        <div class="col">
+            <!--title -->
+            <div class="row">
+                <div class="col text-center new-header-title" v-text="newHeaderTitle"></div>
+            </div>
+            <!-- buttons -->
+            <div class="row justify-content-between">
+                <div class="col-4 text-left">
+                    <p-button type="primary" size="sm" @click="calendarPrev">
+                        <i class="nc-icon nc-minimal-left"></i>
+                    </p-button>
+                    <p-button type="primary" size="sm" @click="calendarNext">
+                        <i class="nc-icon nc-minimal-right"></i>
+                    </p-button>
+                </div>
+                <div class="col-8 text-right">
+                    <div class="btn-group">
+                        <p-button
+                                id="toggleWeek"
+                                type="primary"
+                                size="sm"
+                                data-toggle="button"
+                                aria-pressed="true"
+                                @click="calendarChangeView('week')"
+                        >{{this.trans('Week')}}</p-button>
+                        <p-button
+                                id="toggleTwoDays"
+                                type="primary"
+                                size="sm"
+                                data-toggle="button"
+                                aria-pressed="true"
+                                @click="calendarChangeView('twodays')"
+                        >{{this.trans('2 Days')}}</p-button>
                     </div>
                 </div>
+            </div>
+
+            <div class="card-calendar">
+                <full-calendar
+                    ref="fullCalendar"
+                    defaultView="timeGridWeek"
+                    :header="header"
+                    :themeSystem="themeSystem"
+                    :plugins="calendarPlugins"
+                    :weekends="weekends"
+                    :events="events"
+                    :allDaySlot="allDaySlot"
+                    :firstDay="firstDay"
+                    :locales="locales"
+                    :locale="lang"
+                    :minTime="minTime"
+                    :maxTime="maxTime"
+                    :textEscape="textEscape"
+                    :columnHeaderFormat="columnHeaderFormat"
+                    :nowIndicator="nowIndicator"
+                    :views="views"
+                    @eventRender="eventRender"
+                    @eventClick="eventClick"
+                    @viewSkeletonRender="viewSkeletonRender"
+                    @datesRender="datesRender"
+                >
+                </full-calendar>
             </div>
         </div>
     </div>
@@ -45,7 +76,6 @@
     import ruLocale from 'fullcalendar/dist/locales/ru'
     import enLocale from 'fullcalendar/dist/locales/en-gb'
 
-   // import EventTitle from "../UIComponents/Calendar/EventTitle";
     import { formatDate } from '@fullcalendar/core'
     import CalendarTuning from '../utils/CalendarTuning';
 
@@ -55,13 +85,9 @@
     lastCallDate.setHours(lastCallDate.getHours() + 3);
     nextDayDate.setDate(nextDayDate.getDate() + 1);
 
-    const y = rightNowDate.getFullYear();
-    const m = rightNowDate.getMonth();
-    const d = rightNowDate.getDate();
-
     export default {
         mixins: [CalendarTuning],
-        props: ['lang', 'events', 'userName', 'companyUid'],
+        props: ['lang', 'events', 'userName', 'companyUid', 'companyTimezone'],
         components: {FullCalendar},
         data() {
             return {
@@ -80,11 +106,10 @@
                 textEscape: false,
                 columnHeaderFormat: {weekday:'long', day: 'numeric'},
                 nowIndicator: true,
-                header: {
-                    left: 'prev,next',
-                    center: 'title',
-                    right: 'timeGridWeek, myCustomButton'
-                },
+                newHeaderTitle: '',
+                height: 'auto',
+                handleWindowResize: true,
+                header: false,
                 views: {
                     timeGridWeek: {
                         type: 'timeGrid',
@@ -97,44 +122,65 @@
                     },
                     agendaTwoDay: {
                         type: 'timeGrid',
-                        //duration: { days: 2 },
+                        visibleRange(currentDate){
+                            return {
+                                start: currentDate.clone(),
+                                end: currentDate.clone().add(1, 'days'),
+                            };
+                        },
+                        duration: { days: 2 },
+                        dateIncrement: { days: 2 },
                         titleFormat: {
-                            month: 'short',
+                            month: 'long',
                             day: '2-digit',
                             year: 'numeric'
                         },
-                        buttonText: this.trans('Today | Tomorrow'),
-                    }
-                },
-                customButtons: {
-                    myCustomButton: {
-                        text: this.trans('Today - Tomorrow'),
-                            click: () => { this.customClick()}
+                        buttonText: this.trans('Today + 1'),
                     }
                 }
             }
         },
-        watch:{
-            events: function (val) {
-
-            }
-        },
         methods: {
-            customClick(){
-                this.$refs.fullCalendar.getApi().changeView('agendaTwoDay', {
-                    'start':rightNowDate,
-                    'end':nextDayDate
-                });
+            windowResize(view){
+                console.log(this.$refs.fullCalendar.getApi().getOption('aspectRatio'));
+            },
+            calendarNext(){
+                this.$refs.fullCalendar.getApi().next();
+            },
+            calendarPrev(){
+                this.$refs.fullCalendar.getApi().prev();
+            },
+            calendarChangeView(type){
+                if(type === 'twodays'){
+                    document.getElementById('toggleTwoDays').classList.add("active");
+                    document.getElementById('toggleWeek').classList.remove("active");
+                    this.$refs.fullCalendar.getApi().changeView('agendaTwoDay');
+                    this.$refs.fullCalendar.getApi().setOption('contentHeight', window.innerHeight-100); // minus header
+
+                }else{
+                    if (window.innerWidth <= 800) {
+                        this.$refs.fullCalendar.getApi().setOption('columnHeaderFormat',
+                            {
+                                weekday:'short',
+                                day: 'numeric'
+                            }
+                        );
+                    }
+                    document.getElementById('toggleWeek').classList.add("active");
+                    document.getElementById('toggleTwoDays').classList.remove("active");
+                    this.$refs.fullCalendar.getApi().changeView('timeGridWeek');
+                }
             },
             // call for ini
             datesRender(info){
-                this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
-                //this.$emit('need-refresh')
-                //console.log('render')
+                this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd});
+                this.newHeaderTitle = info.view.title;
+                console.log('render')
+                console.log(window.innerWidth);
+                console.log(window.innerHeight);
             },
             viewSkeletonRender(info){
-               // this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd})
-               // console.log('skeleton')
+
             },
             eventRender(info) {
 
@@ -144,7 +190,7 @@
 
                 if(lastCallDate > info.event._instance.range.start){
                     info.el.style.backgroundColor = "";
-                    //info.el.style.border = "1px solid gray";
+                    info.el.style.border = "1px solid gray";
                     info.el.classList.add("expired-event");
                 }else{
                     title += '<span class="people-stats">' + this.trans('Places left') + ' : ' + info.event._def.extendedProps.peopleStats + '</span>';
@@ -223,7 +269,6 @@
                                     showConfirmButton: false,
                                     timer: 2500
                                 })
-
                             })
                             .catch(error => {
                                 this.$emit('need-refresh');
@@ -236,36 +281,16 @@
                                     timer: 2500
                                 })
                             });
-
                     }
                 });
-            },
-            detectMob(){
-                if (window.innerWidth <= 800 && window.innerHeight <= 600) {
-                    return true;
-                } else {
-                    return false;
-                }
-            },
+            }
         },
         mounted() {
-            this.buttonsTune();
-            if(this.detectMob()){
-                this.$refs.fullCalendar.getApi().setOption('columnHeaderFormat',
-                    {
-                        weekday:'short',
-                        day: 'numeric'
-                    }
-                );
+            if (this.detectMob()){
+                this.calendarChangeView('twodays');
+            }else{
+                this.calendarChangeView('week');
             }
         }
     }
 </script>
-<style>#fullCalendar {
-        min-height: 300px;
-    }
-
-    .el-loading-spinner .path {
-        stroke: #66615B !important;
-    }
-</style>

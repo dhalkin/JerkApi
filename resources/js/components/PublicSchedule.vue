@@ -43,6 +43,7 @@
             :events=events
             :userName=userName
             :companyUid=companyUid
+            :company-timezone="companyTimezone"
             v-on:need-refresh="getEvents"
             @range-changed="rangeChanged"
         >
@@ -60,7 +61,7 @@
     import ErrorHelper from "./utils/ErrorHelper";
 
 export default {
-    props: ['companyUid', 'companyName'],
+    props: ['companyUid', 'companyName', 'companyTimezone'],
     components: {FormLogin, FormRegister, Calendar, CalendarHeader, Modal},
     mixins:[ErrorHelper],
     data() {

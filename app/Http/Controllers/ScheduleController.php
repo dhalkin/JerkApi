@@ -46,7 +46,8 @@ class ScheduleController extends Controller
             [
                 "companyUid" => $uniqueId,
                 "title" => $company->name . ' - ' . trans('timetable'),
-                "companyName"=> $company->name
+                "companyName"=> $company->name,
+                "companyTimezone"=> $company->timezone
             ]);
     }
     

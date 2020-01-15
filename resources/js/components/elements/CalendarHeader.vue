@@ -1,57 +1,51 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10 ml-auto mr-auto">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <span class="h3" v-text="companyName"></span>
-                                <span v-text="trans('Timetable')"></span>
-                            </div>
-                            <div class="col">
-                                <div class="justify-content-end show pull-right">
-                                    <span v-if="!userLogged">
-                                    <ul class="navbar-nav" style="flex-direction: row">
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link pr-3"
-                                               @click.prevent="$emit('click-login')"
-                                            >
-                                                <i class="nc-icon nc-tap-01"></i> {{trans('Login')}}
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="" class="nav-link pr-3"
-                                               @click.prevent="$emit('click-register')"
-                                            >
-                                                <i class="nc-icon nc-book-bookmark"></i> {{trans('Register')}}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    </span>
-                                    <span v-else>
-                                        <ul class="navbar-nav" style="flex-direction: row">
-                                            <li class="nav-item">
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <span class="h3" v-text="companyName"></span>
+                    <span v-text="trans('Timetable')"></span>
+                </div>
+                <div class="col">
+                    <div class="justify-content-end show pull-right">
+                        <span v-if="!userLogged">
+                        <ul class="navbar-nav" style="flex-direction: row">
+                            <li class="nav-item">
+                                <a href="" class="nav-link pr-3"
+                                   @click.prevent="$emit('click-login')"
+                                >
+                                    <i class="nc-icon nc-tap-01"></i><strong>{{trans('Login')}}</strong>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link pr-3"
+                                   @click.prevent="$emit('click-register')"
+                                >
+                                    <i class="nc-icon nc-book-bookmark"></i> <strong>{{trans('Register')}}</strong>
+                                </a>
+                            </li>
+                        </ul>
+                        </span>
+                        <span v-else>
+                            <ul class="navbar-nav" style="flex-direction: row">
+                                <li class="nav-item">
 
-                                               <a href="" class="nav-link disabled pr-3"
-                                                  @click.prevent
-                                               >
-                                                    <i class="nc-icon nc-tap-01"></i> {{userName}}
-                                                </a>
+                                   <a href="" class="nav-link disabled pr-3"
+                                      @click.prevent
+                                   >
+                                       <i class="nc-icon nc-tap-01"></i> <strong>{{userName}}</strong>
+                                    </a>
 
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="" class="nav-link"
-                                                   @click.prevent="logout"
-                                                >
-                                                    <i class="nc-icon nc-user-run"></i> {{trans('Logout')}}
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link"
+                                       @click.prevent="logout"
+                                    >
+                                        <i class="nc-icon nc-user-run"></i> <strong>{{trans('Logout')}}</strong>
+                                    </a>
+                                </li>
+                            </ul>
+                        </span>
                     </div>
                 </div>
             </div>
