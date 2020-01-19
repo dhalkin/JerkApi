@@ -82,14 +82,17 @@
     import CalendarTuning from '../utils/CalendarTuning';
 
     const rightNowDate = new Date();
+    const nextDayDate = new Date(rightNowDate);
     const lastCallDate = new Date(rightNowDate);
-    const nextDayDate = new Date();
-    lastCallDate.setHours(lastCallDate.getHours() + 3);
+    const abilityToRefuse = new Date(rightNowDate);
     nextDayDate.setDate(nextDayDate.getDate() + 1);
 
     export default {
         mixins: [CalendarTuning],
-        props: ['lang', 'events', 'userName', 'companyUid', 'companyTimezone'],
+        props: [
+            'lang', 'events', 'userName', 'companyUid', 'companyTimezone',
+            'lastCallHours', 'refuseInHours'
+        ],
         components: {FullCalendar},
         data() {
             return {
@@ -247,13 +250,18 @@
                     userName: this.userName,
                     eventId: info.event.id,
                     userChecked: userChecked,
-                    expired: (lastCallDate > info.event._instance.range.start),
+                    expired: (lastCallDate >= info.event._instance.range.start),
+                    blocked: (abilityToRefuse >= info.event._instance.range.start),
                     footer: (!this.userName && lastCallDate < info.event._instance.range.start) ? invitation : '',
                     onBeforeOpen: function (el) {
 
                         if(this.expired){
                             el.style.background = "rgba(163, 163, 163, 0.85) linear-gradient(90deg, rgba(255, 255, 255, .8) 50%, rgba(255, 255, 255, .9) 50%)  center center / 6em";
                             //el.classList.add("expired-event");
+                        }
+                        if(this.blocked){
+                            let cancelButton = el.getElementsByClassName("swal2-confirm")[0];
+                            cancelButton.classList.add("disabled");
                         }
                     },
                     preConfirm: function (el) {
@@ -294,6 +302,10 @@
                     }
                 });
             }
+        },
+        created() {
+            lastCallDate.setHours(lastCallDate.getHours() + this.lastCallHours);
+            abilityToRefuse.setHours(abilityToRefuse.getHours() - this.refuseInHours);
         },
         mounted() {
             if (this.detectMob()){

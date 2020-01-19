@@ -55,6 +55,8 @@ class ScheduleController extends Controller
     /**
      * @param Request $request
      * @param companyId $companyId
+     *
+     * @return json
      */
     public function events(Request $request, $companyId)
     {
@@ -94,7 +96,7 @@ class ScheduleController extends Controller
         $data['companyRules'] = [
             'last_call_hours' => $company->last_call_hours,
             'refuse_in_hours'=>$company->refuse_in_hours,
-            'rules'=> nl2br($company->rules)
+            'rules'=> $company->rules
         ];
         
         return response()->json($data);

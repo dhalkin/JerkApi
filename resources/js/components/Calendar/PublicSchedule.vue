@@ -17,7 +17,8 @@
                             @click="showRules = false"
                     >
                     </p-button>
-                </div></div>
+                </div>
+            </div>
         </modal>
         <modal
             v-bind:show="showRegister"
@@ -64,6 +65,8 @@
             :userName=userName
             :companyUid=companyUid
             :company-timezone="companyTimezone"
+            :lastCallHours="companyRules.last_call_hours"
+            :refuseInHours="companyRules.refuse_in_hours"
             v-on:need-refresh="getEvents"
             @range-changed="rangeChanged"
         >
