@@ -10,6 +10,7 @@
                 v-model="model.tel"
                 v-validate="modelValidations.tel"
                 :error="getErrorPhone()"
+                autocomplete="on"
             >
             </fg-input>
 
@@ -22,6 +23,7 @@
                 v-model="model.password"
                 v-validate="modelValidations.password"
                 :error="getError('password')"
+                autocomplete="on"
             >
             </fg-input>
 

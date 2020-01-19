@@ -5,6 +5,7 @@
             <fg-input
                 v-bind:placeholder="trans('Your Name')"
                 v-bind:label="trans('Name')"
+                autocomplete="on"
                 required
                 name="name"
                 v-model="model.name"
@@ -14,6 +15,7 @@
             </fg-input>
             <fg-input
                 v-bind:label="trans('Phone')"
+                autocomplete="on"
                 required
                 name="tel"
                 v-model="model.tel"
@@ -25,6 +27,7 @@
             <fg-input
                 v-bind:placeholder="trans('Enter Password')"
                 v-bind:label="trans('Password')"
+                autocomplete="on"
                 type="password"
                 required
                 name="password"
