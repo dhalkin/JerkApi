@@ -50,7 +50,7 @@
         data(){
             return{
                 model: {
-                    tel: '+380',
+                    tel: '',
                     password: ''
                 },
                 modelValidations: {
