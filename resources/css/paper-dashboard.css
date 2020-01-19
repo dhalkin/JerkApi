@@ -3347,7 +3347,8 @@ temporary rendered events).
 .fc-content {
   cursor: pointer; }
 .fc-content .group {
-  font-weight: bold }
+  font-weight: bold;
+  font-size: small;}
 .fc-content .trainer {
    }
 .fc-content .hall {
@@ -3370,10 +3371,13 @@ temporary rendered events).
   font-size:x-large;
   text-shadow: 1px 1px #743622;
 }
-.expired-event {
+.expired-event-old {
   background: rgba(163, 163, 163, 0.35) linear-gradient(90deg,
   rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, .4) 50%
   ) center center / 2em;
+}
+.expired-event {
+  background-color: lightgray;
 }
 /* overpower some of bootstrap's and jqui's styles on <a> tags */
 .fc-event,
@@ -3814,7 +3818,7 @@ be a descendant of the grid when it is being dragged.
   padding: 0 1px; }
 
 .fc-time-grid-event .fc-time {
-  font-size: .85em;
+  font-size: 1.85em;
   white-space: nowrap; }
 
 /* short mode, where time and title are on the same line */

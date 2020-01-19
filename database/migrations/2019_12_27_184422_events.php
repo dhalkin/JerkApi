@@ -15,11 +15,11 @@ class Events extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->bigInteger('company_id')->unsigned();
+            $table->bigInteger('company_id')->unsigned()->nullable();
             $table->dateTime('start');
             $table->dateTime('finish');
-            $table->bigInteger('group_id')->unsigned();
-            $table->bigInteger('hall_id')->unsigned();
+            $table->bigInteger('group_id')->unsigned()->nullable();
+            $table->bigInteger('hall_id')->unsigned()->nullable();
             // who works trainer
             $table->bigInteger('trainer_id')->unsigned()->nullable();
             $table->boolean('active')->default(true);
@@ -30,28 +30,28 @@ class Events extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies')
-                ->onDelete('CASCADE');
+                ->onDelete('SET NULL');
         });
     
         Schema::table('events', function($table) {
             $table->foreign('group_id')
                 ->references('id')
                 ->on('groups')
-                ->onDelete('CASCADE');
+                ->onDelete('SET NULL');
         });
     
         Schema::table('events', function($table) {
             $table->foreign('hall_id')
                 ->references('id')
                 ->on('halls')
-                ->onDelete('CASCADE');
+                ->onDelete('SET NULL');
         });
         
         Schema::table('events', function($table) {
             $table->foreign('trainer_id')
                 ->references('id')
                 ->on('company_users')
-                ->onDelete('CASCADE');
+                ->onDelete('SET NULL');
         });
     }
 

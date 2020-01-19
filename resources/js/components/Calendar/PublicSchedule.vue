@@ -1,6 +1,25 @@
 <template>
     <div>
         <modal
+            v-bind:show="showRules"
+            v-on:close="showRules = false"
+            >
+            <span class="h3" slot="header" v-text="trans('Studio Rules')"></span>
+            <div class="row">
+                <div class="col text-muted" v-html="companyRules.rules"></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p-button
+                            type="primary" block
+                            v-text="trans('All clear')"
+                            class="mt-4"
+                            @click="showRules = false"
+                    >
+                    </p-button>
+                </div></div>
+        </modal>
+        <modal
             v-bind:show="showRegister"
             v-on:close="showRegister = false"
             >
@@ -31,6 +50,7 @@
         <calendar-header
             v-on:click-register="showRegister = true"
             v-on:click-login="showLogin = true"
+            v-on:click-rules="showRules = true"
             v-on:user-logout="getEvents"
             v-bind:company-name="companyName"
             v-bind:user-logged="userLogged"
@@ -48,17 +68,20 @@
             @range-changed="rangeChanged"
         >
         </calendar>
+        <div class="row">
+            <div class="col text-right">&copy; SportStation.club</div>
+        </div>
     </div>
 </template>
 
 <script>
 
-    import Calendar from "./elements/CalendarPublic"
-    import CalendarHeader from "./elements/CalendarHeader"
-    import Modal from "./UIComponents/Modal"
-    import FormRegister from "./elements/FormRegister";
-    import FormLogin from "./elements/FormLogin";
-    import ErrorHelper from "./utils/ErrorHelper";
+    import Calendar from "./CalendarPublic"
+    import CalendarHeader from "./CalendarHeader2"
+    import Modal from "../UIComponents/Modal"
+    import FormRegister from "./FormRegister";
+    import FormLogin from "./FormLogin";
+    import ErrorHelper from "../utils/ErrorHelper";
 
 export default {
     props: ['companyUid', 'companyName', 'companyTimezone'],
@@ -69,12 +92,18 @@ export default {
             lang: this.$parent.lang,
             showRegister: false,
             showLogin: false,
+            showRules: false,
             events: [],
             userLogged: false,
             userName: '',
             apiToken: '',
             csrf: '',
-            dataRange: {start: new Date(), stop: new Date()}
+            dataRange: {start: new Date(), stop: new Date()},
+            companyRules:{
+                last_call_hours:"",
+                refuse_in_hours:"",
+                rules:""
+            }
         }
     },
     mounted() {
@@ -96,6 +125,7 @@ export default {
         rangeChanged(range){
             this.dataRange = range
         },
+        // do not use this time
         getSession() {
             axios.get('/session')
                 .then(response => response.data)
@@ -108,6 +138,7 @@ export default {
                     this.getEvents();
                 });
         },
+        // do not use
         clearSession() {
             this.apiToken = '';
             this.csrf = '';
@@ -124,6 +155,7 @@ export default {
                     this.csrf = data.csrf;
                     this.userName = data.userName;
                     this.events = data.events;
+                    this.companyRules = data.companyRules
                 })
                 .catch(error => {
                     this.processErr(error);

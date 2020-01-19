@@ -1,8 +1,17 @@
 <template>
-    <form @submit.prevent ref="goLogin" method="post" action="/fakelogin">
+    <form @submit.prevent ref="goRegister" method="post" action="/fakelogin">
     <div class="row">
         <div class="col">
-
+            <fg-input
+                v-bind:placeholder="trans('Your Name')"
+                v-bind:label="trans('Name')"
+                required
+                name="name"
+                v-model="model.name"
+                v-validate="modelValidations.name"
+                :error="getError('name')"
+            >
+            </fg-input>
             <fg-input
                 v-bind:label="trans('Phone')"
                 required
@@ -13,7 +22,6 @@
                 :error="getErrorPhone()"
             >
             </fg-input>
-
             <fg-input
                 v-bind:placeholder="trans('Enter Password')"
                 v-bind:label="trans('Password')"
@@ -27,10 +35,10 @@
             </fg-input>
 
             <p-button
-                type="info" round block
-                v-text="trans('Login')"
+                type="primary" block
+                v-text="trans('Get started')"
                 class="mt-4"
-                @click.prevent="validate"
+                @click="validate"
             >
             </p-button>
 
@@ -48,13 +56,18 @@
         props:['companyUid'],
         mixins: [ErrorHelper],
         directives: {mask},
-        data(){
-            return{
+        data() {
+            return {
                 model: {
+                    name: '',
                     tel: '380',
                     password: ''
                 },
                 modelValidations: {
+                    name: {
+                        required: true,
+                        min:2,
+                    },
                     tel: {
                         required: true,
                         min: 19,
@@ -89,7 +102,7 @@
                 this.$validator.validateAll().then(isValid => {
                     if (isValid) {
                         if(this.whatIsWrongWithNumber() === false){
-                            this.login()
+                            this.register()
                         }
 
                     }
@@ -97,38 +110,36 @@
             },
             prepareData() {
                 return {
+                    name: this.model.name,
                     phone: this.model.tel.replace(/[^\d]/g, ''),
                     password: this.model.password,
                     companyUid: this.companyUid
                 }
             },
-            login() {
-
-                this.$emit('wannaCloseModal')
-                axios.post('/login-again', this.prepareData())
+            register() {
+                this.$emit('wannaCloseModal');
+                axios.post('/register-again', this.prepareData())
                     .then(response => {
-                        localStorage.tel = this.model.tel;
-                        this.model = { tel: '380', password: ''};
+                        let submitTelValue = '+' + this.model.tel.replace(/[^\d]/g, '');
+                        this.model = { name: '', tel: '380', password: ''};
                         this.$validator.reset();
-                        // this.$refs.goLogin.reset();
-                        // this.$refs.goLogin[0].remove();
-                        // this.$refs.goLogin[0].remove();
-                        this.$refs.goLogin.submit();
-                        //this.$emit('userLoggedIn');
+                        this.$refs.goRegister.querySelector('input[name=tel]').value = submitTelValue;
+                        this.$refs.goRegister.submit();
+
+                        //this.$emit('userRegistered');
                         this.$notify({
-                            message: this.trans('Successfully logged'),
+                            message: this.trans('Welcome aboard!'),
                             type: 'success'
                         });
-
                     })
                     .catch(error => {
                         this.$emit('wannaOpenModal')
+
                         this.interfereValidatorMessage = error.response.data.message;
                         this.interfereValidator = true;
                         this.hideInterfereValidator();
                         this.processErr(error);
                     });
-
             },
             whatIsWrongWithNumber() {
                 let num = this.model.tel.replace(/[^\d]/g, '')

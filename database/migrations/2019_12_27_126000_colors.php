@@ -17,7 +17,6 @@ class Colors extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->string('name', 99);
             $table->string('hex', 99);
-            $table->string('rgba', 99);
         });
     }
 

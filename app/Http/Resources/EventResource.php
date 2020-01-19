@@ -20,7 +20,7 @@ class EventResource extends JsonResource
             'title' => $this->title(),
             'start'=> $this->start,
             'end'=> $this->finish,
-            'backgroundColor' => Color::find($this->group->color_id)->rgba,
+            'backgroundColor' => Color::find($this->group->color_id)->hex,
             'trainer' => ($this->trainer) ? $this->trainer->first_name : null,
             'hall' => $this->hall->name,
             'hallAddress' => $this->hall->address,

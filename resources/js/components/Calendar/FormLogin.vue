@@ -1,27 +1,18 @@
 <template>
-    <form @submit.prevent ref="goRegister" method="post" action="/fakelogin">
+    <form @submit.prevent ref="goLogin" method="post" action="/fakelogin">
     <div class="row">
         <div class="col">
-            <fg-input
-                v-bind:placeholder="trans('Your Name')"
-                v-bind:label="trans('Name')"
-                required
-                name="name"
-                v-model="model.name"
-                v-validate="modelValidations.name"
-                :error="getError('name')"
-            >
-            </fg-input>
+
             <fg-input
                 v-bind:label="trans('Phone')"
                 required
                 name="tel"
                 v-model="model.tel"
-                v-mask="['+(##) ###-###-##-##']"
                 v-validate="modelValidations.tel"
                 :error="getErrorPhone()"
             >
             </fg-input>
+
             <fg-input
                 v-bind:placeholder="trans('Enter Password')"
                 v-bind:label="trans('Password')"
@@ -35,10 +26,10 @@
             </fg-input>
 
             <p-button
-                type="info" round block
-                v-text="trans('Get started')"
+                type="primary" block
+                v-text="trans('Login')"
                 class="mt-4"
-                @click.prevent="validate"
+                @click="validate"
             >
             </p-button>
 
@@ -49,29 +40,24 @@
 
 <script>
 
-    import {mask} from 'vue-the-mask'
+    //import {mask} from 'vue-the-mask'
     import ErrorHelper from "../utils/ErrorHelper";
 
     export default {
         props:['companyUid'],
         mixins: [ErrorHelper],
-        directives: {mask},
-        data() {
-            return {
+       // directives: {mask},
+        data(){
+            return{
                 model: {
-                    name: '',
-                    tel: '380',
+                    tel: '+380',
                     password: ''
                 },
                 modelValidations: {
-                    name: {
-                        required: true,
-                        min:2,
-                    },
                     tel: {
                         required: true,
-                        min: 19,
-                        max: 19
+                        min: 13,
+                        max: 13
                     },
                     password: {
                         required: true,
@@ -102,7 +88,7 @@
                 this.$validator.validateAll().then(isValid => {
                     if (isValid) {
                         if(this.whatIsWrongWithNumber() === false){
-                            this.register()
+                            this.login()
                         }
 
                     }
@@ -110,36 +96,26 @@
             },
             prepareData() {
                 return {
-                    name: this.model.name,
                     phone: this.model.tel.replace(/[^\d]/g, ''),
                     password: this.model.password,
                     companyUid: this.companyUid
                 }
             },
-            register() {
-
-                this.$emit('wannaCloseModal')
-                axios.post('/register-again', this.prepareData())
+            login() {
+                this.$emit('wannaCloseModal');
+                axios.post('/login-again', this.prepareData())
                     .then(response => {
-                        localStorage.tel = this.model.tel;
-                        this.model = { name: '', tel: '380', password: ''};
+                        this.model = { tel: '', password: ''};
                         this.$validator.reset();
-                        // this.$refs.goRegister.reset();
-                        // this.$refs.goRegister[0].remove();
-                        // this.$refs.goRegister[0].remove();
-                        // this.$refs.goRegister[0].remove();
-                        this.$refs.goRegister.submit();
-
-                        //this.$emit('userRegistered');
+                        this.$refs.goLogin.submit();
                         this.$notify({
-                            message: this.trans('Welcome aboard!'),
+                            message: this.trans('Successfully logged'),
                             type: 'success'
                         });
 
                     })
                     .catch(error => {
-                        this.$emit('wannaOpenModal')
-
+                        this.$emit('wannaOpenModal');
                         this.interfereValidatorMessage = error.response.data.message;
                         this.interfereValidator = true;
                         this.hideInterfereValidator();
@@ -148,7 +124,7 @@
 
             },
             whatIsWrongWithNumber() {
-                let num = this.model.tel.replace(/[^\d]/g, '')
+                let num = this.model.tel.replace(/[^\d]/g, '');
                 let enteredNum = num.slice(0, 5);
                 if (this.uaNumbers.includes(enteredNum) == false) {
                     this.interfereValidator = true

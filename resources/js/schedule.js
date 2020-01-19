@@ -12,7 +12,7 @@ import GlobalComponents from './globalComponents';
 import VueNotify from 'vue-notifyjs';
 import VeeValidate, {Validator} from 'vee-validate';
 import ru from 'vee-validate/dist/locale/ru';
-import PublicSchedule  from './components/PublicSchedule';
+import PublicSchedule  from './components/Calendar/PublicSchedule';
 import VueLoading from 'vuejs-loading-plugin';
 import VueSweetalert2 from 'vue-sweetalert2';
 

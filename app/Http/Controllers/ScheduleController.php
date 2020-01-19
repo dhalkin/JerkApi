@@ -54,15 +54,16 @@ class ScheduleController extends Controller
     
     /**
      * @param Request $request
+     * @param companyId $companyId
      */
-    public function events(Request $request)
+    public function events(Request $request, $companyId)
     {
         $data = [];
     
         $now =  Carbon::now();
         $weekStart = $request->get('start'); //Carbon::now()->startOfWeek();
         $weekEnd = $request->get('stop'); //Carbon::now()->endOfWeek();
-        
+        $company = Company::where('unique_id', $companyId)->firstOrFail();
         $events = Event::with(['group','hall', 'attemptUsers'])->where('start', '>=', $weekStart)
             ->where('finish', '<=', $weekEnd)->get();
     
@@ -90,6 +91,11 @@ class ScheduleController extends Controller
        
         $data['events'] = EventResource::collection($events);
         $data['csrf'] = $request->session()->token();
+        $data['companyRules'] = [
+            'last_call_hours' => $company->last_call_hours,
+            'refuse_in_hours'=>$company->refuse_in_hours,
+            'rules'=> nl2br($company->rules)
+        ];
         
         return response()->json($data);
     }

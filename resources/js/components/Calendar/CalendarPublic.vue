@@ -56,6 +56,8 @@
                     :columnHeaderFormat="columnHeaderFormat"
                     :nowIndicator="nowIndicator"
                     :views="views"
+                    :timeZone="companyTimezone"
+                    :displayEventEnd="displayEventEnd"
                     @eventRender="eventRender"
                     @eventClick="eventClick"
                     @viewSkeletonRender="viewSkeletonRender"
@@ -110,6 +112,7 @@
                 height: 'auto',
                 handleWindowResize: true,
                 header: false,
+                displayEventEnd: false,
                 views: {
                     timeGridWeek: {
                         type: 'timeGrid',
@@ -142,7 +145,7 @@
         },
         methods: {
             windowResize(view){
-                console.log(this.$refs.fullCalendar.getApi().getOption('aspectRatio'));
+                this.$refs.fullCalendar.getApi().setOption('contentHeight', window.innerHeight-100);
             },
             calendarNext(){
                 this.$refs.fullCalendar.getApi().next();
@@ -156,41 +159,48 @@
                     document.getElementById('toggleWeek').classList.remove("active");
                     this.$refs.fullCalendar.getApi().changeView('agendaTwoDay');
                     this.$refs.fullCalendar.getApi().setOption('contentHeight', window.innerHeight-100); // minus header
-
                 }else{
-                    if (window.innerWidth <= 800) {
-                        this.$refs.fullCalendar.getApi().setOption('columnHeaderFormat',
-                            {
-                                weekday:'short',
-                                day: 'numeric'
-                            }
-                        );
-                    }
                     document.getElementById('toggleWeek').classList.add("active");
                     document.getElementById('toggleTwoDays').classList.remove("active");
                     this.$refs.fullCalendar.getApi().changeView('timeGridWeek');
+                }
+                this.calendarAjustHeight();
+
+            },
+            calendarAjustHeight(){
+                if (window.innerWidth <= 800) {
+                    this.$refs.fullCalendar.getApi().setOption('columnHeaderFormat',
+                        {
+                            weekday:'short',
+                            day: 'numeric'
+                        }
+                    );
+                }else{
+                    this.$refs.fullCalendar.getApi().setOption('columnHeaderFormat',
+                        {
+                            weekday:'long',
+                            day: 'numeric'
+                        }
+                    );
                 }
             },
             // call for ini
             datesRender(info){
                 this.$emit('range-changed', {start: info.view.currentStart, stop: info.view.currentEnd});
                 this.newHeaderTitle = info.view.title;
-                console.log('render')
-                console.log(window.innerWidth);
-                console.log(window.innerHeight);
             },
             viewSkeletonRender(info){
 
             },
             eventRender(info) {
-
                 let title = (info.event._def.extendedProps.personalStatus) ? '<span class="check text-success"><i class="nc-icon nc-check-2"></i></span>' : '';
                     title += '<span class="group">' + info.event.title + '</span><br>';
-                    title += '<span class="hall">' + info.event._def.extendedProps.hall + '</span><br>';
+                   // title += '<span class="hall">' + info.event._def.extendedProps.hall + '</span><br>';
+                    title += '<span class="hall">' + info.event._def.extendedProps.hallAddress + '</span><br>';
 
                 if(lastCallDate > info.event._instance.range.start){
                     info.el.style.backgroundColor = "";
-                    info.el.style.border = "1px solid gray";
+                    info.el.style.border = "1px solid silver";
                     info.el.classList.add("expired-event");
                 }else{
                     title += '<span class="people-stats">' + this.trans('Places left') + ' : ' + info.event._def.extendedProps.peopleStats + '</span>';
@@ -229,7 +239,7 @@
                     confirmButtonClass: (userChecked) ? 'btn btn-danger btn-fill' : 'btn btn-success btn-fill',
                     cancelButtonClass: 'btn btn-warning btn-fill',
                     confirmButtonText: (userChecked) ? this.trans('I want to cancel my visit') : this.trans('Yes, I want to join'),
-                    cancelButtonText: (userChecked) ? this.trans('Close') : this.trans('Cancel'),
+                    cancelButtonText: (!userChecked && lastCallDate <= info.event._instance.range.start) ? this.trans('Cancel') : this.trans('Close'),
                     buttonsStyling: true,
                     reverseButtons: true,
                     showConfirmButton: (lastCallDate <= info.event._instance.range.start) && this.userName,

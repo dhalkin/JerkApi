@@ -16,7 +16,7 @@ class CreateHalls extends Migration
         Schema::create('halls', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('unique_id', 32)->unique();
-            $table->bigInteger('company_id')->unsigned();
+            $table->bigInteger('company_id')->unsigned()->nullable();
             $table->string('name', 99);
             $table->string('address')->nullable();
             $table->boolean('active')->default(true);
@@ -28,7 +28,7 @@ class CreateHalls extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies')
-                ->onDelete('CASCADE');
+                ->onDelete('SET NULL');
         });
     }
 

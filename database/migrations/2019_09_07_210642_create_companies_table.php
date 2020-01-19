@@ -15,7 +15,7 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->string('unique_id', 32)->unique();
             $table->string('name', 96);
             $table->string('city', 96)->nullable();
@@ -24,6 +24,9 @@ class CreateCompaniesTable extends Migration
             $table->string('address',96)->nullable();
             $table->string('timezone', 96)->nullable();
             $table->text('about')->nullable();
+            $table->tinyInteger('last_call_hours')->nullable();
+            $table->tinyInteger('refuse_in_hours')->nullable();
+            $table->text('rules')->nullable();
             $table->timestamps();
 
         });
@@ -32,7 +35,7 @@ class CreateCompaniesTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('CASCADE');
+                ->onDelete('SET NULL');
         });
     }
 
