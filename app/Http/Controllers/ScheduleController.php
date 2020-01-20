@@ -66,7 +66,9 @@ class ScheduleController extends Controller
         $weekStart = $request->get('start'); //Carbon::now()->startOfWeek();
         $weekEnd = $request->get('stop'); //Carbon::now()->endOfWeek();
         $company = Company::where('unique_id', $companyId)->firstOrFail();
-        $events = Event::with(['group','hall', 'attemptUsers'])->where('start', '>=', $weekStart)
+        $events = Event::with(['group','hall', 'attemptUsers'])
+            ->where('company_id', '=', $company->id)
+            ->where('start', '>=', $weekStart)
             ->where('finish', '<=', $weekEnd)->get();
     
         $user = Auth::guard('web2')->user();

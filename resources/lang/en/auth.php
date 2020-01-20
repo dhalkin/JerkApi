@@ -12,7 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
+    'timetable' => 'Timetable',
     'only_logged' => 'Logged users only',
     'already_attempt' => 'You are already signed for this event',
     'failed' => 'These credentials do not match our records.',
