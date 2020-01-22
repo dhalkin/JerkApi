@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     
-    
     <!-- fonts -->
     <link href="{{ asset('css/montseratt.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/awesome.css') }}" rel="stylesheet" />

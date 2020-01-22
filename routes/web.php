@@ -17,7 +17,7 @@ Route::get('/', function () {
 });
 
 //Auth::routes();
-Auth::routes(['reset' => false, 'verify' => false, 'register'=> false]);
+Auth::routes(['reset' => false, 'verify' => false, 'register'=> true]);
 
 Route::post('login-again', 'Auth\LoginAgainController@login')->name('login-again');
 Route::post('logout-again', 'Auth\LoginAgainController@logout');

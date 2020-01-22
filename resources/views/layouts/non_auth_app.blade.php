@@ -5,91 +5,82 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-  
+    <!-- fonts -->
     <link href="{{ asset('css/montseratt.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/awesome.css') }}" rel="stylesheet" />
-    
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/paper-dashboard.css') }}" rel="stylesheet" />
     
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    
 </head>
-<body class="">
+<body>
     <!-- Application -->
-    <div class="wrapper">
-<!--        <flash-message transition-name="flash-transition" class="flashpool"></flash-message>-->
-        <div class="sidebar" data-color="brown" data-active-color="danger">
-            <div class="sidebar-wrapper">
-                <div class="logo text-md-center font-weight-bold">
-                    <a href="{{ url('/') }}" class="simple-text logo-normal">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+    <div class="login-page">
+        
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute" style="margin-bottom: 2px; margin-top: 2px;">
+            <div class="container-fluid">
+                <div class="navbar-wrapper">
+                    <a href="#pablo" class="navbar-brand">SportStation.club</a>
                 </div>
-                <!--  -->
-                <ul class="nav">
-                    @if (Route::has('login'))
-                    <li class="{{ Request::is('login') ? 'active' : '' }}">
-                        <a href="{{ route('login') }}">
-                            <i class="nc-icon nc-single-02"></i>
-                            <p>{{ __('Login') }}</p>
-                        </a>
-                    </li>
-                    @endif
-                    @if (Route::has('register'))
-                    <li class="{{ Request::is('register') ? 'active' : '' }}">
-                        <a href="{{ route('register') }}">
-                            <i class="nc-icon nc-user-run"></i>
-                            <p>{{ __('Register') }}</p>
-                        </a>
-                    </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
+                <div id="navigation" class="collapse navbar-collapse justify-content-end show navbar-right">
+                    <ul class="navbar-nav">
+                        @if (Route::has('login') && !Request::is('login'))
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" class="nav-link">
+                                <i class="nc-icon nc-single-02"></i>
+                                {{ __('Login') }}
+                            </a>
+                        </li>
+                        @endif
+                        @if (Route::has('register') && !Request::is('register'))
+                        <li class="nav-item">
+                            <a href="{{ route('register') }}" class="nav-link">
+                                <i class="nc-icon nc-user-run"></i>
+                                {{ __('Register') }}
+                            </a>
+                        </li>
+                        @endif
 
-        <div class="main-panel">
-            <!-- Top Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-                <div class="container-fluid">
-                    
-                    <div class="navbar-wrapper">
-                        <!-- for mobile fiew -->
-                        <div class="navbar-toggle">
-                            <button type="button" class="navbar-toggler">
-                                <span class="navbar-toggler-bar bar1"></span>
-                                <span class="navbar-toggler-bar bar2"></span>
-                                <span class="navbar-toggler-bar bar3"></span>
-                            </button>
-                        </div>
-                        <span class="navbar-brand">{{ __('You need to log in to continue')}}</span>
-                    </div>
-                    <div class="navbar-wrapper justify-content-end">
-                        <a class="ml-2" href="/lang/ru">Ru</a>
-                        <a class="ml-2" href="/lang/en">En</a>
-                    </div>
-                    
+                    </ul>
                 </div>
-            </nav>
-            <!-- End Navbar -->
-  
-            <div class="content">
+            </div>
+        </nav>
+    
+        <div class="wrapper wrapper-full-page">
+        <div class="full-page login-page section-image">
+            
+            <div class="content" style="padding-top: 10vh">
                     @yield('content')
             </div>
     
-            <footer class="footer footer-black">
+            <footer class="footer footer-black footer-white">
                 <div class="container-fluid">
-                    <div class="pull-left">
-                        <a class="" href="{{ url('/') }}">{{ __('Back')}}</a>
-                    </div>
-                    <div class="copyright pull-right">
-                        &copy; 2019 made with <i class="fa fa-heart heart"></i>
+                    <div class="row">
+                        <nav class="footer-nav">
+                            <ul>
+                                <li>
+<!--                                    <a href="https://www.creative-tim.com" target="_blank" rel="noopener">Creative Tim</a>-->
+                                </li>
+                                <li>
+                                </li>
+                                <li>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="credits ml-auto">
+                            <div class="copyright">
+                                &copy; SportStation
+                                <i class="fa fa-heart heart"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </footer>
-            
+<!--            <div class="full-page-background" style="background-image: url(static/img/background/background-2.jpg) "></div>-->
+        
+        </div>
         </div>
         
     </div>

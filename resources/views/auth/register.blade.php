@@ -2,10 +2,11 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+    <div class="col-lg-8 col-md-8 ml-auto mr-auto">
+        <div class="card">
+                <div class="card-header text-center" style="font-size: 1.714em; margin-top: 2px; margin-bottom: 2px;">
+                    {{ __('Register') }}
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -62,16 +63,20 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+    
+                                <a class="btn btn-link" href="{{ route('login') }}">
+                                    {{ __('Or login with your account') }}
+                                </a>
                             </div>
                         </div>
                     </form>
                 </div>
+            
             </div>
-        </div>
     </div>
 </div>
 @endsection
