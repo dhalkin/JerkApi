@@ -6,7 +6,10 @@ const Overview = () => import(/* webpackChunkName: "widgets" */ '../components/D
 const Widgets = () => import(/* webpackChunkName: "widgets" */ '../components/Dashboard/Views/Dashboard/Widgets.vue')
 
 // Pages
-import User from '../components/Dashboard/Views/Pages/UserProfile.vue'
+import User from '../components/App/UserProfile.vue'
+import UserCompany from "../components/App/UserCompany.vue"
+
+//import User from '../components/Dashboard/Views/Pages/Forms.vue'
 import TimeLine from '../components/Dashboard/Views/Pages/TimeLinePage.vue'
 import Login from '../components/Dashboard/Views/Pages/Login.vue'
 import Register from '../components/Dashboard/Views/Pages/Register.vue'
@@ -28,13 +31,13 @@ const ValidationForms = () => import(/* webpackChunkName: "forms" */ '../compone
 const Wizard = () => import(/* webpackChunkName: "forms" */ '../components/Dashboard/Views/Forms/Wizard.vue');
 
 // TableList pages
-const RegularTables = () => import(/* webpackChunkName: "tables" */ '../components/Dashboard/Views/Tables/RegularTables.vue');
-const ExtendedTables = () => import(/* webpackChunkName: "tables" */ '../components/Dashboard/Views/Tables/ExtendedTables.vue');
-const PaginatedTables = () => import(/* webpackChunkName: "tables" */ '../components/Dashboard/Views/Tables/PaginatedTables.vue');
+const RegularTables = () => import(/* webpackChunkName: "tables" */ '../components/Dashboard/Views/Tables/RegularTables.vue')
+const ExtendedTables = () => import(/* webpackChunkName: "tables" */ '../components/Dashboard/Views/Tables/ExtendedTables.vue')
+const PaginatedTables = () => import(/* webpackChunkName: "tables" */ '../components/Dashboard/Views/Tables/PaginatedTables.vue')
 // Maps pages
 const GoogleMaps = () => import(/* webpackChunkName: "maps" */ '../components/Dashboard/Views/Maps/GoogleMaps.vue')
 const FullScreenMap = () => import(/* webpackChunkName: "maps" */ '../components/Dashboard/Views/Maps/FullScreenMap.vue')
-const VectorMaps = () => import(/* webpackChunkName: "maps" */ '../components/Dashboard/Views/Maps/VectorMapsPage.vue');
+const VectorMaps = () => import(/* webpackChunkName: "maps" */ '../components/Dashboard/Views/Maps/VectorMapsPage.vue')
 
 // Calendar
 import Calendar from '../components/Dashboard/Views/Calendar/CalendarRoute.vue'
@@ -84,6 +87,7 @@ let componentsMenu = {
 
   ]
 }
+
 let formsMenu = {
   path: '/forms',
   component: DashboardLayout,
@@ -175,6 +179,24 @@ let pagesMenu = {
   ]
 }
 
+let userMenu = {
+  path: '/user',
+  component: DashboardLayout,
+  redirect: '/user/profile',
+  children: [
+    {
+      path: 'profile',
+      name: 'User Profile',
+      component: User
+    },
+    {
+      path: 'company',
+      name: 'User Company',
+      component: UserCompany
+    }
+  ]
+}
+
 let loginPage = {
   path: '/login',
   name: 'Login',
@@ -236,6 +258,7 @@ const routes = [
       }
     ]
   },
+  userMenu,
   {path: '*', component: NotFound}
 ];
 

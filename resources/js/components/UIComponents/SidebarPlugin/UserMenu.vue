@@ -1,12 +1,12 @@
 <template>
   <div class="user">
     <div class="photo">
-      <img src="/static/img/faces/face-2.jpg" alt="user avatar"/>
+      <img src="/static/img/faces/face-0.jpg" alt="user avatar"/>
     </div>
     <div class="info">
       <a data-toggle="collapse" :aria-expanded="!isClosed" @click="toggleMenu" href="#">
          <span>
-           Chet Faker
+           {{userName}}
            <b class="caret"></b>
         </span>
       </a>
@@ -15,22 +15,16 @@
         <collapse-transition>
           <ul class="nav nav-menu" v-show="!isClosed">
             <li>
-              <a href="#">
+              <router-link  name="User profile" to="/user/profile">
                 <span class="sidebar-mini-icon">Mp</span>
-                <span class="sidebar-normal">My Profile</span>
-              </a>
+                <span class="sidebar-normal" v-text="trans('My Profile')"></span>
+              </router-link>
             </li>
             <li>
-              <a href="#">
-                <span class="sidebar-mini-icon">Ep</span>
-                <span class="sidebar-normal">Edit Profile</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span class="sidebar-mini-icon">S</span>
-                <span class="sidebar-normal">Settings</span>
-              </a>
+              <router-link  name="User Company" to="/user/company">
+                <span class="sidebar-mini-icon">Mc</span>
+                <span class="sidebar-normal" v-text="trans('My Company')"></span>
+              </router-link>
             </li>
           </ul>
         </collapse-transition>
@@ -47,7 +41,8 @@
     },
     data() {
       return {
-        isClosed: true
+        isClosed: true,
+        userName: this.$root.userName
       }
     },
     methods: {

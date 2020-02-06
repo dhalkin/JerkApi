@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ __('SportStation - Welcome') }}</title>
+        <title>{{ __('Manage your business') }}</title>
 
         <!-- Scripts -->
         <script src="{{ asset('js/welcome.js') }}" defer></script>

@@ -45,7 +45,7 @@ class ScheduleController extends Controller
         return view('schedule',
             [
                 "companyUid" => $uniqueId,
-                "title" => $company->name . ' - ' . trans('timetable'),
+                "title" => $company->name . ' - ' . trans('auth.timetable'),
                 "companyName"=> $company->name,
                 "companyTimezone"=> $company->timezone
             ]);

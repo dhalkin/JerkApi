@@ -40,6 +40,7 @@
         "nprogress": "^0.2.0",
         "perfect-scrollbar": "0.7.1",
         "sweetalert2": "^6.11.4",
+        "theme-chalk": "^1.0.0-dev.9",
         "throttle": "^1.0.3",
         "vee-validate": "^2.2.15",
         "vue-chartjs": "^3.5.0",

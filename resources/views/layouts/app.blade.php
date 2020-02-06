@@ -16,6 +16,12 @@
     
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="company-uid" content="{{ $companyUid }}">
+    <meta name="company-name" content="{{ $companyName }}">
+    <meta name="user-name" content="{{ $userName }}">
+    <meta name="secret" content="{{ $apiToken }}">
+    
+    <title>{{ $title }}</title>
     
 </head>
 <body>

@@ -12,6 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'management' => 'Management',
     'timetable' => 'Timetable',
     'only_logged' => 'Logged users only',
     'already_attempt' => 'You are already signed for this event',

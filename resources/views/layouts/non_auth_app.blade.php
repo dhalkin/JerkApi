@@ -61,7 +61,6 @@
                         <nav class="footer-nav">
                             <ul>
                                 <li>
-<!--                                    <a href="https://www.creative-tim.com" target="_blank" rel="noopener">Creative Tim</a>-->
                                 </li>
                                 <li>
                                 </li>
@@ -78,7 +77,7 @@
                     </div>
                 </div>
             </footer>
-<!--            <div class="full-page-background" style="background-image: url(static/img/background/background-2.jpg) "></div>-->
+<!--            <div class="full-page-background" style="background-image: url(/static/img/background/background-2.jpg) "></div>-->
         
         </div>
         </div>

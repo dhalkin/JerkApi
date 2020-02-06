@@ -5,13 +5,13 @@
     <div class="logo">
       <a class="simple-text logo-mini"
          aria-label="sidebar mini logo"
-         href="https://www.creative-tim.com/product/vue-paper-dashboard-2-pro">
+         href="/">
           <div class="logo-img">
               <img :src="logo" alt="">
           </div>
       </a>
       <a class="simple-text logo-normal"
-         href="https://www.creative-tim.com/vue-paper-dashboard-2-pro">
+         href="">
           {{ title }}
       </a>
     </div>
@@ -42,7 +42,7 @@
     props: {
       title: {
         type: String,
-        default: 'Vue PDP Pro',
+        default: 'Sportstation',
         description: 'Sidebar title'
       },
       backgroundColor: {

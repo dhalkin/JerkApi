@@ -1,5 +1,17 @@
 const mix = require('laravel-mix');
 
+// mix.webpackConfig({
+//     module: {
+//         rules: [{
+//             test: /node_modules(\/|\\)(lightgallery\.js|lg-[a-z0-9]+\.js)(\/|\\).+\.js$/,
+//             use: [{
+//                 loader: 'babel-loader',
+//                 options: mix.config.babel()
+//             }]
+//         }]
+//     }
+// });
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -23,9 +35,9 @@ const mix = require('laravel-mix');
     //implementation: require('node-sass')
 //});
 
-mix.js('resources/js/main.js', 'public/js');
+mix.js('resources/js/main.js', 'public/js/main.js');
 
-mix.js('resources/js/schedule.js', 'public/js');
+//mix.js('resources/js/schedule.js', 'public/js');
 
 // mix.js('resources/js/app.js', 'public/js')
 //     .sass('resources/sass/app.scss', 'public/css');

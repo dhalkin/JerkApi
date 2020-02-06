@@ -16,10 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/webapp', function () {
-    //return redirect('login');
-    return view('home');
-})->middleware('auth');
+Route::get('/webapp', 'HomeController@index');
 
 //Auth::routes();
 Auth::routes(['reset' => false, 'verify' => false, 'register'=> true]);

@@ -12,7 +12,7 @@
 
         </navbar-toggle-button>
       </div>
-      <a class="navbar-brand" href="#pablo">SportStation.club</a>
+      <span class="navbar-brand">{{companyName}}</span>
     </div>
 
     <template slot="navbar-menu">
@@ -21,49 +21,20 @@
         <input type="hidden" name="_token" v-bind:value="csrf">
       </form>
 
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link btn-magnify" href="#pablo">
-            <i class="nc-icon nc-layout-11"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Stats</span>
-            </p>
-          </a>
-        </li>
-        <drop-down icon="nc-icon nc-bell-55" tag="li"
-                   position="right"
-                   direction="none"
-                   class="nav-item btn-rotate dropdown">
-          <a slot="title"
-             slot-scope="{isOpen}"
-             class="nav-link dropdown-toggle"
-             data-toggle="dropdown"
-             aria-haspopup="true"
-             :aria-expanded="isOpen">
-            <i class="nc-icon nc-bell-55"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Some Actions</span>
-            </p>
-          </a>
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </drop-down>
-        <li class="nav-item">
-          <a class="nav-link btn-rotate" href="#pablo">
-            <i class="nc-icon nc-settings-gear-65"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Account</span>
-            </p>
-          </a>
-        </li>
-      </ul>
-      <p-button type="primary" size="sm" @click="logout">Exit</p-button>
+<!--      <p-button type="primary" size="sm" @click="logout">Exit</p-button>-->
+      <a class="nav-link btn-magnify" href="#" @click="logout">
+        <i class="nc-icon nc-button-power"></i>
+        <p>
+          <span class="d-lg d-md-block" v-text="trans('Logout')"></span>
+        </p>
+      </a>
+
     </template>
   </navbar>
 </template>
 <script>
   import { Navbar, NavbarToggleButton } from '../../../components/UIComponents'
+  import swal from 'sweetalert2'
 
   export default {
     refs:['logoutForm'],
@@ -76,12 +47,31 @@
         activeNotifications: false,
         showNavbar: false,
         csrf: this.$root.csrf,
+        companyName: this.$root.companyName
       }
     },
     methods: {
       logout() {
-        this.$refs.logoutForm.submit();
-        //console.log(this.$root.csrf)
+        swal({
+          title: this.trans('Want to log out?'),
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonClass: 'btn btn-success btn-fill',
+          cancelButtonClass: 'btn btn-danger btn-fill',
+          confirmButtonText: this.trans('Yes, good to go!'),
+          cancelButtonText: this.trans('Cancel'),
+          buttonsStyling: true,
+          reverseButtons: true,
+        }).then(result => {
+          if (result) {
+            axios.get('/session')
+                    .then(response => response.data)
+                    .then(data => {
+                      this.csrf = data.csrf
+                      this.$refs.logoutForm.submit();
+                    });
+          }
+        })
       },
       capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
