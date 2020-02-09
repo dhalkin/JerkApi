@@ -42,7 +42,7 @@ class HomeController extends Controller
     public function welcome()
     {
         
-        $companies = Company::where('public-available', true)->get();
+        $companies = Company::where('public_available', true)->get();
     
         return view('welcome',
             [

@@ -70,9 +70,14 @@
                 <h4 class="title ml-3">{{trans('Visit Calendar Settings')}}</h4>
                 <div class="row">
                     <label class="col-md-9 col-form-label text-right">{{trans('Online Calendar')}}</label>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-3 form-group text-right">
                         <p-switch v-model="company.public_available" type="primary" :on-text="switches.on" :off-text="switches.off"></p-switch>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">{{trans('Link to your calendar')}}</div>
+                    <div class="col-8 text-muted badge badge-warning text-wrap mb-2 p-1">https://sportstation.club/company{{company.unique_id}}/public-schedule</div>
+                    <div class="col-1"><a href="#" @click.prevent="clickCopyUrl"><i class="fa fa-copy"></i></a></div>
                 </div>
                 <div class="row">
                     <label class="col-md-9 col-form-label text-right">{{trans('Last call in')}}</label>
@@ -137,6 +142,7 @@
         data() {
             return {
                 company: {
+                    unique_id:'',
                     name: '',
                     address: '',
                     country: '',
@@ -214,6 +220,9 @@
                 });
         },
         methods: {
+            clickCopyUrl() {
+
+            },
             getError(fieldName) {
                 return this.errors.first(fieldName)
             },

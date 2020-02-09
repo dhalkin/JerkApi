@@ -62,12 +62,13 @@
     "City": "Город",
     "Country": "Страна",
     "Postal Code": "Индекс",
-    "Visit Calendar Settings": "Настройки календаря посещений",
+    "Visit Calendar Settings": "Настройки календаря занятий",
     "Last call in": "Записаться на занятие возможно не позже чем за",
     "Cancel visit in": "Отменить свой визит возможно не позже чем за",
     "Class entry rules": "Правила записи на занятия студии",
     "About Company": "Про компанию",
     "Manage your business": "Управляй своим бизнесом",
     "Easy manage your sport business": "Easy manage your sport business",
-    "Available schedules": "Расписания On-line"
+    "Available schedules": "Расписания On-line",
+    "Dashboard": "Дашборд"
 }
