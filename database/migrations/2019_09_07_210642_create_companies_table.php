@@ -27,6 +27,7 @@ class CreateCompaniesTable extends Migration
             $table->tinyInteger('last_call_hours')->nullable();
             $table->tinyInteger('refuse_in_hours')->nullable();
             $table->text('rules')->nullable();
+            $table->boolean('public_available')->default(false);
             $table->timestamps();
 
         });

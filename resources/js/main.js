@@ -59,7 +59,7 @@ import initProgress from './progressbar';
 import routes from './routes/routes'
 
 // Style imports
-import '../assets/sass/paper-dashboard-new.scss'
+import '../assets/sass/paper-dashboard.scss'
 import '../assets/sass/demo.scss'
 
 import sidebarLinks from './sidebarLinks'

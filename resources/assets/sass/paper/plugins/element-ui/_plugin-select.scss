@@ -66,14 +66,15 @@
       background-color: $color;
       color: white;
     }
-  }
 
-  &.el-select-dropdown.is-multiple
-  .el-select-dropdown__item.selected{
-    &.select-#{$type}{
-      color: $color;
+    &.el-select-dropdown.is-multiple
+    .el-select-dropdown__item.selected{
+      &.select-#{$type}{
+        color: $color;
+      }
     }
   }
+
 }
 
 .el-select .el-input {

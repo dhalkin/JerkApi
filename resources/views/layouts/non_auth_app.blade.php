@@ -12,7 +12,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/paper-dashboard.css') }}" rel="stylesheet" />
     
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ __('Login or Register') }}</title>
     
 </head>
 <body>
@@ -22,7 +22,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute" style="margin-bottom: 2px; margin-top: 2px;">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a href="#pablo" class="navbar-brand">SportStation.club</a>
+                    <a href="/" class="navbar-brand">SportStation.club</a>
                 </div>
                 <div id="navigation" class="collapse navbar-collapse justify-content-end show navbar-right">
                     <ul class="navbar-nav">

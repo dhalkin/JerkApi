@@ -67,8 +67,14 @@
                     </div>
                 </div>
 
+                <h4 class="title ml-3">{{trans('Visit Calendar Settings')}}</h4>
                 <div class="row">
-                    <h4 class="title ml-3">{{trans('Visit Calendar Settings')}}</h4>
+                    <label class="col-md-9 col-form-label text-right">{{trans('Online Calendar')}}</label>
+                    <div class="col-md-3 form-group">
+                        <p-switch v-model="company.public_available" type="primary" :on-text="switches.on" :off-text="switches.off"></p-switch>
+                    </div>
+                </div>
+                <div class="row">
                     <label class="col-md-9 col-form-label text-right">{{trans('Last call in')}}</label>
                     <div class="col-md-3 form-group">
                         <b-form-select v-model="company.last_call_hours" :options="selects.lastCalls"></b-form-select>
@@ -120,11 +126,13 @@
 
     import {BFormSelect} from 'bootstrap-vue'
     import ErrorHelper from '../../utils/ErrorHelper'
+    import PSwitch from '../../../components/UIComponents/Switch.vue'
 
     export default {
         mixins: [ErrorHelper],
         components: {
-            BFormSelect
+            BFormSelect,
+            PSwitch
         },
         data() {
             return {
@@ -138,7 +146,8 @@
                     last_call_hours: '',
                     refuse_in_hours: '',
                     rules: '',
-                    timezone: ''
+                    timezone: '',
+                    public_available: false
                 },
                 companyValidations: {
                     name: {
@@ -173,6 +182,10 @@
                         {value: '8', text: this.trans('8 hours')},
                         {value: '4', text: this.trans('4 hours')}
                     ]
+                },
+                switches: {
+                    on: this.trans('ON'),
+                    off: this.trans('OFF')
                 }
             }
         },
@@ -232,10 +245,4 @@
 
         },
     }
-
 </script>
-<style>
-    .el-select {
-        width: 100%;
-    }
-</style>

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class CompanyTableSeeder extends Seeder
 {
@@ -23,6 +24,9 @@ class CompanyTableSeeder extends Seeder
             'api_token' => Str::random(60),
             'active' => 1
         ]);
+    
+        $dt = Carbon::now();
+        $dateNow = $dt->toDateTimeString();
         
         DB::table('companies')->insert([
             'user_id' => 1,
@@ -35,19 +39,16 @@ class CompanyTableSeeder extends Seeder
             'timezone' => 'Europe/Kiev',
             'last_call_hours'=> 3,
             'refuse_in_hours' => 8,
-            'rules' => '
-<ul>
-<li>Запись - не позже, чем за 3 часа до начала занятия</li>
+            'created_at' => $dateNow,
+            'about' => 'Что-то презентативное, короткий текст в две-три строки.
+Деятельность.',
+            'rules' => '- Запись - не позже, чем за 3 часа до начала занятия.
+- Отмена записи - не позже, чем за 8 часов до начала занятия (в противном случае оплата за занятие сгорает).
+- Абонемент действует 1 календарный месяц от даты покупки без заморозок.
 
-<li>Отмена записи - не позже, чем за 8 часов до начала занятия (в противном случае оплата за занятие сгорает)</li>
-
-<li>Абонемент действует 1 календарный месяц от даты покупки без заморозок.</li>
-</ul>
-<p>
 Вопросы, админ: 099 000-00-00
-</p>
-<p>До встречи на занятиях:)</p>
-'
+
+До встречи на занятиях:)'
         ]);
     }
 }

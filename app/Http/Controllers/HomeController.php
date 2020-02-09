@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\ORM\Model\Company;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['welcome']]);
+        
     }
 
     /**
@@ -34,6 +36,17 @@ class HomeController extends Controller
                 "userName"=> $user->first_name . ' ' . $user->last_name,
                 "apiToken"=> base64_encode($user->api_token),
                 "title" => $company->name . " - " . trans('auth.management')
+            ]);
+    }
+    
+    public function welcome()
+    {
+        
+        $companies = Company::where('public-available', true)->get();
+    
+        return view('welcome',
+            [
+                "companies" => $companies
             ]);
     }
 }

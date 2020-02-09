@@ -28,7 +28,7 @@ const mix = require('laravel-mix');
  |
  */
 //mix.sass('resources', 'output', { implementation: require('node-sass') });
-// mix.sass('resources/assets/sass/paper-dashboard-new.scss', 'public/css', {
+// mix.sass('resources/assets/sass/paper-dashboard.scss', 'public/css', {
 //     implementation: require('node-sass')
 // });
 //mix.sass('resources/assets/sass/demo.scss', 'public/css', {
@@ -45,7 +45,7 @@ mix.js('resources/js/main.js', 'public/js/main.js');
 mix.js('resources/js/welcome.js', 'public/js')
     .sass('resources/sass/welcome.scss', 'public/css');
 
-//mix.sass('resources/sass/paper-dashboard-new.scss', 'public/css');
+//mix.sass('resources/sass/paper-dashboard.scss', 'public/css');
 //mix.js('resources/js/non-auth-app.js', 'public/js');
 
 mix.copyDirectory('resources/css', 'public/css');

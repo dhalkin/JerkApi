@@ -12,11 +12,9 @@
 */
 
 // unauthorized page
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@welcome')->name('welcome');
 
-Route::get('/webapp', 'HomeController@index');
+Route::get('/webapp', 'HomeController@index')->name('webapp');
 
 //Auth::routes();
 Auth::routes(['reset' => false, 'verify' => false, 'register'=> true]);

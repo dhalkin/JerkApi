@@ -35,6 +35,7 @@ class CompanyController extends Controller
                 'timezone' => $request->get('timezone'),
                 'last_call_hours' => $request->get('last_call_hours'),
                 'refuse_in_hours' => $request->get('refuse_in_hours'),
+                'public_available' => $request->get('public_available')
                 
             ]);
 
