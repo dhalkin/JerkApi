@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ORM\Model;
+namespace App\ORM\Model\Dance;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +10,7 @@ class Event extends Model
     public $timestamps = false;
     public $personalStatus = false;
     protected $hidden = ['id', 'company_id', 'group_id', 'hall_id'];
-    protected $table = 'events';
+    protected $table = 'dance_events';
     
     
     public function group()

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 class ColorsTableSeeder extends Seeder
 {
-    private $groups = [
+    private $dance_groups = [
         ['PowderBlue', '#B0E0E6'],
         ['SkyBlue','#87CEEB'],
         ['Lavender','#E6E6FA'],
@@ -34,7 +34,7 @@ class ColorsTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach ($this->groups as $role){
+        foreach ($this->dance_groups as $role){
             DB::table('colors')->insert([
                 'name' => $role[0],
                 'hex' => $role[1]

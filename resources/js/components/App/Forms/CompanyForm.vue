@@ -69,16 +69,34 @@
 
                 <h4 class="title ml-3">{{trans('Visit Calendar Settings')}}</h4>
                 <div class="row">
-                    <label class="col-md-9 col-form-label text-right">{{trans('Online Calendar')}}</label>
-                    <div class="col-md-3 form-group text-right">
-                        <p-switch v-model="company.public_available" type="primary" :on-text="switches.on" :off-text="switches.off"></p-switch>
+                    <label class="col-md-10 col-form-label text-right">{{trans('Online Calendar')}}</label>
+                    <div class="col-md-2 form-group text-right">
+                        <p-switch
+                                v-model="company.public_available"
+                                type="primary"
+                                :on-text="switches.on"
+                                :off-text="switches.off"
+                        ></p-switch>
                     </div>
                 </div>
+
+                <b-collapse visible id="collapse-3" v-model="company.public_available">
                 <div class="row">
-                    <div class="col-3">{{trans('Link to your calendar')}}</div>
-                    <div class="col-8 text-muted badge badge-warning text-wrap mb-2 p-1">https://sportstation.club/company{{company.unique_id}}/public-schedule</div>
-                    <div class="col-1"><a href="#" @click.prevent="clickCopyUrl"><i class="fa fa-copy"></i></a></div>
+                    <div class="col-11">
+                        <fg-input type="text"
+                                  name="link_to_calendar"
+                                  v-bind:label="trans('Link to your calendar')"
+                                  v-bind:placeholder="trans('Link to your calendar')"
+                                  v-model="link_to_calendar"
+                        >
+                        </fg-input>
+                    </div>
+                    <div class="col-1">
+                        <a href="#" @click.prevent="clickCopyUrl" style="position:absolute; top:2rem;"><i class="fa fa-copy"></i></a>
+                    </div>
                 </div>
+                </b-collapse>
+
                 <div class="row">
                     <label class="col-md-9 col-form-label text-right">{{trans('Last call in')}}</label>
                     <div class="col-md-3 form-group">
@@ -130,6 +148,7 @@
 <script>
 
     import {BFormSelect} from 'bootstrap-vue'
+    import {BCollapse} from 'bootstrap-vue'
     import ErrorHelper from '../../utils/ErrorHelper'
     import PSwitch from '../../../components/UIComponents/Switch.vue'
 
@@ -137,10 +156,13 @@
         mixins: [ErrorHelper],
         components: {
             BFormSelect,
-            PSwitch
+            PSwitch,
+            BCollapse
         },
         data() {
             return {
+                visible_link: false,
+                link_to_calendar: '',
                 company: {
                     unique_id:'',
                     name: '',
@@ -195,33 +217,42 @@
                 }
             }
         },
+        watch:{
+            'company.public_available'(newValue){
+
+            }
+        },
         mounted() {
             // enable editor
 
             // get company
             axios.get('/api/company') // , {withCredentials: true}
                 .then(response => {
+                   // let pa = response.data.public_available;
                     this.company = response.data;
-
-                    // if (
-                    //     typeof response.data.timezone === 'undefined' ||
-                    //     !response.data.timezone
-                    // ) {
-                    //     this.company.timezone = this.uiTimezone;
-                    // }
-                    // this.updateTime();if (
-                    //     typeof response.data.timezone === 'undefined' ||
-                    //     !response.data.timezone
-                    // ) {
-                    //     this.company.timezone = this.uiTimezone;
-                    // }
-                    // this.updateTime();
-
+                    this.company.public_available = Boolean(response.data.public_available);
+                    this.link_to_calendar = 'https://sportstation.club/company/' + this.company.unique_id + '/public-schedule'
                 });
         },
         methods: {
             clickCopyUrl() {
-
+                this.$copyText(this.link_to_calendar).then( e => {
+                    this.$notify({
+                        icon: 'fa fa-check',
+                        horizontalAlign: 'right',
+                        verticalAlign: 'top',
+                        type: 'success',
+                        message: this.trans('Copied'),
+                    })
+                }, e => {
+                    this.$notify({
+                        //icon: 'nc-icon nc-bell-55',
+                        horizontalAlign: 'right',
+                        verticalAlign: 'top',
+                        type: 'danger',
+                        message: this.trans('Can not copy'),
+                    })
+                })
             },
             getError(fieldName) {
                 return this.errors.first(fieldName)

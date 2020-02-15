@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Groups extends Migration
+class DanceGroups extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class Groups extends Migration
     public function up()
     {
         //
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('dance_groups', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('company_id')->unsigned()->nullable();
             $table->string('name', 99);
@@ -26,19 +26,19 @@ class Groups extends Migration
         
         });
     
-        Schema::table('groups', function($table) {
+        Schema::table('dance_groups', function($table) {
             $table->foreign('company_id')
                 ->references('id')
-                ->on('companies')
+                ->on('dance_companies')
                 ->onDelete('SET NULL');
         });
-        Schema::table('groups', function($table) {
+        Schema::table('dance_groups', function($table) {
             $table->foreign('direction_id')
                 ->references('id')
-                ->on('directions')
+                ->on('dance_directions')
                 ->onDelete('SET NULL');
         });
-        Schema::table('groups', function($table) {
+        Schema::table('dance_groups', function($table) {
             $table->foreign('color_id')
                 ->references('id')
                 ->on('colors')
@@ -53,6 +53,6 @@ class Groups extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('dance_groups');
     }
 }

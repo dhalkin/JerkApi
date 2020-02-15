@@ -18,6 +18,3 @@
   import 'vue-notifyjs/themes/default.css'
   export default {}
 </script>
-<style lang="scss">
-
-</style>

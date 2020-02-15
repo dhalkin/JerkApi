@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RolesCompanyUserTableSeeder extends Seeder
+class DanceRolesSeeder extends Seeder
 {
     private $roles = [
         'Trainer',
@@ -18,7 +18,7 @@ class RolesCompanyUserTableSeeder extends Seeder
     public function run()
     {
         foreach ($this->roles as $role){
-            DB::table('roles_company_users')->insert([
+            DB::table('dance_roles')->insert([
                 'name' => $role
             ]);
         }

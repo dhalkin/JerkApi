@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHalls extends Migration
+class DanceHalls extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,21 @@ class CreateHalls extends Migration
      */
     public function up()
     {
-        Schema::create('halls', function (Blueprint $table) {
+        Schema::create('dance_halls', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('unique_id', 32)->unique();
-            $table->bigInteger('company_id')->unsigned()->nullable();
+            $table->bigInteger('branch_id')->unsigned()->nullable();
             $table->string('name', 99);
-            $table->string('address')->nullable();
+           // $table->string('address')->nullable();
             $table->boolean('active')->default(true);
             $table->text('about')->nullable();
             
         });
     
-        Schema::table('halls', function($table) {
-            $table->foreign('company_id')
+        Schema::table('dance_halls', function($table) {
+            $table->foreign('branch_id')
                 ->references('id')
-                ->on('companies')
+                ->on('dance_branches')
                 ->onDelete('SET NULL');
         });
     }
@@ -39,6 +39,6 @@ class CreateHalls extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('halls');
+        Schema::dropIfExists('dance_halls');
     }
 }

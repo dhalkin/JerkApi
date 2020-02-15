@@ -85,6 +85,4 @@
     </div>
     <!-- End of Application -->
 </body>
-<!-- Scripts -->
-<script src="{{ asset('/js/non-auth-app.js') }}"></script>
 </html>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class EventsSeeder extends Seeder
+class DanceEventsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class EventsSeeder extends Seeder
     
         for ($x = 0; $x <= 3; $x++) {
         
-            DB::table('events')->insert([
+            DB::table('dance_events')->insert([
                 'start' => $start,
                 'finish' => $finish,
                 'group_id' => rand(1, 12),
@@ -40,7 +40,7 @@ class EventsSeeder extends Seeder
 
         for ($x = 0; $x <= 3; $x++) {
             
-            DB::table('events')->insert([
+            DB::table('dance_events')->insert([
                 'start' => $start,
                 'finish' => $finish,
                 'group_id' => rand(1, 12),
@@ -61,7 +61,7 @@ class EventsSeeder extends Seeder
     
         for ($x = 0; $x <= 3; $x++) {
         
-            DB::table('events')->insert([
+            DB::table('dance_events')->insert([
                 'start' => $start,
                 'finish' => $finish,
                 'group_id' => rand(1, 12),
@@ -74,7 +74,6 @@ class EventsSeeder extends Seeder
             $start = $start->addHours(3);
             $finish = $finish->addHours(3);
         }
-        
         
     }
 }

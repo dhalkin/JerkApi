@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DirectionsTableSeeder extends Seeder
+class DanceDirectionsSeeder extends Seeder
 {
     private $directions = [
         'Exotic pole dance',
@@ -25,7 +25,7 @@ class DirectionsTableSeeder extends Seeder
     public function run()
     {
         foreach ($this->directions as $role){
-            DB::table('directions')->insert([
+            DB::table('dance_directions')->insert([
                 'name' => $role,
                 'trainer_id' => random_int(1, 3),
                 'company_id' => FirstCompanySeeder::COMPANY_ID

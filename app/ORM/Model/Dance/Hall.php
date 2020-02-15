@@ -1,13 +1,13 @@
 <?php
 
-namespace App\ORM\Model;
+namespace App\ORM\Model\Dance;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Hall extends Model
 {
     public $timestamps = false;
-    protected $table = 'halls';
+    protected $table = 'dance_halls';
     
     protected $hidden = ['id', 'unique_id', 'company_id', 'created_at', 'updated_at'];
     

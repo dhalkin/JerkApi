@@ -5,17 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 
-        <!-- Scripts -->
-        <script src="{{ asset('js/welcome.js') }}" defer></script>
-
-        <!-- Styles -->
-        <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
         <!-- fonts -->
         <link href="{{ asset('css/montseratt.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/awesome.css') }}" rel="stylesheet" />
         <!-- Styles -->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('css/paper-dashboard.css') }}" rel="stylesheet" />
+    
+        <!-- Scripts -->
+        <script src="{{ asset('js/welcome.js') }}" defer></script>
     
         <title>{{ __('Manage your business') }}</title>
     </head>
@@ -29,15 +27,15 @@
                             <span class="h5">{{ config('app.name', 'Laravel') }}</span>
                             <span style="font-size: 1.25vw">.club</span>
                         </div>
-                        <div class="col-4 text-right">
+                        <div class="col-4 text-right font-weight-bolder invisible">
                             @if (Route::has('login'))
                     
                             @auth
-                            <a class="mr-1" href="{{ route('webapp') }}">::{{ __('Control Panel') }}</a>
+                            <a class="mr-2" href="{{ route('webapp') }}">{{ __('Control Panel') }}</a>
                             @else
-                            <a class="mr-1" href="{{ route('login') }}">::{{ __('Login') }}</a>
+                            <a class="mr-2" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
-                            <a class="mr-1" href="{{ route('register') }}">::{{ __('Register') }}</a>
+                            <a class="mr-1" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                             @endauth
                     
@@ -59,6 +57,7 @@
                         </div>
                     </div>
             
+                    
                     <div class="row">
                         <div class="col"><h4>{{ __('Available schedules')}}</h4></div>
                     </div>
@@ -77,6 +76,7 @@
                             @endforeach
                         </div>
                     </div>
+                    
         
                 </div>
             </div>

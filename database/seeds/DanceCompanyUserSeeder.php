@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class CompanyUserTableSeeder extends Seeder
+class DanceCompanyUserSeeder extends Seeder
 {
     private $directions = [
         'Trainer One',
@@ -13,9 +13,9 @@ class CompanyUserTableSeeder extends Seeder
     ];
     
     private $clients = [
-        'Client One',
-        'Client Two',
-        'Client Three'
+        'Student One',
+        'Student Two',
+        'Student Three'
     ];
     /**
      * Run the database seeds.
@@ -26,7 +26,7 @@ class CompanyUserTableSeeder extends Seeder
     {
         $i = 1;
         foreach ($this->directions as $role){
-            DB::table('company_users')->insert([
+            DB::table('dance_company_users')->insert([
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
                 'first_name' => $role,
                 'phone' => '38096666666' . ++$i,
@@ -38,11 +38,11 @@ class CompanyUserTableSeeder extends Seeder
         }
     
         foreach ($this->clients as $role){
-            DB::table('company_users')->insert([
+            DB::table('dance_company_users')->insert([
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
                 'first_name' => $role,
                 'phone' => '38096666666' . ++$i,
-                'role_id' => 1, // trainer
+                'role_id' => 2, // student
                 'password' => '$2y$10$rQZiMjlSfjCTQtqGUDTsq.WYRgKFIKUbMUArwdBA863Kp63UG3DTm', // 0000
                 'api_token' => Str::random(60),
                 'active' => 1

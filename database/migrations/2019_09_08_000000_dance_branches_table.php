@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Directions extends Migration
+class DanceBranchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,33 +13,24 @@ class Directions extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('directions', function (Blueprint $table) {
+        Schema::create('dance_branches', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('company_id')->unsigned()->nullable();
-            // preferable trainer
-            $table->bigInteger('trainer_id')->unsigned()->nullable();
             $table->string('name', 99);
+            $table->string('address');
+            $table->boolean('active')->default(true);
             $table->text('about')->nullable();
-        
+            
         });
-    
-        Schema::table('directions', function($table) {
+        
+        Schema::table('dance_branches', function($table) {
             $table->foreign('company_id')
                 ->references('id')
-                ->on('companies')
+                ->on('dance_companies')
                 ->onDelete('SET NULL');
         });
-    
-        Schema::table('directions', function($table) {
-            $table->foreign('trainer_id')
-                ->references('id')
-                ->on('company_users')
-                ->onDelete('SET NULL');
-        });
-        
     }
-
+    
     /**
      * Reverse the migrations.
      *
@@ -47,6 +38,6 @@ class Directions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('directions');
+        Schema::dropIfExists('dance_branches');
     }
 }

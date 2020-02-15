@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CompanyUsers extends Migration
+class DanceCompanyUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CompanyUsers extends Migration
      */
     public function up()
     {
-        Schema::create('company_users', function (Blueprint $table) {
+        Schema::create('dance_company_users', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('company_id')->unsigned()->nullable();
             $table->string('first_name', 96);
@@ -38,17 +38,17 @@ class CompanyUsers extends Migration
             $table->timestamps();
         });
     
-        Schema::table('company_users', function($table) {
+        Schema::table('dance_company_users', function($table) {
             $table->foreign('role_id')
                 ->references('id')
-                ->on('roles_company_users')
+                ->on('dance_roles')
                 ->onDelete('SET NULL');
         });
     
-        Schema::table('company_users', function($table) {
+        Schema::table('dance_company_users', function($table) {
             $table->foreign('company_id')
                 ->references('id')
-                ->on('companies')
+                ->on('dance_companies')
                 ->onDelete('SET NULL');
         });
     }
@@ -60,6 +60,6 @@ class CompanyUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_users');
+        Schema::dropIfExists('dance_company_users');
     }
 }

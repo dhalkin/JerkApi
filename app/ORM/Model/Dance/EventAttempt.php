@@ -1,13 +1,13 @@
 <?php
 
-namespace App\ORM\Model;
+namespace App\ORM\Model\Dance;
 
 use Illuminate\Database\Eloquent\Model;
 
 class EventAttempt extends Model
 {
     public $timestamps = true;
-    protected $table = 'event_attempts';
+    protected $table = 'dance_event_attempts';
     
     protected $fillable = ['event_id', 'company_user_id'];
     

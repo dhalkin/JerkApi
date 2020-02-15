@@ -1,12 +1,12 @@
 <?php
 
-namespace App\ORM\Model;
+namespace App\ORM\Model\Dance;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $table = 'companies';
+    protected $table = 'dance_companies';
 
     protected $hidden = ['id', 'user_id', 'created_at', 'updated_at'];
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\ORM\Model\Company;
-use App\ORM\Model\Event;
-use App\ORM\Model\EventAttempt;
+use App\ORM\Model\Dance\Company;
+use App\ORM\Model\Dance\Event;
+use App\ORM\Model\Dance\EventAttempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;

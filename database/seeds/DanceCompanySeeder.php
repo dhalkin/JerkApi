@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
-class CompanyTableSeeder extends Seeder
+class DanceCompanySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -28,7 +28,7 @@ class CompanyTableSeeder extends Seeder
         $dt = Carbon::now();
         $dateNow = $dt->toDateTimeString();
         
-        DB::table('companies')->insert([
+        DB::table('dance_companies')->insert([
             'user_id' => 1,
             'unique_id' => 'c5d3c76de69f35b003d3b4f187455c40',
             'name' => 'Студия DiDance',

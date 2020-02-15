@@ -1,12 +1,12 @@
 <?php
 
-namespace App\ORM\Model;
+namespace App\ORM\Model\Dance;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    protected $table = 'groups';
+    protected $table = 'dance_groups';
     protected $hidden = ['id', 'company_id', 'direction_id'];
     
     public function event()

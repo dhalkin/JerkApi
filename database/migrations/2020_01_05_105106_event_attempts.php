@@ -13,7 +13,7 @@ class EventAttempts extends Migration
      */
     public function up()
     {
-        Schema::create('event_attempts', function (Blueprint $table) {
+        Schema::create('dance_event_attempts', function (Blueprint $table) {
             $table->bigInteger('event_id')->unsigned();
             $table->bigInteger('company_user_id')->unsigned();
             $table->boolean('visited')->default(false);
@@ -30,6 +30,6 @@ class EventAttempts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_attempts');
+        Schema::dropIfExists('dance_event_attempts');
     }
 }

@@ -53,7 +53,8 @@ Vue.prototype.trans = (string, args) => {
 import GlobalComponents from './globalComponents'
 import GlobalDirectives from './globalDirectives'
 import SideBar from './components/UIComponents/SidebarPlugin'
-import initProgress from './progressbar';
+import initProgress from './progressbar'
+import VueClipboard from 'vue-clipboard2'
 
 // router setup
 import routes from './routes/routes'
@@ -72,13 +73,9 @@ Vue.use(GlobalComponents)
 Vue.use(VueNotify, {'timeout':3000})
 Vue.use(SideBar, {sidebarLinks: sidebarLinks})
 Vue.use(VueLoading, {
-    //dark: true, // default false
-    //text: 'Ladataan', // default 'Loading'
-    // loading: true, // default false
-    //customLoader: myVueComponent, // replaces the spinner and text with your own
-    //background: 'rgb(255,255,255)', // set custom background
-    //classes: ['myclass'] // array, object or string
+    text: 'Loading',
 })
+Vue.use(VueClipboard)
 
 
 //locale.use(lang)

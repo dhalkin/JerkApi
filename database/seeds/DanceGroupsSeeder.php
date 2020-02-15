@@ -3,9 +3,9 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class GroupsTableSeeder extends Seeder
+class DanceGroupsSeeder extends Seeder
 {
-    private $groups = [
+    private $dance_groups = [
         'Exotic pole dance',
         'Pole Dance',
         'Pole junior (от 12ти)',
@@ -26,8 +26,8 @@ class GroupsTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach ($this->groups as $role){
-            DB::table('groups')->insert([
+        foreach ($this->dance_groups as $role){
+            DB::table('dance_groups')->insert([
                 'name' => $role,
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
                 'direction_id' => rand(1, 9),

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompaniesTable extends Migration
+class DanceCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('dance_companies', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->string('unique_id', 32)->unique();
@@ -32,7 +32,7 @@ class CreateCompaniesTable extends Migration
 
         });
 
-        Schema::table('companies', function($table) {
+        Schema::table('dance_companies', function($table) {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
@@ -47,6 +47,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('dance_companies');
     }
 }

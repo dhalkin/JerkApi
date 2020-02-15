@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ORM\Model;
+namespace App\ORM\Model\Dance;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -12,6 +12,7 @@ class CompanyUser extends Authenticatable
     use HasApiTokens, Notifiable;
     
     protected $guard = 'web2';
+    protected $table = 'dance_company_users';
 
     /**
      * The attributes that should be hidden for arrays.
@@ -39,7 +40,7 @@ class CompanyUser extends Authenticatable
      */
     public function role()
     {
-        return $this->hasOne('App\RolesCompanyUser', 'id', 'role_id');
+        return $this->hasOne(RolesCompanyUser::class, 'id', 'role_id');
     }
     
     /**
