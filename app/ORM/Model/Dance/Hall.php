@@ -9,7 +9,7 @@ class Hall extends Model
     public $timestamps = false;
     protected $table = 'dance_halls';
     
-    protected $hidden = ['id', 'unique_id', 'company_id', 'created_at', 'updated_at'];
+    protected $hidden = ['id', 'unique_id'];
     
     public static function boot()
     {
@@ -28,5 +28,10 @@ class Hall extends Model
     public function event()
     {
         return $this->belongsTo(Event::class);
+    }
+    
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
 }

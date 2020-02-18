@@ -3,6 +3,7 @@
 namespace App\ORM\Model\Dance;
 
 use Illuminate\Database\Eloquent\Model;
+use App\ORM\Model\User;
 
 class Company extends Model
 {
@@ -30,9 +31,10 @@ class Company extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
-
-    public function halls()
+    
+    
+    public function branches()
     {
-        return $this->hasMany(Hall::class, 'company_id', 'id');
+        return $this->hasMany(Branch::class, 'company_id', 'id');
     }
 }

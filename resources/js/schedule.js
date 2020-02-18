@@ -25,12 +25,6 @@ if (lang !== 'en') {
 Vue.use(VeeValidate, {
     locale: lang
 });
-
-Vue.use(GlobalComponents);
-Vue.use(VueNotify);
-Vue.use(VueLoading);
-Vue.use(VueSweetalert2);
-
 // translators
 Vue.prototype.trans = (string, args) => {
     let value = _.get(window.i18n, string);
@@ -42,6 +36,13 @@ Vue.prototype.trans = (string, args) => {
 Vue.prototype.capitalize = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
 };
+
+Vue.use(GlobalComponents);
+Vue.use(VueNotify);
+Vue.use(VueLoading, {
+    text: Vue.prototype.trans('Loading'),
+})
+Vue.use(VueSweetalert2);
 
 let app = new Vue({
     el: '#app',

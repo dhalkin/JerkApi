@@ -75,7 +75,7 @@ return [
         ],
         'company_users' => [
             'driver' => 'eloquent',
-            'model' => App\ORM\Model\CompanyUser::class,
+            'model' => App\ORM\Model\Dance\CompanyUser::class,
         ],
 
         // 'users' => [

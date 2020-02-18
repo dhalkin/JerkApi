@@ -66,10 +66,19 @@ class ScheduleController extends Controller
         $weekStart = $request->get('start'); //Carbon::now()->startOfWeek();
         $weekEnd = $request->get('stop'); //Carbon::now()->endOfWeek();
         $company = Company::where('unique_id', $companyId)->firstOrFail();
-        $events = Event::with(['group','hall', 'attemptUsers'])
-            ->where('company_id', '=', $company->id)
-            ->where('start', '>=', $weekStart)
-            ->where('finish', '<=', $weekEnd)->get();
+        $currentBranch =  $request->get('currentBranch');
+        $eventsQ = Event::where('dance_events.company_id', '=', $company->id)
+            ->where('dance_events.start', '>=', $weekStart)
+            ->where('dance_events.finish', '<=', $weekEnd)
+            ->where('dance_events.active', '=', true);
+    
+        if ($currentBranch > 0) {
+            $eventsQ->leftJoin('dance_halls', 'dance_events.hall_id', '=', 'dance_halls.id')
+                ->leftJoin('dance_branches', 'dance_halls.branch_id', '=', 'dance_branches.id')
+                ->where('dance_halls.branch_id', $currentBranch);
+        }
+        
+        $events = $eventsQ->select('dance_events.*')->get();
     
         $user = Auth::guard('web2')->user();
         if($user){
@@ -88,20 +97,12 @@ class ScheduleController extends Controller
                     $event->setPersonalStatus(true);
                 }
             }
-            
-            $data['apiToken'] = $user->getAttributes()['api_token'];
-            $data['userName'] = $user->getAttributes()['first_name'];
         }
        
         $data['events'] = EventResource::collection($events);
         $data['csrf'] = $request->session()->token();
-        $data['companyRules'] = [
-            'last_call_hours' => $company->last_call_hours,
-            'refuse_in_hours'=>$company->refuse_in_hours,
-            'rules'=> $company->rules
-        ];
         
-        return response()->json($data);
+        return response()->json($data, '200');
     }
     
     /**
@@ -172,4 +173,34 @@ class ScheduleController extends Controller
             }
         }
     }
+    
+    
+    /**
+     * @param Request $request
+     * @param $companyId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function environment(Request $request, $companyId)
+    {
+        $apiToken = null;
+        $userName = null;
+        $user = Auth::guard('web2')->user();
+        if ($user) {
+            $apiToken = $user->getAttributes()['api_token'];
+            $userName = $user->getAttributes()['first_name'];
+        }
+        
+        $company = Company::select('id', 'last_call_hours', 'refuse_in_hours', 'rules')
+            ->with(['branches'])->where('unique_id', '=', $companyId)
+            ->firstOrFail();
+    
+        $company->rules = nl2br($company->rules);
+        return response()->json([
+            'company' => $company,
+            'apiToken'=> $apiToken,
+            'userName'=> $userName,
+            'type' => 'success'
+        ], 200);
+    }
+    
 }

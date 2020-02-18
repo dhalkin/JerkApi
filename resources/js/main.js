@@ -73,7 +73,7 @@ Vue.use(GlobalComponents)
 Vue.use(VueNotify, {'timeout':3000})
 Vue.use(SideBar, {sidebarLinks: sidebarLinks})
 Vue.use(VueLoading, {
-    text: 'Loading',
+    text: Vue.prototype.trans('Loading'),
 })
 Vue.use(VueClipboard)
 

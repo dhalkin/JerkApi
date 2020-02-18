@@ -23,7 +23,7 @@ class EventResource extends JsonResource
             'backgroundColor' => Color::find($this->group->color_id)->hex,
             'trainer' => ($this->trainer) ? $this->trainer->first_name : null,
             'hall' => $this->hall->name,
-            'hallAddress' => $this->hall->address,
+            'hallAddress' => $this->hall->branch->address,
             'peopleStats' => $this->group->max_person - $this->getAttended(),
             'personalStatus' => $this->getPersonalStatus()
         ];

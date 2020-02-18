@@ -15,7 +15,7 @@ class DanceEventsSeeder extends Seeder
         $start =  Carbon::yesterday();
         $start->hour(10)->minute(30);
     
-        $finish = $start->copy()->addHours(2);
+        $finish = $start->copy()->addHours(1);
     
         for ($x = 0; $x <= 3; $x++) {
         
@@ -36,7 +36,7 @@ class DanceEventsSeeder extends Seeder
         $start =  Carbon::now();
         $start->hour(7)->minute(30);
         
-        $finish = $start->copy()->addHours(2);
+        $finish = $start->copy()->addHours(1)->addMinutes(30);
 
         for ($x = 0; $x <= 3; $x++) {
             
@@ -57,7 +57,7 @@ class DanceEventsSeeder extends Seeder
         $start =  Carbon::tomorrow();
         $start->hour(11)->minute(30);
     
-        $finish = $start->copy()->addHours(2);
+        $finish = $start->copy()->addHours(1)->addMinutes(30);
     
         for ($x = 0; $x <= 3; $x++) {
         

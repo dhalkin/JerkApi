@@ -5,16 +5,16 @@
         </div>
         <div class="row justify-content-between">
             <div class="col-4">
-                <p-button type="warning" size="sm" @click="$emit('click-rules')">
+                <p-button type="warning" @click="$emit('click-rules')">
                     {{trans('Rules')}}
                 </p-button>
             </div>
             <div class="col-8 text-right">
                 <span v-if="!userLogged">
-                    <p-button type="info" size="sm" @click="$emit('click-login')">
+                    <p-button type="info" @click="$emit('click-login')">
                     {{trans('Login')}}
                     </p-button>
-                    <p-button type="info" size="sm" @click="$emit('click-register')">
+                    <p-button type="info" @click="$emit('click-register')">
                     {{trans('Register')}}
                     </p-button>
                 </span>
@@ -23,7 +23,7 @@
                         <i class="nc-icon nc-single-02"></i>
                         {{userName}} |
                     </span>
-                    <p-button type="info" size="sm" @click="logout">
+                    <p-button type="info" @click="logout">
                     {{trans('Logout')}}
                     </p-button>
                 </span>

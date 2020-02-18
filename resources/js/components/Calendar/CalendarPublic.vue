@@ -3,24 +3,26 @@
         <div class="col">
             <!--title -->
             <div class="row">
-                <div class="col text-center new-header-title" v-text="newHeaderTitle"></div>
+                <div class="col-6 text-left new-header-title" v-text="newHeaderTitle"></div>
+                <div class="col-6 text-right">
+                    <b-form-select v-model="currentBranch" :options="branches"></b-form-select>
+                </div>
             </div>
             <!-- buttons -->
             <div class="row justify-content-between">
-                <div class="col-4 text-left">
-                    <p-button type="primary" size="sm" @click="calendarPrev">
+                <div class="col-5 text-left">
+                    <p-button type="primary" @click="calendarPrev">
                         <i class="nc-icon nc-minimal-left"></i>
                     </p-button>
-                    <p-button type="primary" size="sm" @click="calendarNext">
+                    <p-button type="primary" @click="calendarNext">
                         <i class="nc-icon nc-minimal-right"></i>
                     </p-button>
                 </div>
-                <div class="col-8 text-right">
+                <div class="col-7 text-right">
                     <div class="btn-group">
                         <p-button
                                 id="toggleWeek"
                                 type="primary"
-                                size="sm"
                                 data-toggle="button"
                                 aria-pressed="true"
                                 @click="calendarChangeView('week')"
@@ -28,7 +30,6 @@
                         <p-button
                                 id="toggleTwoDays"
                                 type="primary"
-                                size="sm"
                                 data-toggle="button"
                                 aria-pressed="true"
                                 @click="calendarChangeView('twodays')"
@@ -58,10 +59,11 @@
                     :views="views"
                     :timeZone="companyTimezone"
                     :displayEventEnd="displayEventEnd"
-                    @eventRender="eventRender"
+                    :eventRender="eventRender"
+                    :viewSkeletonRender="viewSkeletonRender"
+                    :datesRender="datesRender"
+                    :currentBranch="currentBranch"
                     @eventClick="eventClick"
-                    @viewSkeletonRender="viewSkeletonRender"
-                    @datesRender="datesRender"
                 >
                 </full-calendar>
             </div>
@@ -74,6 +76,7 @@
     import dayGridPlugin from '@fullcalendar/daygrid'
     import timeGridPlugin from '@fullcalendar/timegrid'
     import interactionPlugin from '@fullcalendar/interaction'
+    import {BFormSelect} from 'bootstrap-vue'
 
     import ruLocale from 'fullcalendar/dist/locales/ru'
     import enLocale from 'fullcalendar/dist/locales/en-gb'
@@ -91,9 +94,9 @@
         mixins: [CalendarTuning],
         props: [
             'lang', 'events', 'userName', 'companyUid', 'companyTimezone',
-            'lastCallHours', 'refuseInHours'
+            'lastCallHours', 'refuseInHours', 'branches'
         ],
-        components: {FullCalendar},
+        components: {FullCalendar, BFormSelect},
         data() {
             return {
                 calendarPlugins: [
@@ -115,7 +118,8 @@
                 height: 'auto',
                 handleWindowResize: true,
                 header: false,
-                displayEventEnd: false,
+                displayEventEnd: true,
+                currentBranch: 0,
                 views: {
                     timeGridWeek: {
                         type: 'timeGrid',
@@ -144,6 +148,13 @@
                         buttonText: this.trans('Today + 1'),
                     }
                 }
+            }
+        },
+        watch: {
+            currentBranch: function (val) {
+                // check local storage and get timezones
+                localStorage.preferedBranch = val;
+                this.$emit('need-refresh');
             }
         },
         methods: {
@@ -196,18 +207,26 @@
 
             },
             eventRender(info) {
-                let title = (info.event._def.extendedProps.personalStatus) ? '<span class="check text-success"><i class="nc-icon nc-check-2"></i></span>' : '';
-                    title += '<span class="group">' + info.event.title + '</span><br>';
-                   // title += '<span class="hall">' + info.event._def.extendedProps.hall + '</span><br>';
-                    title += '<span class="hall">' + info.event._def.extendedProps.hallAddress + '</span><br>';
 
-                if(lastCallDate > info.event._instance.range.start){
+                let title = `
+                ${info.event._def.extendedProps.personalStatus ? `<span class="check text-success"><i class="nc-icon nc-check-2"></i></span>` : ''}
+                <span class="group">${info.event.title}</span><br>
+                <span class="hall">${info.event._def.extendedProps.hallAddress}</span><br>
+                ${lastCallDate > info.event._instance.range.start ? `<span class="people-stats">${this.trans('Places left')} : ${info.event._def.extendedProps.peopleStats}</span>` : ''}
+                `
+                let t = Math.abs(info.event._instance.range.end - info.event._instance.range.start)
+                let diff = Math.floor((t/1000)/60)
+                let time = `
+                <span>${info.event._instance.range.start.getHours()}:${info.event._instance.range.start.getMinutes()}</span>
+                <span style="font-size:0.5em">-${diff} min.</span>
+                `
+
+                if(lastCallDate > info.event._instance.range.start) {
                     info.el.style.backgroundColor = "";
                     info.el.style.border = "1px solid silver";
                     info.el.classList.add("expired-event");
-                }else{
-                    title += '<span class="people-stats">' + this.trans('Places left') + ' : ' + info.event._def.extendedProps.peopleStats + '</span>';
                 }
+                info.el.childNodes[0].childNodes[0].innerHTML = time
                 info.el.childNodes[0].childNodes[1].innerHTML = title;
             },
             eventClick(info) {
@@ -221,14 +240,28 @@
                     locale: this.lang
                 });
 
-                let eventInfo = '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Beginning')+':</div><div class="col text-left">'+this.capitalize(startDate)+'</div></div>';
-                eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Group')+':</div><div class="col text-left">'+info.event.title+'</div></div>';
-                if(info.event._def.extendedProps.trainer){
-                    eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Trainer')+':</div><div class="col text-left">'+info.event._def.extendedProps.trainer+'</div></div>';
-                }
-                eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Classroom')+':</div><div class="col text-left">'+info.event._def.extendedProps.hall+'</div></div>';
-                eventInfo += '<div class="row mb-2"><div class="col-4 text-right">'+this.trans('Address')+':</div><div class="col text-left">'+info.event._def.extendedProps.hallAddress+'</div></div>';
-                eventInfo += '<div class="row mb-2"><div class="col-5 text-right">'+this.trans('Places left')+':</div><div class="col text-left">'+info.event._def.extendedProps.peopleStats+'</div></div>';
+                let eventInfo2 =`
+                <div class="row mb-2">
+                    <div class="col-4 text-right">${this.trans('Beginning')}:</div>
+                    <div class="col text-left">${this.capitalize(startDate)}</div></div>
+                <div class="row mb-2">
+                    <div class="col-4 text-right">${this.trans('Group')}:</div>
+                    <div class="col text-left">${info.event.title}</div></div>
+                    ${info.event._def.extendedProps.trainer ? `
+                <div class="row mb-2">
+                    <div class="col-4 text-right">${this.trans('Trainer')}:</div>
+                    <div class="col text-left">${info.event._def.extendedProps.trainer}</div></div>
+                    ` : ''}
+                <div class="row mb-2">
+                    <div class="col-4 text-right">${this.trans('Classroom')}:</div>
+                    <div class="col text-left">${info.event._def.extendedProps.hall}</div></div>
+                <div class="row mb-2">
+                    <div class="col-4 text-right">${this.trans('Address')}:</div>
+                    <div class="col text-left">${info.event._def.extendedProps.hallAddress}</div></div>
+                <div class="row mb-2">
+                    <div class="col-4 text-right">${this.trans('Places left')}:</div>
+                    <div class="col text-left">${info.event._def.extendedProps.peopleStats}</div></div>
+                `
 
                 let invitation ='<div class="text-danger small mark p-2 w-100">'+ this.trans('You need register or log in to your account')+'</div>';
                 let userChecked = info.event._def.extendedProps.personalStatus;
@@ -246,7 +279,7 @@
                     buttonsStyling: true,
                     reverseButtons: true,
                     showConfirmButton: (lastCallDate <= info.event._instance.range.start) && this.userName,
-                    html: eventInfo,
+                    html: eventInfo2,
                     userName: this.userName,
                     eventId: info.event.id,
                     userChecked: userChecked,
@@ -256,7 +289,7 @@
                     onBeforeOpen: function (el) {
 
                         if(this.expired){
-                            el.style.background = "rgba(163, 163, 163, 0.85) linear-gradient(90deg, rgba(255, 255, 255, .8) 50%, rgba(255, 255, 255, .9) 50%)  center center / 6em";
+                            el.style.background = "rgba(163, 163, 163, 0.65) linear-gradient(90deg, rgba(255, 255, 255, .8) 50%, rgba(255, 255, 255, .9) 50%)  center center / 6em";
                             //el.classList.add("expired-event");
                         }
                         if(this.blocked){

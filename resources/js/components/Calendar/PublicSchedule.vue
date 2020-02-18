@@ -59,9 +59,10 @@
             >
         </calendar-header>
 
-        <calendar
+        <calendar ref="calendar"
             :lang=lang
             :events=events
+            :branches=branches
             :userName=userName
             :companyUid=companyUid
             :company-timezone="companyTimezone"
@@ -97,31 +98,37 @@ export default {
             showLogin: false,
             showRules: false,
             events: [],
+            branches:[
+                {value: 0, text: this.trans('All Branches')}
+            ],
             userLogged: false,
             userName: '',
             apiToken: '',
             csrf: '',
             dataRange: {start: new Date(), stop: new Date()},
             companyRules:{
-                last_call_hours:"",
-                refuse_in_hours:"",
-                rules:""
+                last_call_hours:'',
+                refuse_in_hours:'',
+                rules:''
             }
         }
     },
     mounted() {
-        //this.getSession();
+        this.getEnvironment();
     },
     watch: {
-        apiToken: function(val, oldVal) {
+        apiToken: function (val, oldVal) {
             if (typeof val == "string" && val.length > 6) {
                 this.userLogged = true
-            }else {
+            } else {
                 this.userLogged = false
             }
         },
         dataRange: function (val, oldVal) {
-           this.getEvents()
+            //prevent first init
+            if (oldVal.start.getTime() !== oldVal.stop.getTime()) {
+                this.getEvents()
+            }
         }
     },
     methods: {
@@ -134,35 +141,55 @@ export default {
                 .then(response => response.data)
                 .then(data => {
                     // axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.apiToken;
-                    axios.defaults.headers.common['X-CSRF-TOKEN'] = data.csrf;
+                    //axios.defaults.headers.common['X-CSRF-TOKEN'] = data.csrf;
                     this.apiToken = data.apiToken;
                     this.csrf = data.csrf;
                     this.userName = data.userName;
                     this.getEvents();
                 });
         },
-        // do not use
-        clearSession() {
-            this.apiToken = '';
-            this.csrf = '';
-            // delete axios.defaults.headers.common['Authorization'];
-            // delete axios.defaults.headers.common['X-CSRF-TOKEN'];
-
-        },
-        getEvents() {
-            axios.post('/company/' + this.companyUid + '/events', this.dataRange)
+        getEnvironment() {
+            axios.get('/company/' + this.companyUid + '/environment')
                 .then(response => response.data)
                 .then(data => {
-                    axios.defaults.headers.common['X-CSRF-TOKEN'] = data.csrf;
-                    this.apiToken = data.apiToken;
-                    this.csrf = data.csrf;
-                    this.userName = data.userName;
-                    this.events = data.events;
-                    this.companyRules = data.companyRules
+                    this.companyRules = data.company
+                    this.apiToken = data.apiToken
+                    this.userName = data.userName
+
+                    data.company.branches.forEach((item) => {
+                        this.branches.push({value: item.id, text: item.name})
+                    });
+                    // hey, how about user preferences
+                    if (localStorage.preferedBranch && localStorage.preferedBranch > 0) {
+                        this.$refs.calendar.currentBranch = localStorage.preferedBranch
+                    } else {
+                        this.getEvents()
+                    }
                 })
                 .catch(error => {
                     this.processErr(error);
                 });
+        },
+        getEvents() {
+            axios.get('/company/' + this.companyUid + '/events', this.prepareEventsData())
+                .then(response => response.data)
+                .then(data => {
+                    // axios.defaults.headers.common['X-CSRF-TOKEN'] = data.csrf;
+                    this.csrf = data.csrf;
+                    this.events = data.events;
+                })
+                .catch(error => {
+                    this.processErr(error);
+                });
+        },
+        prepareEventsData() {
+            return {
+                params: {
+                    start: this.dataRange.start,
+                    stop: this.dataRange.stop,
+                    currentBranch: this.$refs.calendar.currentBranch
+                }
+            }
         }
     }
 }
