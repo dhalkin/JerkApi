@@ -217,8 +217,10 @@
                 let t = Math.abs(info.event._instance.range.end - info.event._instance.range.start)
                 let diff = Math.floor((t/1000)/60)
                 let time = `
-                <span>${info.event._instance.range.start.getHours()}:${info.event._instance.range.start.getMinutes()}</span>
-                <span style="font-size:0.5em">-${diff} min.</span>
+                <span class="row">
+                <span class="col text-left">${info.event._instance.range.start.getHours()}:${info.event._instance.range.start.getMinutes()}</span>
+                <span class="col text-right" style="font-size:0.5em">${diff} min.</span>
+                </span>
                 `
 
                 if(lastCallDate > info.event._instance.range.start) {
@@ -227,7 +229,7 @@
                     info.el.classList.add("expired-event");
                 }
                 info.el.childNodes[0].childNodes[0].innerHTML = time
-                info.el.childNodes[0].childNodes[1].innerHTML = title;
+                info.el.childNodes[0].childNodes[1].innerHTML = title
             },
             eventClick(info) {
                 let startDate = formatDate(info.event.start, {
