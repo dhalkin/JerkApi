@@ -4,12 +4,12 @@
             <div class="col new-header-title text-primary">{{companyName}} - {{trans('Timetable')}}</div>
         </div>
         <div class="row justify-content-between">
-            <div class="col-4">
+            <div class="col-3">
                 <p-button type="warning" @click="$emit('click-rules')">
                     {{trans('Rules')}}
                 </p-button>
             </div>
-            <div class="col-8 text-right">
+            <div class="col-9 text-right">
                 <span v-if="!userLogged">
                     <p-button type="info" @click="$emit('click-login')">
                     {{trans('Login')}}
