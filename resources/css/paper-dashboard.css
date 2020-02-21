@@ -3348,12 +3348,13 @@ temporary rendered events).
   cursor: pointer; }
 .fc-content .group {
   font-weight: bold;
-  font-size: small;}
+  font-size: 1.2em;}
 .fc-content .trainer {
    }
 .fc-content .hall {
    }
 .fc-content .people-stats {
+  font-size: 0.9em;
   }
 .fc-content .check {
   position: absolute;

@@ -11,30 +11,34 @@
             <!-- buttons -->
             <div class="row justify-content-between">
                 <div class="col-5 text-left">
-                    <p-button type="primary" @click="calendarPrev">
+                    <p-button type="info" @click="calendarPrev">
                         <i class="nc-icon nc-minimal-left"></i>
                     </p-button>
-                    <p-button type="primary" @click="calendarNext">
+                    <p-button type="info" @click="calendarNext">
                         <i class="nc-icon nc-minimal-right"></i>
                     </p-button>
                 </div>
                 <div class="col-7 text-right">
+
                     <div class="btn-group">
                         <p-button
                                 id="toggleWeek"
-                                type="primary"
+                                type="info"
+                                outline
                                 data-toggle="button"
                                 aria-pressed="true"
                                 @click="calendarChangeView('week')"
                         >{{this.trans('Week')}}</p-button>
                         <p-button
                                 id="toggleTwoDays"
-                                type="primary"
+                                type="info"
+                                outline
                                 data-toggle="button"
                                 aria-pressed="true"
                                 @click="calendarChangeView('twodays')"
-                        >{{this.trans('2 Days')}}</p-button>
+                        >{{this.trans('1 Day')}}</p-button>
                     </div>
+
                 </div>
             </div>
 
@@ -135,11 +139,11 @@
                         visibleRange(currentDate){
                             return {
                                 start: currentDate.clone(),
-                                end: currentDate.clone().add(1, 'days'),
+                                end: currentDate.clone(),
                             };
                         },
-                        duration: { days: 2 },
-                        dateIncrement: { days: 2 },
+                        duration: { days: 1 },
+                        dateIncrement: { days: 1 },
                         titleFormat: {
                             month: 'long',
                             day: '2-digit',
@@ -210,17 +214,22 @@
 
                 let title = `
                 ${info.event._def.extendedProps.personalStatus ? `<span class="check text-success"><i class="nc-icon nc-check-2"></i></span>` : ''}
-                <span class="group">${info.event.title}</span><br>
-                <span class="hall">${info.event._def.extendedProps.hallAddress}</span><br>
-                ${lastCallDate > info.event._instance.range.start ? `<span class="people-stats">${this.trans('Places left')} : ${info.event._def.extendedProps.peopleStats}</span>` : ''}
+                <div class="row"><div class="col">
+                <span class="group">${info.event.title}</span>
+                </div></div>
+                <div class="row">
+<!--                <div class="col text-left">${info.event._def.extendedProps.hallAddress}</div>-->
+                ${lastCallDate < info.event._instance.range.start ? `<div class="col text-right"><span class="people-stats">${this.trans('Places')} : ${info.event._def.extendedProps.peopleStats}</span></div>` : ''}
+                </div>
                 `
+
                 let t = Math.abs(info.event._instance.range.end - info.event._instance.range.start)
                 let diff = Math.floor((t/1000)/60)
                 let time = `
-                <span class="row">
-                <span class="col text-left">${info.event._instance.range.start.getHours()}:${info.event._instance.range.start.getMinutes()}</span>
-                <span class="col text-right" style="font-size:0.5em">${diff} min.</span>
-                </span>
+                <div class="row">
+                <div class="col text-left">${info.event._instance.range.start.getHours()}:${info.event._instance.range.start.getMinutes()}</div>
+                <div class="col text-right" style="font-size:0.5em">${diff} min</div>
+                </div>
                 `
 
                 if(lastCallDate > info.event._instance.range.start) {
@@ -242,13 +251,13 @@
                     locale: this.lang
                 });
 
-                let eventInfo2 =`
+                let eventInfo =`
                 <div class="row mb-2">
                     <div class="col-4 text-right">${this.trans('Beginning')}:</div>
                     <div class="col text-left">${this.capitalize(startDate)}</div></div>
                 <div class="row mb-2">
                     <div class="col-4 text-right">${this.trans('Group')}:</div>
-                    <div class="col text-left">${info.event.title}</div></div>
+                    <div class="col text-left h5"><kbd>${info.event.title}</kbd></div></div>
                     ${info.event._def.extendedProps.trainer ? `
                 <div class="row mb-2">
                     <div class="col-4 text-right">${this.trans('Trainer')}:</div>
@@ -256,7 +265,7 @@
                     ` : ''}
                 <div class="row mb-2">
                     <div class="col-4 text-right">${this.trans('Classroom')}:</div>
-                    <div class="col text-left">${info.event._def.extendedProps.hall}</div></div>
+                    <div class="col text-left"><span class="badge badge-info">${info.event._def.extendedProps.hall}</span></div></div>
                 <div class="row mb-2">
                     <div class="col-4 text-right">${this.trans('Address')}:</div>
                     <div class="col text-left">${info.event._def.extendedProps.hallAddress}</div></div>
@@ -265,11 +274,14 @@
                     <div class="col text-left">${info.event._def.extendedProps.peopleStats}</div></div>
                 `
 
-                let invitation ='<div class="text-danger small mark p-2 w-100">'+ this.trans('You need register or log in to your account')+'</div>';
+                let invitation =`<div class="justify-content-center p-2 w-100 small mark text-danger">${this.trans('You need register or log in to your account')}</div>`;
                 let userChecked = info.event._def.extendedProps.personalStatus;
 
                 let title = (userChecked) ? this.trans('You are applied on event') : this.trans('Join the Event');
                 if (lastCallDate > info.event._instance.range.start)  title = this.trans('Registration completed');
+
+                let expired = lastCallDate >= info.event._instance.range.start
+                let blocked = abilityToRefuse >= info.event._instance.range.start
 
                 this.$swal({
                     title: title,
@@ -281,20 +293,14 @@
                     buttonsStyling: true,
                     reverseButtons: true,
                     showConfirmButton: (lastCallDate <= info.event._instance.range.start) && this.userName,
-                    html: eventInfo2,
-                    userName: this.userName,
-                    eventId: info.event.id,
-                    userChecked: userChecked,
-                    expired: (lastCallDate >= info.event._instance.range.start),
-                    blocked: (abilityToRefuse >= info.event._instance.range.start),
+                    html: eventInfo,
                     footer: (!this.userName && lastCallDate < info.event._instance.range.start) ? invitation : '',
                     onBeforeOpen: function (el) {
-
-                        if(this.expired){
+                        if(expired){
                             el.style.background = "rgba(163, 163, 163, 0.65) linear-gradient(90deg, rgba(255, 255, 255, .8) 50%, rgba(255, 255, 255, .9) 50%)  center center / 6em";
                             //el.classList.add("expired-event");
                         }
-                        if(this.blocked){
+                        if(blocked){
                             let cancelButton = el.getElementsByClassName("swal2-confirm")[0];
                             cancelButton.classList.add("disabled");
                         }
