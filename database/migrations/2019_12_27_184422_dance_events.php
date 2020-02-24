@@ -15,13 +15,13 @@ class DanceEvents extends Migration
     {
         Schema::create('dance_events', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->bigInteger('company_id')->unsigned()->nullable();
+            $table->integer('company_id')->unsigned()->nullable();
             $table->dateTime('start');
             $table->dateTime('finish');
-            $table->bigInteger('group_id')->unsigned()->nullable();
-            $table->bigInteger('hall_id')->unsigned()->nullable();
+            $table->integer('group_id')->unsigned()->nullable();
+            $table->integer('hall_id')->unsigned()->nullable();
             // who works trainer
-            $table->bigInteger('trainer_id')->unsigned()->nullable();
+            $table->integer('trainer_id')->unsigned()->nullable();
             $table->boolean('active')->default(true);
             $table->text('note')->nullable();
         });

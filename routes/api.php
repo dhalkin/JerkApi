@@ -51,6 +51,11 @@ Route::group([
     Route::get('branches', 'BranchController@get');
     Route::post('branch', 'BranchController@update');
     Route::delete('branch', 'BranchController@delete');
+    
+    Route::get('roles', 'RoleController@get');
+    Route::post('role', 'RoleController@update');
+    Route::delete('role', 'RoleController@delete');
+    
 });
 //Route::get('timezones', function(){
 //

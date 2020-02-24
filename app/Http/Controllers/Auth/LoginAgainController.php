@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\ORM\Model\Dance\Roles;
+use App\ORM\Model\Dance\Role;
 use App\ORM\Model\Dance\CompanyUser;
 use App\ORM\Model\Dance\Company;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -190,7 +190,7 @@ class LoginAgainController extends Controller
             'password' => bcrypt($request->password),
             'api_token' => Str::random(60),
             'active' => true,
-            'role_id' => Roles::ROLE_STUDENT
+            'role_id' => Role::ROLE_STUDENT
         ]);
         
         // and login in a hurry

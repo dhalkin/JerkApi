@@ -14,7 +14,7 @@ class Colors extends Migration
     public function up()
     {
         Schema::create('colors', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('name', 99);
             $table->string('hex', 99);
         });

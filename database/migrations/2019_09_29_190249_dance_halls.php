@@ -14,11 +14,10 @@ class DanceHalls extends Migration
     public function up()
     {
         Schema::create('dance_halls', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('unique_id', 32)->unique();
-            $table->bigInteger('branch_id')->unsigned()->nullable();
+            $table->integer('branch_id')->unsigned()->nullable();
             $table->string('name', 99);
-           // $table->string('address')->nullable();
             $table->boolean('active')->default(true);
             $table->text('about')->nullable();
             

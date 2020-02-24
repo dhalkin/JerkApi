@@ -4,7 +4,7 @@ namespace App\ORM\Model\Dance;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Roles extends Model
+class Role extends Model
 {
     public const ROLE_TRAINER = 1;
     public const ROLE_STUDENT = 2;

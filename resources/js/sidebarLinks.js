@@ -23,7 +23,7 @@ export default [
     name: 'People',
     icon: 'fa fa-users',
     children: [{
-      name: 'Roles',
+      name: 'Role',
       path: '/people/roles'
     },
     {

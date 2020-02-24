@@ -1,45 +1,45 @@
 <template>
     <div class="container-fluid">
-        <h4 class="card-title" v-text="trans('Branches')"></h4>
+        <h4 class="card-title" v-text="trans('Roles')"></h4>
 
       <modal
           v-bind:show="showForm"
           v-on:close="showForm = false"
       >
-        <span class="h4" slot="header" v-text="trans('Branch')"></span>
-        <branch-form ref="form"
-            :item=modalBranch
+        <span class="h4" slot="header" v-text="trans('Role')"></span>
+        <role-form ref="form"
+            :item=modalRole
             v-on:save="save"
         >
-        </branch-form>
+        </role-form>
       </modal>
 
         <div class="places-sweet-alerts">
             <div class="row">
                 <!--items -->
-                <div class="col-sm-4" v-for="branch in branches">
+                <div class="col-sm-4" v-for="role in roles">
                     <card card-body-classes="text-center">
                         <span style="position: absolute; top:0px; right:6px;">
-                            <a href="#" @click.prevent="openDeleteDialog(branch.id)"><i class="fa fa-times fa-lg text-danger"></i></a>
+                            <a class="invisible" href="#" @click.prevent="openDeleteDialog(role.id)"><i class="fa fa-times fa-lg text-danger"></i></a>
                         </span>
-                        <p class="card-text h5">{{branch.name}}</p>
-                        <p class="card-text">{{branch.address}}</p>
+                        <p class="card-text h5">{{role.name}}</p>
 
                         <div class="row">
-                            <div class="col-6 pt-3">
-                                <p-switch
-                                        v-model=branch.active
-                                        type="success"
-                                        :on-text="switches.on"
-                                        :off-text="switches.off"
-                                        @input="updateBranch({id:branch.id, active:branch.active})"
-                                ></p-switch>
-                            </div>
-                            <div class="col-6">
-                                <p-button type="default" size="sm" outline round @click="openEditor(branch.id)" class="w-100">
+<!--                            <div class="col-6 pt-3">-->
+<!--                                <p-switch-->
+<!--                                        v-model=role.active-->
+<!--                                        type="success"-->
+<!--                                        :on-text="switches.on"-->
+<!--                                        :off-text="switches.off"-->
+<!--                                        @input="updateRole({id:role.id, active:role.active})"-->
+<!--                                ></p-switch>-->
+<!--                            </div>-->
+                            <div class="col-12">
+                                <p-button type="default" size="sm" outline round @click="openEditor(role.id)" class="w-75">
                                     <i slot="label" class="fa fa-edit"></i>{{trans('Edit')}}
                                 </p-button>
                             </div>
+
                         </div>
                     </card>
                 </div>
@@ -47,8 +47,8 @@
                 <!-- new item -->
                 <div class="col-md-3">
                     <card card-body-classes="text-center">
-                        <p class="card-text">{{this.trans('Add Branch')}}</p>
-                        <p-button type="success" outline @click="newBranch">
+                        <p class="card-text">{{this.trans('Add Role')}}</p>
+                        <p-button type="success" outline @click="newRole">
                             <i class="fa fa-plus-circle fa-3x"></i></p-button>
                     </card>
                 </div>
@@ -63,7 +63,7 @@
     import PSwitch from '../../../components/UIComponents/Switch.vue'
     import ErrorHelper from "../../utils/ErrorHelper"
     import Modal from "../../../components/UIComponents/Modal";
-    import BranchForm from "../../../components/App/Forms/BranchForm"
+    import RoleForm from "../../../components/App/Forms/RoleForm"
     import PButton from "../../UIComponents/Button"
     import swal from 'sweetalert2'
 
@@ -72,7 +72,7 @@
         refs:['form'],
         components: {
             PButton,
-            BranchForm,
+            RoleForm,
             [Button.name]: Button,
             Card,
             PSwitch,
@@ -81,36 +81,36 @@
         data() {
             return {
                 showForm:false,
-                branches: [],
+                roles: [],
                 switches: {
                     on: this.trans('ON'),
                     off: this.trans('OFF')
                 },
-                modalBranch: {id:'', name:'', address:'', active:true, about:''}
+                modalRole: {id:'', name:'', about:''}
             }
         },
         watch: {},
         methods: {
-            newBranch() {
-                this.modalBranch = {id:'', name:'', address:'', active:true, about:''}
+            newRole() {
+                this.modalRole = {id:'', name:'', about:''}
                 this.$refs.form.reset()
                 this.showForm = true
             },
             save() {
                 this.showForm = false
-                this.updateBranch(this.modalBranch)
+                this.updateRole(this.modalRole)
             },
-            updateBranch(data) {
-                axios.post('/api/branch', data)
+            updateRole(data) {
+                axios.post('/api/role', data)
                     .then(response => {
                         if (typeof response.data.id !== 'undefined') {
-                            this.modalBranch.id = response.data.id
-                            this.branches.push(this.modalBranch)
+                            this.modalRole.id = response.data.id
+                            this.roles.push(this.modalRole)
                         }else{
-                            let indexBranch = this.branches.findIndex((obj => obj.id === data.id))
-                            this.branches[indexBranch] = this.modalBranch
+                            let index = this.roles.findIndex((obj => obj.id === data.id));
+                            this.roles[index] = this.modalRole
                         }
-                        this.modalBranch = {id:'', name:'', address:'', about:'', active:true}
+                        this.modalRole = {id:'', name:'', about:''}
                         this.$refs.form.reset()
                         this.$notify({
                             //icon: 'nc-icon nc-bell-55',
@@ -125,25 +125,25 @@
                         this.showForm = true
                     });
             },
-            getBranches() {
-                // get branches
-                axios.get('/api/branches') // , {withCredentials: true}
+            getRoles() {
+                // get roles
+                axios.get('/api/roles') // , {withCredentials: true}
                     .then(response => {
-                        this.branches = response.data
+                        this.roles = response.data
                     });
             },
             openEditor(val) {
-                this.modalBranch = this.getCloneBranch(this.branches.find(o => o.id === val))
+                this.modalRole = this.getCloneRole(this.roles.find(o => o.id === val))
                 this.showForm = true;
             },
-            getCloneBranch(branch) {
-                return Object.assign({}, branch);
+            getCloneRole(role) {
+                return Object.assign({}, role);
             },
             openDeleteDialog(val) {
-                let delBranch = this.branches.find(o => o.id === val);
+                let delRole = this.roles.find(o => o.id === val);
                 swal({
-                    title: delBranch.name,
-                    html: `<span class="h5">${this.trans('Delete branch')}?</span>`,
+                    title: delRole.name,
+                    html: `<span class="h5">${this.trans('Delete role')}?</span>`,
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonClass: 'btn btn-danger btn-fill',
@@ -154,10 +154,10 @@
                     reverseButtons: true,
                 }).then(result => {
                     if (result) {
-                        axios.delete('/api/branch', { data: { id: val }})
+                        axios.delete('/api/role', { data: { id: val }})
                             .then(response => {
-                                // this.getBranches()
-                                this.branches =  this.branches.filter(function(el) { return el.id != val; });
+                                // this.getRoles()
+                                this.roles =  this.roles.filter(function(el) { return el.id != val; });
                                 this.$notify({
                                     //icon: 'nc-icon nc-bell-55',
                                     horizontalAlign: 'right',
@@ -175,7 +175,7 @@
 
         },
         mounted() {
-            this.getBranches();
+            this.getRoles();
         }
     }
 </script>

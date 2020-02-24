@@ -9,6 +9,7 @@ import UserCompany from "../components/App/UserCompany.vue"
 
 // Components pages
 import Branches from '../components/App/Pages/Branches'
+import Roles from '../components/App/Pages/Roles'
 import Halls from '../components/App/Pages/Halls'
 import Groups from '../components/App/Pages/Groups'
 import Directions from '../components/App/Pages/Directions'
@@ -23,8 +24,8 @@ let peopleMenu = {
   children: [
     {
       path: 'roles',
-      name: 'Roles',
-      component: Branches
+      name: 'Role',
+      component: Roles
     },
     {
       path: 'users',

@@ -15,10 +15,10 @@ class DanceDirections extends Migration
     {
         //
         Schema::create('dance_directions', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->bigInteger('company_id')->unsigned()->nullable();
+            $table->increments('id')->unsigned();
+            $table->integer('company_id')->unsigned()->nullable();
             // preferable trainer
-            $table->bigInteger('trainer_id')->unsigned()->nullable();
+            $table->integer('trainer_id')->unsigned()->nullable();
             $table->string('name', 99);
             $table->text('about')->nullable();
         

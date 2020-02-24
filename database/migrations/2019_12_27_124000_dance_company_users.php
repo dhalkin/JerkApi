@@ -14,15 +14,15 @@ class DanceCompanyUsers extends Migration
     public function up()
     {
         Schema::create('dance_company_users', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->bigInteger('company_id')->unsigned()->nullable();
+            $table->increments('id')->unsigned();
+            $table->integer('company_id')->unsigned()->nullable();
             $table->string('first_name', 96);
             $table->string('second_name', 96)->nullable();
             $table->string('phone', 36)
                 ->unique()
                 ->nullable()
                 ->default(null);
-            $table->tinyInteger('role_id')->unsigned()->nullable();
+            $table->integer('role_id')->unsigned()->nullable();
             $table->string('email', 96)
                 ->unique()
                 ->nullable()

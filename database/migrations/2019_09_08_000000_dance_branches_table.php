@@ -14,8 +14,8 @@ class DanceBranchesTable extends Migration
     public function up()
     {
         Schema::create('dance_branches', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->bigInteger('company_id')->unsigned()->nullable();
+            $table->increments('id')->unsigned();
+            $table->integer('company_id')->unsigned()->nullable();
             $table->string('name', 99);
             $table->string('address');
             $table->boolean('active')->default(true);

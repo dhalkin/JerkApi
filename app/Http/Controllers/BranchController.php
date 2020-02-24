@@ -8,11 +8,11 @@ use App\Http\Resources\BranchResource;
 
 class BranchController extends Controller
 {
-
+    
     public function get(Request $request)
     {
         $branches = Branch::all();
-    
+        
         return response()->json(BranchResource::collection($branches), '200');
     }
     
@@ -22,21 +22,22 @@ class BranchController extends Controller
         $branch = Branch::find($request->get('id'));
         $changes = $request->all();
         
-        if($branch){
+        if ($branch) {
             unset($changes['id']);
             
-            foreach ($changes as $item => $val){
+            foreach ($changes as $item => $val) {
                 $branch->$item = $val;
             }
             
             $branch->save();
         } else {
             $branch = new Branch();
-            foreach ($changes as $item => $val){
+            foreach ($changes as $item => $val) {
                 $branch->$item = $val;
             }
-    
+            
             $branch->save();
+            return response()->json(['id' => $branch->id], '200');
         }
     }
     
