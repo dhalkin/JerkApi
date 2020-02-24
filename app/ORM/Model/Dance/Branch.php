@@ -8,6 +8,7 @@ class Branch extends Model
 {
     protected $table = 'dance_branches';
     protected $hidden = ['company_id'];
+    public $timestamps = false;
     
     public function company()
     {

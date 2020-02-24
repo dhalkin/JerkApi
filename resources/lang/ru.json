@@ -74,5 +74,15 @@
     "Loading": "Загружаем..",
     "All Branches": "Все филиалы",
     "1 Day": "1 День",
-    "Places": "Места"
+    "Places": "Места",
+    "Edit": "Ред",
+    "Notes": "Заметки",
+    "Branch": "Филиал",
+    "Input Address": "Введите адрес",
+    "Input Name": "Введите имя",
+    "Add Branch": "Добавить филиал",
+    "ON": "Вкл",
+    "OFF": "Вык",
+    "A Note": "Заметка",
+    "Delete Branch": "Удалить филиал"
 }

@@ -113,7 +113,7 @@
                     <div class="col-md-12 form-group">
                         <label>{{trans('Class entry rules')}}</label>
 
-                        <textarea rows="10" class="form-control border-input"
+                        <textarea rows="10" class="form-control"
                                   name="rules"
                                   v-bind:placeholder="trans('Class entry rules')"
                                   v-model="company.rules"

@@ -1,7 +1,7 @@
 export default [
   {
     name: 'Classes',
-    icon: 'fa fa-users',
+    icon: 'fa fa-wrench',
     children: [{
       name: 'Branches',
       path: '/classes/branches'
@@ -17,6 +17,18 @@ export default [
     {
       name: 'Directions',
       path: '/classes/directions'
+    }]
+  },
+  {
+    name: 'People',
+    icon: 'fa fa-users',
+    children: [{
+      name: 'Roles',
+      path: '/people/roles'
+    },
+    {
+      name: 'Users',
+      path: '/people/users'
     }]
   },
   {

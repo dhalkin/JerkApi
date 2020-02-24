@@ -15,6 +15,7 @@ class CompanyController extends Controller
         return $company->toJson();
     }
 
+    
     public function storeCompany(Request $request)
     {
 

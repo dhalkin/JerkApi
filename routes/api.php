@@ -47,8 +47,11 @@ Route::group([
         ->where('uniqueId', '[a-z0-9]{32}');
     Route::post('hall/{uniqueId?}/update', 'HallController@updateHall')
         ->where('uniqueId', '[a-z0-9]{32}');
+    
+    Route::get('branches', 'BranchController@get');
+    Route::post('branch', 'BranchController@update');
+    Route::delete('branch', 'BranchController@delete');
 });
-
 //Route::get('timezones', function(){
 //
 //    return [

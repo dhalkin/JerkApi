@@ -16,6 +16,23 @@ import Directions from '../components/App/Pages/Directions'
 // Calendar
 import Calendar from '../components/Dashboard/Views/Calendar/CalendarRoute.vue'
 
+let peopleMenu = {
+  path: '/people',
+  component: DashboardLayout,
+  redirect: '/people/roles',
+  children: [
+    {
+      path: 'roles',
+      name: 'Roles',
+      component: Branches
+    },
+    {
+      path: 'users',
+      name: 'Users',
+      component: Halls
+    }
+  ]
+}
 
 let componentsMenu = {
   path: '/classes',
@@ -76,6 +93,7 @@ const routes = [
       }
     ]
   },
+  peopleMenu,
   componentsMenu,
   userMenu,
   {path: '*', component: NotFound}

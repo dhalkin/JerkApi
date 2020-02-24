@@ -16,6 +16,7 @@ class DanceRoles extends Migration
         Schema::create('dance_roles', function (Blueprint $table) {
             $table->tinyIncrements('id')->unsigned();
             $table->string('name', 96);
+            $table->text('about')->nullable();
         });
     }
 
