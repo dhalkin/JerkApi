@@ -30,7 +30,7 @@ class DanceCompanySeeder extends Seeder
         
         DB::table('dance_companies')->insert([
             'user_id' => 1,
-            'unique_id' => 'c5d3c76de69f35b003d3b4f187455c40',
+            'uid' => md5(microtime()),
             'name' => 'Студия DiDance',
             'city' => 'Киев',
             'country' => 'Украина',

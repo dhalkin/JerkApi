@@ -48,9 +48,20 @@ Route::group([
     Route::post('hall/{uniqueId?}/update', 'HallController@updateHall')
         ->where('uniqueId', '[a-z0-9]{32}');
     
-    Route::get('branches', 'BranchController@get');
-    Route::post('branch', 'BranchController@update');
-    Route::delete('branch', 'BranchController@delete');
+    
+    Route::get('/company/{uid?}/branches', 'BranchController@get')
+        ->where('uid', '[a-z0-9]{32}');
+    Route::post('/company/{uid?}/branch', 'BranchController@update')
+        ->where('uid', '[a-z0-9]{32}');
+    Route::delete('/company/{uid?}/branch', 'BranchController@delete')
+        ->where('uid', '[a-z0-9]{32}');
+    
+    Route::get('branch/{uid?}', 'BranchController@getBranchByUid')
+        ->where('uid', '[a-z0-9]{32}');
+    Route::post('branch/{uid?}/hall', 'BranchController@updateHall')
+        ->where('uid', '[a-z0-9]{32}');
+    Route::delete('/branch/{uid?}/hall', 'BranchController@deleteHall')
+        ->where('uid', '[a-z0-9]{32}');
     
     Route::get('roles', 'RoleController@get');
     Route::post('role', 'RoleController@update');

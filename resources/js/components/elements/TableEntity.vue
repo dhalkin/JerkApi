@@ -64,11 +64,11 @@
                         <input
                             type="checkbox"
                             class="custom-control-input"
-                            :id="data.item.unique_id"
+                            :id="data.item.uid"
                             v-model="data.item.active"
-                            @click="$emit('click-active', data.item.unique_id, data.item.active)"
+                            @click="$emit('click-active', data.item.uid, data.item.active)"
                         >
-                        <label class="custom-control-label" :for="data.item.unique_id"></label>
+                        <label class="custom-control-label" :for="data.item.uid"></label>
                     </div>
                 </template>
                 <!--actions -->

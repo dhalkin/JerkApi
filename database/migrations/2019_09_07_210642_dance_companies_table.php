@@ -16,7 +16,7 @@ class DanceCompaniesTable extends Migration
         Schema::create('dance_companies', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned()->nullable();
-            $table->string('unique_id', 32)->unique();
+            $table->string('uid', 32)->unique();
             $table->string('name', 96);
             $table->string('city', 96)->nullable();
             $table->string('country', 96)->nullable();

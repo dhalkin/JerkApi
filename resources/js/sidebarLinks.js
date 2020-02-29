@@ -3,21 +3,22 @@ export default [
     name: 'Classes',
     icon: 'fa fa-wrench',
     children: [{
-      name: 'Branches',
+      name: 'Branches/Halls',
       path: '/classes/branches'
     },
+    // {
+    //   name: 'Halls',
+    //   path: '/classes/halls'
+    // },
     {
-      name: 'Halls',
-      path: '/classes/halls'
-    },
-    {
-      name: 'Groups',
+      name: 'Groups/Directions',
       path: '/classes/groups'
     },
-    {
-      name: 'Directions',
-      path: '/classes/directions'
-    }]
+    // {
+    //   name: 'Directions',
+    //   path: '/classes/directions'
+    // }
+    ]
   },
   {
     name: 'People',

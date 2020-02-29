@@ -15,7 +15,7 @@ class DanceHalls extends Migration
     {
         Schema::create('dance_halls', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('unique_id', 32)->unique();
+            $table->string('uid', 32)->unique();
             $table->integer('branch_id')->unsigned()->nullable();
             $table->string('name', 99);
             $table->boolean('active')->default(true);

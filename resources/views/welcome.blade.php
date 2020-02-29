@@ -65,7 +65,7 @@
                         <div class="col">
                             @foreach ($companies as $company)
                             <ul>
-                                <a href="/company/{{ $company->unique_id }}/public-schedule" target="_blank">
+                                <a href="/company/{{ $company->uid }}/public-schedule" target="_blank">
                                     <li><h6>{{ $company->name }} | {{ $company->city }}&nbsp;&nbsp;<i
                                                 class="fa fa-external-link-square"></i></h6></li>
                                 </a>

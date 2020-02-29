@@ -19,6 +19,7 @@ class DanceBranchesSeeder extends Seeder
         foreach ($this->branches as $role){
             DB::table('dance_branches')->insert([
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
+                'uid' => md5(microtime()),
                 'name' => $role[0],
                 'address' => $role[1],
                 'active' => true

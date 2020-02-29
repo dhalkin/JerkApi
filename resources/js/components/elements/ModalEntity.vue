@@ -12,7 +12,7 @@
     >
         <form method="POST" action="#" @submit.prevent="$emit('click-save')"
               @keydown="errors.clear($event.target.name)" id="modalForm">
-            <input type="hidden" name="unique_id" v-model="item.unique_id">
+            <input type="hidden" name="uid" v-model="item.uid">
             <div class="form-row">
                 <div class="col">
                     <input-text

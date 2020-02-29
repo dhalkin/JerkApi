@@ -84,5 +84,13 @@
     "ON": "Вкл",
     "OFF": "Вык",
     "A Note": "Заметка",
-    "Delete Branch": "Удалить филиал"
+    "Branches/Halls": "Филиалы/Залы",
+    "Classes": "Занятия",
+    "Groups/Directions": "Группы/Направления",
+    "Halls": "Залы",
+    "Add Hall": "Добавить Зал",
+    "Delete Branch": "Удалить Филиал",
+    "Delete Hall": "Удалить Зал",
+    "Yes, Delete it": "Да, удалить",
+    "Hall": "Зал"
 }

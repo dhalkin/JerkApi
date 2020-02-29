@@ -2,9 +2,8 @@
 
 namespace App\ORM\Model\Dance;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Branch extends Model
+class Branch extends BaseUIDModel
 {
     protected $table = 'dance_branches';
     protected $hidden = ['company_id'];
@@ -14,5 +13,18 @@ class Branch extends Model
     {
         return $this->belongsTo(Company::class, 'id', 'company_id');
     }
- 
+    
+    public function halls()
+    {
+        return $this->hasMany(Hall::class, 'branch_id', 'id');
+    }
+    
+    public function getUid()
+    {
+        return $this->uid;
+    }
+    public function getId()
+    {
+        return $this->id;
+    }
 }

@@ -164,7 +164,7 @@
                 visible_link: false,
                 link_to_calendar: '',
                 company: {
-                    unique_id:'',
+                    uid:'',
                     name: '',
                     address: '',
                     country: '',
@@ -231,7 +231,7 @@
                    // let pa = response.data.public_available;
                     this.company = response.data;
                     this.company.public_available = Boolean(response.data.public_available);
-                    this.link_to_calendar = 'https://sportstation.club/company/' + this.company.unique_id + '/public-schedule'
+                    this.link_to_calendar = 'https://sportstation.club/company/' + this.company.uid + '/public-schedule'
                 });
         },
         methods: {

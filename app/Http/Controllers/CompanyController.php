@@ -23,6 +23,8 @@ class CompanyController extends Controller
             'name' => 'required',
             'zip' => 'numeric'
         ]);
+        
+        $uid = $request->get('uid');
 
         Company::where('user_id', $request->user()->id)
             ->update([

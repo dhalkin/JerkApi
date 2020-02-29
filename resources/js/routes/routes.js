@@ -46,7 +46,7 @@ let componentsMenu = {
       component: Branches
     },
     {
-      path: 'halls',
+      path: 'branch/:uid/halls',
       name: 'Halls',
       component: Halls
     },

@@ -31,7 +31,7 @@ class HomeController extends Controller
         
         return view('home',
             [
-                "companyUid" => $company->unique_id,
+                "companyUid" => $company->uid,
                 "companyName"=> $company->name,
                 "userName"=> $user->first_name . ' ' . $user->last_name,
                 "apiToken"=> base64_encode($user->api_token),

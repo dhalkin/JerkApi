@@ -2,23 +2,14 @@
 
 namespace App\ORM\Model\Dance;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Hall extends Model
+class Hall extends BaseUIDModel
 {
     public $timestamps = false;
     protected $table = 'dance_halls';
     
-    protected $hidden = ['id', 'unique_id'];
+    protected $hidden = ['id'];
     
-    public static function boot()
-    {
-        parent::boot();
-        
-        self::creating(function ($model) {
-            $model->unique_id = md5(microtime());
-        });
-    }
     
     public function preSave()
     {
@@ -33,5 +24,10 @@ class Hall extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
+    }
+    
+    public function getUid()
+    {
+        return $this->uid;
     }
 }

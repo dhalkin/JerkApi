@@ -165,7 +165,7 @@ class LoginAgainController extends Controller
         ]);
         
         // is there a right company
-        $company = Company::where('unique_id', '=', $request->get('companyUid'))
+        $company = Company::where('uid', '=', $request->get('companyUid'))
             ->first();
         if(!$company){
             return response()->json([

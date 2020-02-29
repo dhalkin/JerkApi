@@ -15,12 +15,12 @@ class DanceBranchesTable extends Migration
     {
         Schema::create('dance_branches', function (Blueprint $table) {
             $table->increments('id')->unsigned();
+            $table->string('uid', 32)->unique();
             $table->integer('company_id')->unsigned()->nullable();
             $table->string('name', 99);
             $table->string('address');
             $table->boolean('active')->default(true);
             $table->text('about')->nullable();
-            
         });
         
         Schema::table('dance_branches', function($table) {

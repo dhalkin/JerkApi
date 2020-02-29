@@ -39,7 +39,7 @@ class ScheduleController extends Controller
      */
     public function show(Request $request, $uniqueId)
     {
-        $company = Company::where('unique_id', '=', $uniqueId)
+        $company = Company::where('uid', '=', $uniqueId)
             ->firstOrFail();
         
         return view('schedule',
@@ -65,7 +65,7 @@ class ScheduleController extends Controller
         $now =  Carbon::now();
         $weekStart = $request->get('start'); //Carbon::now()->startOfWeek();
         $weekEnd = $request->get('stop'); //Carbon::now()->endOfWeek();
-        $company = Company::where('unique_id', $companyId)->firstOrFail();
+        $company = Company::where('uid', $companyId)->firstOrFail();
         $currentBranch =  $request->get('currentBranch');
         $eventsQ = Event::where('dance_events.company_id', '=', $company->id)
             ->where('dance_events.start', '>=', $weekStart)
@@ -121,7 +121,7 @@ class ScheduleController extends Controller
             ], 409);
         }
         
-        $company = Company::where('unique_id', '=', $uniqueId)
+        $company = Company::where('uid', '=', $uniqueId)
             ->firstOrFail();
         $eventId = $request->get('eventId');
         
@@ -191,7 +191,7 @@ class ScheduleController extends Controller
         }
         
         $company = Company::select('id', 'last_call_hours', 'refuse_in_hours', 'rules')
-            ->with(['branches'])->where('unique_id', '=', $companyId)
+            ->with(['branches'])->where('uid', '=', $companyId)
             ->firstOrFail();
     
         $company->rules = nl2br($company->rules);
