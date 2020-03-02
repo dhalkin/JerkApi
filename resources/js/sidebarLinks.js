@@ -6,25 +6,17 @@ export default [
       name: 'Branches/Halls',
       path: '/classes/branches'
     },
-    // {
-    //   name: 'Halls',
-    //   path: '/classes/halls'
-    // },
     {
-      name: 'Groups/Directions',
+      name: 'Groups',
       path: '/classes/groups'
-    },
-    // {
-    //   name: 'Directions',
-    //   path: '/classes/directions'
-    // }
+    }
     ]
   },
   {
     name: 'People',
     icon: 'fa fa-users',
     children: [{
-      name: 'Role',
+      name: 'Roles',
       path: '/people/roles'
     },
     {
@@ -33,7 +25,7 @@ export default [
     }]
   },
   {
-    name: 'Calendar',
+    name: 'Planning',
     icon: 'nc-icon nc-calendar-60',
     path: '/calendar'
   }

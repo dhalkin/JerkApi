@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\DB;
 class DanceBranchesSeeder extends Seeder
 {
     private $branches = [
-        ['Подол', 'ул. Братская 6'],
-        ['Виноградарь','ул. проспект Правды 12в']
+        ['Подол', 'Братская 6'],
+        ['Виноградарь','проспект Правды 12в']
     ];
     /**
      * Run the database seeds.

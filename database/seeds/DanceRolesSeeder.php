@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\DB;
 class DanceRolesSeeder extends Seeder
 {
     private $roles = [
-        'Trainer',
-        'Student',
-        'Renter'
+        ['Тренер', 'Ведет занятия'],
+        ['Студент', 'Посещает занятия'],
+        ['Съемщик', 'Берет в субаренду помещение']
     ];
     /**
      * Run the database seeds.
@@ -19,7 +19,8 @@ class DanceRolesSeeder extends Seeder
     {
         foreach ($this->roles as $role){
             DB::table('dance_roles')->insert([
-                'name' => $role
+                'name' => $role[0],
+                'about' => $role[1]
             ]);
         }
     }

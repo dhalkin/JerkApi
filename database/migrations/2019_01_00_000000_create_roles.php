@@ -16,6 +16,7 @@ class CreateRoles extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 96);
+            $table->text('about')->nullable();
         });
     }
 

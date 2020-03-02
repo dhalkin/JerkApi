@@ -26,12 +26,6 @@
                                 </router-link>
                             </li>
                             <li>
-                                <router-link name="Directions" to="/directions">
-                                    <span class="sidebar-mini-icon" v-text="trans('Directions').charAt(0)"></span>
-                                    <span class="sidebar-normal" v-text="trans('Directions')"></span>
-                                </router-link>
-                            </li>
-                            <li>
                                 <router-link name="Groups" to="/groups">
                                     <span class="sidebar-mini-icon" v-text="trans('Groups').charAt(0)"></span>
                                     <span class="sidebar-normal" v-text="trans('Groups')"></span>

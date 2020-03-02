@@ -87,10 +87,16 @@
     "Branches/Halls": "Филиалы/Залы",
     "Classes": "Занятия",
     "Groups/Directions": "Группы/Направления",
+    "Groups": "Группы",
     "Halls": "Залы",
     "Add Hall": "Добавить Зал",
     "Delete Branch": "Удалить Филиал",
     "Delete Hall": "Удалить Зал",
     "Yes, Delete it": "Да, удалить",
-    "Hall": "Зал"
+    "Hall": "Зал",
+    "Directions": "Направления",
+    "People": "Люди",
+    "Roles": "Роли",
+    "Users": "Пользователи",
+    "Planning": "Планирование"
 }

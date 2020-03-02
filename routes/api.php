@@ -63,6 +63,9 @@ Route::group([
     Route::delete('/branch/{uid?}/hall', 'BranchController@deleteHall')
         ->where('uid', '[a-z0-9]{32}');
     
+    Route::get('company/{uid?}/groups', 'GroupController@getGroups')
+        ->where('uid', '[a-z0-9]{32}');
+    
     Route::get('roles', 'RoleController@get');
     Route::post('role', 'RoleController@update');
     Route::delete('role', 'RoleController@delete');

@@ -18,7 +18,7 @@ class FirstCompanySeeder extends Seeder
         $this->call(DanceCompanyUserSeeder::class);
         $this->call(DanceBranchesSeeder::class);
         $this->call(DanceHallsSeeder::class);
-        $this->call(DanceDirectionsSeeder::class);
+       // $this->call(DanceDirectionsSeeder::class);
         $this->call(DanceGroupsSeeder::class);
         
     }

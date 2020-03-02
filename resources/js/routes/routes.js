@@ -12,7 +12,6 @@ import Branches from '../components/App/Pages/Branches'
 import Roles from '../components/App/Pages/Roles'
 import Halls from '../components/App/Pages/Halls'
 import Groups from '../components/App/Pages/Groups'
-import Directions from '../components/App/Pages/Directions'
 
 // Calendar
 import Calendar from '../components/Dashboard/Views/Calendar/CalendarRoute.vue'
@@ -24,7 +23,7 @@ let peopleMenu = {
   children: [
     {
       path: 'roles',
-      name: 'Role',
+      name: 'Roles',
       component: Roles
     },
     {
@@ -54,11 +53,6 @@ let componentsMenu = {
       path: 'groups',
       name: 'Groups',
       component: Groups
-    },
-    {
-      path: 'directions',
-      name: 'Directions',
-      component: Directions
     }
   ]
 }

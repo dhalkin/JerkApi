@@ -30,7 +30,7 @@ class DanceGroupsSeeder extends Seeder
             DB::table('dance_groups')->insert([
                 'name' => $role,
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
-                'direction_id' => rand(1, 9),
+                'default_trainer_id' => rand(1, 3),
                 'color_id' => rand(1, 9),
                 'duration_min' => 60,
                 'max_person' => 12

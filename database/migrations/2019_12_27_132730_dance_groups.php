@@ -18,8 +18,8 @@ class DanceGroups extends Migration
             $table->increments('id')->unsigned();
             $table->integer('company_id')->unsigned()->nullable();
             $table->string('name', 99);
-            $table->integer('direction_id')->unsigned()->nullable();
             $table->integer('color_id')->unsigned()->nullable();
+            $table->integer('default_trainer_id')->unsigned()->nullable();
             $table->tinyInteger('max_person')->unsigned()->nullable();
             $table->tinyInteger('duration_min')->unsigned()->nullable();
             $table->text('about')->nullable();
@@ -33,9 +33,9 @@ class DanceGroups extends Migration
                 ->onDelete('SET NULL');
         });
         Schema::table('dance_groups', function($table) {
-            $table->foreign('direction_id')
+            $table->foreign('default_trainer_id')
                 ->references('id')
-                ->on('dance_directions')
+                ->on('dance_company_users')
                 ->onDelete('SET NULL');
         });
         Schema::table('dance_groups', function($table) {

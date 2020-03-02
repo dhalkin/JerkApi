@@ -39,8 +39,10 @@ if (lang !== 'en') {
     Validator.localize('ru', ru);
 }
 Vue.use(VeeValidate, {
-    locale: lang
+    locale: lang,
+    fieldsBagName: 'veeFields'
 });
+
 // translators
 Vue.prototype.trans = (string, args) => {
     let value = _.get(window.i18n, string);
