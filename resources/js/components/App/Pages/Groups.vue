@@ -1,6 +1,12 @@
 <template>
   <div class="container-fluid">
-    <h4 class="card-title" v-text="trans('Groups')"></h4>
+
+   <span class="card-title d-inline">
+     <span class="h4">{{trans('Groups')}}</span>
+   <span class="text-primary ml-3"><p-button type="primary" @click="openEditor('new')">
+              <i slot="label" class="fa fa-edit"></i>{{trans('Create')}}
+            </p-button></span>
+   </span>
 
     <div class="card">
       <div class="card-body">
@@ -11,7 +17,7 @@
               <!--filter -->
               <div class="input-group" style="flex-wrap: nowrap;">
                 <input type="search" class="form-control form-control-sm"
-                       placeholder="Type to Search"
+                       v-bind:placeholder="trans('Type to Search')"
                        aria-describedby="button-addon2"
                        v-model="filter"
                        id="filterInput"
@@ -51,6 +57,7 @@
           </div>
 
         <b-table striped hover
+           responsive="sm"
            :items="items"
            :fields="fields"
            :current-page="currentPage"
@@ -62,12 +69,22 @@
            :sort-direction="sortDirection"
            @filtered="onFiltered"
            sort-icon-left
-        ></b-table>
+        >
+
+          <template v-slot:cell(actions)="row">
+            <p-button size="sm" @click="openEditor(row.item)" class="mr-1">
+              <i class="fa fa-edit"></i> {{trans('Edit')}}
+            </p-button>
+          </template>
+
+          <template v-slot:table-caption>{{trans('Total records')}}: {{totalRows}}</template>
+        </b-table>
         </div>
-        <div class="h5 p-5" v-else>
-          Seems you still don't have any group, use "Create" button.
+        <div class="p-5" v-else>
           <p>
-            <p-button type="primary" outline round @click="openEditor()">
+            {{trans('Seems you still do not have any group')}}</p>
+          <p>
+            <p-button type="primary" @click="openEditor('new')">
               <i slot="label" class="fa fa-edit"></i>{{trans('Create')}}
             </p-button>
           </p>
@@ -101,17 +118,16 @@
         },
         items:[],
         fields:[
-          { key: 'name', label: this.trans('Name'), sortable: true},
-          { key: 'direction', label: this.trans('Direction'), sortable: true},
-          { key: 'color', label: this.trans('Color'), sortable: false},
-          { key: 'max_person', label: this.trans('Max Person'), sortable: false},
-          { key: 'duration', label: this.trans('Duration'), sortable: true},
+          { key: 'name', label: this.trans('Name'), sortable: true, stickyColumn: true},
+          { key: 'max_person', label: this.trans('Max Person'), sortable: false, class:'text-center'},
+          { key: 'duration_min', label: this.trans('Duration')+',min', sortable: true, class:'text-center'},
+          { key: 'actions', label: this.trans('Actions'), class:'text-right' }
         ],
         filterOn:['name'],
         sortBy:'name',
         totalRows: 1,
         currentPage: 1,
-        perPage: 5,
+        perPage: 10,
         pageOptions: [5, 10, 15],
         sortDesc: false,
         sortDirection: 'asc',
@@ -141,9 +157,13 @@
         this.totalRows = filteredItems.length
         this.currentPage = 1
       },
-      openEditor() {
-
-      }
+      openEditor(val) {
+        if(val === 'new'){
+          this.$router.push({ name: 'GroupEditor', params: { uid: 'new'}})
+        }else{
+          this.$router.push({ name: 'GroupEditor', params: { uid: val.uid}})
+        }
+      },
     },
     mounted() {
       axios.get(this.urls.getItems) // , {withCredentials: true}

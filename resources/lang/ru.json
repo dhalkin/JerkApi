@@ -98,5 +98,17 @@
     "People": "Люди",
     "Roles": "Роли",
     "Users": "Пользователи",
-    "Planning": "Планирование"
+    "Planning": "Планирование",
+    "Type to Search": "Поиск",
+    "Clear": "Очистить",
+    "Add Role": "Добавить Роль",
+    "Create": "Создать",
+    "Total records": "Всего записей",
+    "Max Person": "Макс.Люд",
+    "Duration": "Длительность",
+    "Actions": "Действия",
+    "Group Name": "Имя Группы",
+    "Color on schedule": "Цвет в расписании",
+    "Default trainer": "Тренер",
+    "Delete": "Удалить"
 }

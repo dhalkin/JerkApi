@@ -53,6 +53,7 @@ class BranchController extends Controller
     
     /*
      * delete branch
+     * what if deleted branch has a halls?
      */
     public function delete(Request $request)
     {
@@ -98,10 +99,13 @@ class BranchController extends Controller
         }
     }
     
+    /*
+     * is there any future events in deleted hall?
+     */
     public function deleteHall(Request $request) {
         
-        $branch = Hall::where('uid', $request->get('uid'))->firstOrFail();
-        $branch->delete();
+        $hall = Hall::where('uid', $request->get('uid'))->firstOrFail();
+        $hall->delete();
     }
     
 }

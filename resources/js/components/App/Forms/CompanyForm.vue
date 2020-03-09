@@ -217,14 +217,7 @@
                 }
             }
         },
-        watch:{
-            'company.public_available'(newValue){
-
-            }
-        },
         mounted() {
-            // enable editor
-
             // get company
             axios.get('/api/company') // , {withCredentials: true}
                 .then(response => {
@@ -236,6 +229,7 @@
         },
         methods: {
             clickCopyUrl() {
+                // copy to buffer
                 this.$copyText(this.link_to_calendar).then( e => {
                     this.$notify({
                         icon: 'fa fa-check',
@@ -280,9 +274,6 @@
                         this.processErr(error);
                     });
             }
-        },
-        beforeDestroy() {
-
-        },
+        }
     }
 </script>

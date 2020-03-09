@@ -29,6 +29,7 @@ class DanceGroupsSeeder extends Seeder
         foreach ($this->dance_groups as $role){
             DB::table('dance_groups')->insert([
                 'name' => $role,
+                'uid' => md5(microtime()),
                 'company_id' => FirstCompanySeeder::COMPANY_ID,
                 'default_trainer_id' => rand(1, 3),
                 'color_id' => rand(1, 9),

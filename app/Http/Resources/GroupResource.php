@@ -16,10 +16,13 @@ class GroupResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'color'=> $this->color->hex,
+            'color_id' => $this->color_id,
+            'default_trainer_id' => $this->default_trainer_id,
+            'uid' => $this->uid,
             'max_person'=> $this->max_person,
-            'duration' => $this->duration_min,
-            'about' => $this->about
+            'duration_min' => $this->duration_min,
+            'about' => $this->about,
+            '_cellVariants'=> ['name'=>strtolower($this->color->name)]
         ];
     }
 }

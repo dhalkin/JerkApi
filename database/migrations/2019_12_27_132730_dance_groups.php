@@ -16,6 +16,7 @@ class DanceGroups extends Migration
         //
         Schema::create('dance_groups', function (Blueprint $table) {
             $table->increments('id')->unsigned();
+            $table->string('uid', 32)->unique();
             $table->integer('company_id')->unsigned()->nullable();
             $table->string('name', 99);
             $table->integer('color_id')->unsigned()->nullable();

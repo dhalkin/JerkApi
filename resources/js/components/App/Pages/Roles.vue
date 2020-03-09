@@ -23,23 +23,14 @@
                             <a class="invisible" href="#" @click.prevent="openDeleteDialog(role.id)"><i class="fa fa-times fa-lg text-danger"></i></a>
                         </span>
                         <p class="card-text h5">{{role.name}}</p>
+                        <p class="card-text">{{role.about}}</p>
 
                         <div class="row">
-<!--                            <div class="col-6 pt-3">-->
-<!--                                <p-switch-->
-<!--                                        v-model=role.active-->
-<!--                                        type="success"-->
-<!--                                        :on-text="switches.on"-->
-<!--                                        :off-text="switches.off"-->
-<!--                                        @input="updateRole({id:role.id, active:role.active})"-->
-<!--                                ></p-switch>-->
-<!--                            </div>-->
                             <div class="col-12">
                                 <p-button type="default" size="sm" outline round @click="openEditor(role.id)" class="w-75">
                                     <i slot="label" class="fa fa-edit"></i>{{trans('Edit')}}
                                 </p-button>
                             </div>
-
                         </div>
                     </card>
                 </div>

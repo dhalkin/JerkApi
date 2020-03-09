@@ -5,10 +5,11 @@ namespace App\ORM\Model\Dance;
 use Illuminate\Database\Eloquent\Model;
 use App\ORM\Model\Color;
 
-class Group extends Model
+class Group extends BaseUIDModel
 {
     protected $table = 'dance_groups';
     protected $hidden = ['id', 'company_id'];
+    public $timestamps = false;
     
     public function event()
     {

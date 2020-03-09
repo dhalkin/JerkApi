@@ -12,6 +12,7 @@ import Branches from '../components/App/Pages/Branches'
 import Roles from '../components/App/Pages/Roles'
 import Halls from '../components/App/Pages/Halls'
 import Groups from '../components/App/Pages/Groups'
+import Group from '../components/App/Pages/Group'
 
 // Calendar
 import Calendar from '../components/Dashboard/Views/Calendar/CalendarRoute.vue'
@@ -53,6 +54,11 @@ let componentsMenu = {
       path: 'groups',
       name: 'Groups',
       component: Groups
+    },
+    {
+      path: 'group/:uid',
+      name: 'GroupEditor',
+      component: Group
     }
   ]
 }

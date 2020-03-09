@@ -10363,4 +10363,131 @@ img {
     width: 38%;
     padding: 15px; } }
 
-/*# sourceMappingURL=paper-dashboard.css.map */
+/* experiments with table colors */
+.table tbody tr > td.powderblue {
+  background-color: #B0E0E6 !important;
+}
+.table-hover tbody tr:hover > td.powderblue {
+  background-color: #B0E0E6 !important;
+}
+
+.table tbody tr > td.skyblue {
+  background-color: #87CEEB !important;
+}
+.table-hover tbody tr:hover > td.skyblue {
+  background-color: #87CEEB !important;
+}
+
+.table tbody tr > td.lavender {
+  background-color: #E6E6FA !important;
+}
+.table-hover tbody tr:hover > td.lavender {
+  background-color: #E6E6FA !important;
+}
+
+.table tbody tr > td.lightpink {
+  background-color: #FFB6C1 !important;
+}
+.table-hover tbody tr:hover > td.lightpink {
+  background-color: #FFB6C1 !important;
+}
+
+.table tbody tr > td.salmon {
+  background-color: #FA8072 !important;
+}
+.table-hover tbody tr:hover > td.salmon {
+  background-color: #FA8072 !important;
+}
+
+.table tbody tr > td.lightsalmon {
+  background-color: #FFA07A !important;
+}
+.table-hover tbody tr:hover > td.lightsalmon {
+  background-color: #FFA07A !important;
+}
+
+.table tbody tr > td.khaki {
+  background-color: #F0E68C !important;
+}
+.table-hover tbody tr:hover > td.khaki {
+  background-color: #F0E68C !important;
+}
+
+.table tbody tr > td.gold {
+  background-color: #FFD700 !important;
+}
+.table-hover tbody tr:hover > td.gold {
+  background-color: #FFD700 !important;
+}
+
+.table tbody tr > td.lemonchiffon {
+  background-color: #FFFACD !important;
+}
+.table-hover tbody tr:hover > td.lemonchiffon {
+  background-color: #FFFACD !important;
+}
+
+.table tbody tr > td.moccasin {
+  background-color: #FFE4B5 !important;
+}
+.table-hover tbody tr:hover > td.moccasin {
+  background-color: #FFE4B5 !important;
+}
+
+.table tbody tr > td.peachpuff {
+  background-color: #FFDAB9 !important;
+}
+.table-hover tbody tr:hover > td.peachpuff {
+  background-color: #FFDAB9 !important;
+}
+
+.table tbody tr > td.wheat {
+  background-color: #F5DEB3 !important;
+}
+.table-hover tbody tr:hover > td.wheat {
+  background-color: #F5DEB3 !important;
+}
+
+.table tbody tr > td.cornsilk {
+  background-color: #FFF8DC !important;
+}
+.table-hover tbody tr:hover > td.cornsilk {
+  background-color: #FFF8DC !important;
+}
+
+.table tbody tr > td.honeydew {
+  background-color: #F0FFF0 !important;
+}
+.table-hover tbody tr:hover > td.honeydew {
+  background-color: #F0FFF0 !important;
+}
+
+.table tbody tr > td.azure {
+  background-color: #F0FFFF !important;
+}
+.table-hover tbody tr:hover > td.azure {
+  background-color: #F0FFFF !important;
+}
+
+.table tbody tr > td.antiquewhite {
+  background-color: #FAEBD7 !important;
+}
+.table-hover tbody tr:hover > td.antiquewhite {
+  background-color: #FAEBD7 !important;
+}
+
+.table tbody tr > td.palegreen {
+  background-color: #98FB98 !important;
+}
+.table-hover tbody tr:hover > td.palegreen {
+  background-color: #98FB98 !important;
+}
+
+.table tbody tr > td.lightgreen {
+  background-color: #90EE90 !important;
+}
+.table-hover tbody tr:hover > td.lightgreen {
+  background-color: #90EE90 !important;
+}
+
+.table-salmon {background-color:#FA8072}
