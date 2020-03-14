@@ -66,7 +66,7 @@ import '../assets/sass/paper-dashboard.scss'
 import '../assets/sass/demo.scss'
 
 import sidebarLinks from './sidebarLinks'
-//import './registerServiceWorker'
+
 // plugin setup
 Vue.use(VueRouter)
 Vue.use(VueRouterPrefetch)
@@ -133,7 +133,17 @@ new Vue({
             userName: userName.content,
             companyName: companyName.content,
             companyUid: companyUid.content,
-            apiToken: atob(apiToken.content)
+            apiToken: atob(apiToken.content),
+            roles:null
         }
+    },
+    created(){
+        axios.get('/api/roles') // , {withCredentials: true}
+            .then(response => {
+                this.roles = response.data
+            });
+    },
+    mounted(){
+
     }
 })

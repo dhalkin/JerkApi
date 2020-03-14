@@ -18,7 +18,6 @@ class CompanyController extends Controller
     
     public function storeCompany(Request $request)
     {
-
         $this->validate($request, [
             'name' => 'required',
             'zip' => 'numeric'

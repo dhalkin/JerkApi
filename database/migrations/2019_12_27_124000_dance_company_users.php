@@ -18,7 +18,7 @@ class DanceCompanyUsers extends Migration
             $table->integer('company_id')->unsigned()->nullable();
             $table->string('first_name', 96);
             $table->string('second_name', 96)->nullable();
-            $table->string('phone', 36)
+            $table->string('phone', 12)
                 ->unique()
                 ->nullable()
                 ->default(null);

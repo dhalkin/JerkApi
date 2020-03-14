@@ -3,7 +3,7 @@
 
    <span class="card-title d-inline">
      <span class="h4">{{trans('Groups')}}</span>
-   <span class="text-primary ml-3"><p-button type="primary" @click="openEditor('new')">
+   <span class="text-primary ml-3"><p-button size="sm" type="primary" @click="openEditor('new')">
               <i slot="label" class="fa fa-edit"></i>{{trans('Create')}}
             </p-button></span>
    </span>
@@ -70,6 +70,9 @@
            @filtered="onFiltered"
            sort-icon-left
         >
+          <template v-slot:head(name)="scope">
+            <div class="text-nowrap">Name</div>
+          </template>
 
           <template v-slot:cell(actions)="row">
             <p-button size="sm" @click="openEditor(row.item)" class="mr-1">
@@ -82,11 +85,7 @@
         </div>
         <div class="p-5" v-else>
           <p>
-            {{trans('Seems you still do not have any group')}}</p>
-          <p>
-            <p-button type="primary" @click="openEditor('new')">
-              <i slot="label" class="fa fa-edit"></i>{{trans('Create')}}
-            </p-button>
+            {{trans('Seems you still do not have any group')}}
           </p>
         </div>
 
@@ -101,8 +100,10 @@
   import {BFormSelect} from "bootstrap-vue"
   import {BPagination} from "bootstrap-vue"
   import PButton from "../../UIComponents/Button"
+  import ErrorHelper from "../../utils/ErrorHelper"
 
   export default {
+    mixins: [ErrorHelper],
     components: {
       [Button.name]: Button,
       Card,
@@ -123,6 +124,8 @@
           { key: 'duration_min', label: this.trans('Duration')+',min', sortable: true, class:'text-center'},
           { key: 'actions', label: this.trans('Actions'), class:'text-right' }
         ],
+        stickyHeader: true,
+        noCollapse: false,
         filterOn:['name'],
         sortBy:'name',
         totalRows: 1,
@@ -166,12 +169,12 @@
       },
     },
     mounted() {
-      axios.get(this.urls.getItems) // , {withCredentials: true}
+      axios.get(this.urls.getItems)
               .then(response => {
                 this.items = response.data
+              }).catch(error => {
+                this.processErr(error)
               });
     }
   }
 </script>
-<style>
-</style>

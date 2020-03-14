@@ -118,10 +118,12 @@
             },
             getRoles() {
                 // get roles
-                axios.get('/api/roles') // , {withCredentials: true}
-                    .then(response => {
-                        this.roles = response.data
-                    });
+                // axios.get('/api/roles') // , {withCredentials: true}
+                //     .then(response => {
+                //         this.roles = response.data
+                //     });
+
+                this.roles = this.$root.roles;
             },
             openEditor(val) {
                 this.modalRole = this.getCloneRole(this.roles.find(o => o.id === val))

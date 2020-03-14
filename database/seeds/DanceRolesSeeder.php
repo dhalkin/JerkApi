@@ -19,6 +19,7 @@ class DanceRolesSeeder extends Seeder
     {
         foreach ($this->roles as $role){
             DB::table('dance_roles')->insert([
+                'uid' => md5(microtime()),
                 'name' => $role[0],
                 'about' => $role[1]
             ]);

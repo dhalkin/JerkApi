@@ -4,7 +4,7 @@ namespace App\ORM\Model\Dance;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Role extends BaseUIDModel
 {
     public const ROLE_TRAINER = 1;
     public const ROLE_STUDENT = 2;
@@ -13,5 +13,10 @@ class Role extends Model
     protected $table = 'dance_roles';
 
     public $timestamps = false;
+    
+    public function getId() {
+        
+        return $this->id;
+    }
 
 }

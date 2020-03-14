@@ -11,15 +11,18 @@
             </ol>
         </nav>
 
-        <div class="col-7">
-            <group-form
-                :item="item"
-                :colors="colors"
-                :trainers="trainers"
-                v-on:save="saveItem"
-                v-on:delete="deleteItem"
-            ></group-form>
-        </div>
+
+<div class="col-sm-6">
+    <group-form
+            :item="item"
+            :colors="colors"
+            :trainers="trainers"
+            v-on:save="saveItem"
+            v-on:delete="deleteItem"
+    ></group-form>
+</div>
+
+
 
     </div>
 </template>
