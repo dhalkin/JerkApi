@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CompanyUserResource;
-use App\Http\Resources\RoleResource;
 use App\ORM\Model\Dance\Company;
 use App\ORM\Model\Dance\CompanyUser;
 use App\ORM\Model\Dance\Role;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CompanyUserController extends Controller
 {
@@ -33,5 +33,48 @@ class CompanyUserController extends Controller
         return response()->json([
             'users' => CompanyUserResource::collection($users)
         ], '200');
+    }
+    
+    /*
+     * Status user
+     */
+    public function saveUser(Request $request, $uid)
+    {
+        $c = Company::where('uid', $uid)->firstOrFail();
+    
+        // validate ?
+        
+        try {
+            $user = CompanyUser::where('id', $request->get('id'))->firstOrFail();
+            if ($request->has('active')) {
+                $user->active = $request->get('active');
+            } else {
+                $user->first_name = $request->get('first_name');
+                $user->second_name = $request->get('second_name');
+                $user->email = $request->get('email');
+                $user->phone = $request->get('phone');
+                $user->role_id = $request->get('role_id');
+            }
+            
+        }catch (ModelNotFoundException $e){
+            
+            $user = new CompanyUser();
+            $user->company_id = $c->getId();
+            $user->first_name = $request->get('first_name');
+            $user->second_name = $request->get('second_name');
+            $user->email = $request->get('email');
+            $user->phone = $request->get('phone');
+            $user->role_id = $request->get('role_id');
+            
+        }
+    
+        $user->save();
+    }
+    
+    /*
+     *
+     */
+    public function deleteUser() {
+    
     }
 }

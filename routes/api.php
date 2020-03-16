@@ -75,7 +75,10 @@ Route::group([
     
     Route::get('company/{uid?}/users', 'CompanyUserController@getUsers')
         ->where('uid', '[a-z0-9]{32}');
-    
+    Route::post('company/{uid?}/user', 'CompanyUserController@saveUser')
+        ->where('uid', '[a-z0-9]{32}');
+    Route::delete('company/{uid?}/user', 'CompanyUserController@deleteUser')
+        ->where('uid', '[a-z0-9]{32}');
     
     Route::get('roles', 'RoleController@get');
     Route::post('role', 'RoleController@update');

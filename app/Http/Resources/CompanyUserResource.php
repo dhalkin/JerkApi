@@ -16,7 +16,8 @@ class CompanyUserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => ['first_name'=>$this->first_name, 'second_name'=>$this->second_name],
+            'first_name'=>$this->first_name,
+            'second_name'=>$this->second_name,
             'phone' => $this->phone,
             'role_id' => $this->role_id,
             'email' => $this->email,

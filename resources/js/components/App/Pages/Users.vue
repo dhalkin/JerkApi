@@ -1,12 +1,34 @@
+import swal from "sweetalert2";
 <template>
     <div class="container-fluid">
 
    <span class="card-title d-inline">
    <span class="h4">{{trans('Users')}}</span>
-   <span class="text-primary ml-3"><p-button size="sm" type="primary" @click="openEditor('new')">
+   <span class="text-primary ml-3">
+       <p-button size="sm" type="primary" @click="openEditor('new')">
               <i slot="label" class="fa fa-edit"></i>{{trans('Create')}}
-            </p-button></span>
+       </p-button>
    </span>
+   </span>
+
+        <!--modal for child elem -->
+        <modal
+            v-bind:show="showForm"
+            v-on:close="showForm = false"
+            headerClasses="p-2"
+            bodyClasses="p-3"
+        >
+            <span class="h4" slot="header">{{trans('User')}} {{modalEntity.first_name}}</span>
+            <user-form ref="form"
+               :item=modalEntity
+               :roles=selectRoles
+               v-on:save="saveEntity"
+               v-on:delete="deleteEntity"
+               v-on:close="showForm = false"
+            >
+            </user-form>
+
+        </modal>
 
         <div class="card">
             <div class="card-body">
@@ -53,28 +75,28 @@
                 <!--data block -->
                 <div v-if="this.items.length > 0">
                     <b-table striped hover
-                             sticky-header
-                             responsive="sm"
-                             :items="items"
-                             :fields="fields"
-                             :current-page="currentPage"
-                             :per-page="perPage"
-                             :filter="filter"
-                             :filterIncludedFields="filterOn"
-                             :sort-by.sync="sortBy"
-                             :sort-desc.sync="sortDesc"
-                             :sort-direction="sortDirection"
-                             @filtered="onFiltered"
-                             sort-icon-left
-                             :tbody-tr-class="rowClass"
+                         sticky-header
+                         responsive="sm"
+                         :items="items"
+                         :fields="fields"
+                         :current-page="currentPage"
+                         :per-page="perPage"
+                         :filter="filter"
+                         :filterIncludedFields="filterOn"
+                         :sort-by.sync="sortBy"
+                         :sort-desc.sync="sortDesc"
+                         :sort-direction="sortDirection"
+                         @filtered="onFiltered"
+                         sort-icon-left
+                         :tbody-tr-class="rowClass"
                     >
 
-                        <template v-slot:cell(name)="data">
-                            <span>{{ data.value.first_name}}</span> <span>{{ data.value.last_name }}</span>
+                        <template v-slot:cell(name)="row">
+                            <span>{{ row.item.first_name}} </span> <span>{{ row.item.second_name }}</span>
                         </template>
 
                         <template v-slot:cell(actions)="row">
-                            <p-button size="sm" @click="openEditor(row.item)" class="mr-1">
+                            <p-button size="sm" @click="openEditor(row.item.id)" class="mr-1">
                                 <i class="fa fa-edit"></i> {{trans('Edit')}}
                             </p-button>
                         </template>
@@ -110,22 +132,28 @@
     import {BPagination} from "bootstrap-vue"
     import PButton from "../../UIComponents/Button"
     import ErrorHelper from "../../utils/ErrorHelper"
-
+    import UserForm from "../Forms/UserForm"
+    import Modal from "../../../components/UIComponents/Modal"
+    import swal from 'sweetalert2'
 
     export default {
         mixins: [ErrorHelper],
+        refs:['form'],
         components: {
             [Button.name]: Button,
             Card,
             BTable,
             BFormSelect,
             BPagination,
-            PButton
+            PButton,
+            UserForm,
+            Modal
         },
         data() {
             return {
                 urls: {
                     'getItems': `/api/company/${this.$root.companyUid}/users`,
+                    'updateItem': `/api/company/${this.$root.companyUid}/user`,
                 },
                 items: [],
                 roles: [],
@@ -136,7 +164,7 @@
                     {key: 'active', label: this.trans('Active'), class: 'text-center', sortable: false},
                     {key: 'actions', label: this.trans('Actions'), class: 'text-right'}
                 ],
-                filterOn: ['name'],
+                filterOn: ['first_name', 'second_name', 'phone'],
                 sortBy: 'name',
                 totalRows: 1,
                 currentPage: null,
@@ -144,7 +172,10 @@
                 pageOptions: null,
                 sortDesc: false,
                 sortDirection: 'asc',
-                filter: null
+                filter: null,
+                showForm:false,
+                modalEntity: {id: null, first_name:'', second_name:'', email:'', phone:'', role_id:''},
+                selectRoles: []
             }
         },
         watch: {
@@ -158,10 +189,12 @@
             roles: function () {
                 if (this.roles && this.roles.length > 0) {
                     this.currentRole = this.roles[0].uid
+                    this.roles.forEach( item => {
+                        this.selectRoles.push({value: item.id, text: item.name})
+                    })
                 }
             }
         },
-
         computed: {
             sortOptions() {
                 // Create an options list from our fields
@@ -174,8 +207,19 @@
         },
         methods: {
             clickActive(id, active) {
-                console.log(id)
-                console.log(active)
+                axios.post(this.urls.updateItem, {id: id, active: !active})
+                    .then(response => {
+                        this.$notify({
+                            //icon: 'nc-icon nc-bell-55',
+                            horizontalAlign: 'right',
+                            verticalAlign: 'top',
+                            type: 'success',
+                            message: this.trans('Done'),
+                        })
+                    })
+                    .catch(error => {
+                        this.processErr(error)
+                    });
             },
             onFiltered(filteredItems) {
                 // Trigger pagination to update the number of buttons/pages due to filtering
@@ -184,10 +228,67 @@
             },
             openEditor(val) {
                 if (val === 'new') {
-                    this.$router.push({name: 'GroupEditor', params: {uid: 'new'}})
+                   this.modalEntity = {id: null, first_name:'', second_name:'', email:'', phone:'', role_id: this.currentRole}
+                   this.$refs.form.reset()
+                   this.showForm = true;
                 } else {
-                    this.$router.push({name: 'GroupEditor', params: {uid: val.uid}})
+                    this.modalEntity = this.getClone(this.items.find(o => o.id === val))
+                    this.showForm = true;
                 }
+            },
+            getClone(obj) {
+                return Object.assign({}, obj);
+            },
+            saveEntity() {
+                this.showForm = false
+                delete this.modalEntity.active
+                axios.post(this.urls.updateItem, this.modalEntity)
+                    .then(response => {
+                        this.$notify({
+                            //icon: 'nc-icon nc-bell-55',
+                            horizontalAlign: 'right',
+                            verticalAlign: 'top',
+                            type: 'success',
+                            message: this.trans('Done'),
+                        })
+                        this.getUsers()
+                    })
+                    .catch(error => {
+                        this.processErr(error)
+                        this.showForm = true
+                    });
+            },
+            deleteEntity(uid){
+                swal({
+                    title: this.modalEntity.first_name + ' ' + this.modalEntity.second_name,
+                    html: `<span class="h5">${this.trans('Delete User')}?</span>`,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-danger btn-fill',
+                    cancelButtonClass: 'btn btn-default btn-fill',
+                    confirmButtonText: this.trans('Yes, delete it!'),
+                    cancelButtonText: this.trans('Cancel'),
+                    buttonsStyling: true,
+                    reverseButtons: true,
+                }).then(result => {
+                    if (result) {
+                        axios.delete(this.urls.updateItem, { data: uid })
+                            .then(response => {
+                                this.$notify({
+                                    //icon: 'nc-icon nc-bell-55',
+                                    horizontalAlign: 'right',
+                                    verticalAlign: 'top',
+                                    type: 'success',
+                                    message: this.trans('Done')
+                                })
+
+                                this.showForm = false;
+                            })
+                            .catch(error => {
+                                this.processErr(error)
+                            });
+                    }
+                }).catch(swal.noop)
             },
             rowClass(item, type) {
                 return
@@ -204,10 +305,10 @@
                         role: this.currentRole
                     }
                 })
-                    .then(response => {
-                        this.items = response.data.users
-                        //this.roles = response.data.roles
-                    }).catch(error => {
+                .then(response => {
+                    this.items = response.data.users
+                    //this.roles = response.data.roles
+                }).catch(error => {
                     this.processErr(error)
                 });
             }
@@ -216,7 +317,7 @@
             // @todo here a problem
             if (this.$root.roles) {
                 this.roles = this.$root.roles
-                this.getUsers()
+               // this.getUsers()
             }
         }
     }

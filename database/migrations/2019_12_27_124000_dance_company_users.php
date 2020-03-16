@@ -35,6 +35,7 @@ class DanceCompanyUsers extends Migration
                 ->default(null);
             $table->rememberToken();
             $table->boolean('active')->default(false);
+            $table->text('about')->nullable();
             $table->timestamps();
         });
     
