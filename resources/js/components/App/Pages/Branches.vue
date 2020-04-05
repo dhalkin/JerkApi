@@ -46,7 +46,7 @@
                                 ></p-switch>
                             </div>
                             <div class="col-6">
-                                <p-button type="default" size="sm" outline round @click="openEditor(branch.uid)" class="w-100">
+                                <p-button type="default" size="sm" @click="openEditor(branch.uid)" class="w-100">
                                     <i slot="label" class="fa fa-edit"></i>{{trans('Edit')}}
                                 </p-button>
                             </div>

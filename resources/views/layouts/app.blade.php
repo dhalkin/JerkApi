@@ -20,6 +20,7 @@
     <meta name="company-name" content="{{ $companyName }}">
     <meta name="user-name" content="{{ $userName }}">
     <meta name="secret" content="{{ $apiToken }}">
+    <meta name="company-timezone" content="{{ $companyTimezone }}">
     
     <title>{{ $title }}</title>
     

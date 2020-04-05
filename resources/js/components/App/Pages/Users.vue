@@ -1,4 +1,3 @@
-import swal from "sweetalert2";
 <template>
     <div class="container-fluid">
 
@@ -228,8 +227,9 @@ import swal from "sweetalert2";
             },
             openEditor(val) {
                 if (val === 'new') {
-                   this.modalEntity = {id: null, first_name:'', second_name:'', email:'', phone:'', role_id: this.currentRole}
-                   this.$refs.form.reset()
+                    let role  = this.roles.find(o => o.uid === this.currentRole)
+                    this.modalEntity = {id: null, first_name:'', second_name:'', email:'', phone:'', role_id: role.id}
+                    this.$refs.form.reset()
                    this.showForm = true;
                 } else {
                     this.modalEntity = this.getClone(this.items.find(o => o.id === val))

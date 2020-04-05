@@ -149,7 +149,7 @@
                             day: '2-digit',
                             year: 'numeric'
                         },
-                        buttonText: this.trans('Today + 1'),
+                        buttonText: this.trans('1 Day'),
                     }
                 }
             }

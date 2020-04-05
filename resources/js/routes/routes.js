@@ -14,9 +14,7 @@ import Halls from '../components/App/Pages/Halls'
 import Groups from '../components/App/Pages/Groups'
 import Users from '../components/App/Pages/Users'
 import Group from '../components/App/Pages/Group'
-
-// Calendar
-import Calendar from '../components/Dashboard/Views/Calendar/CalendarRoute.vue'
+import Calendar from '../components/App/Calendar'
 
 let peopleMenu = {
   path: '/people',

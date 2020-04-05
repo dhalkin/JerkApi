@@ -35,7 +35,8 @@ class HomeController extends Controller
                 "companyName"=> $company->name,
                 "userName"=> $user->first_name . ' ' . $user->last_name,
                 "apiToken"=> base64_encode($user->api_token),
-                "title" => $company->name . " - " . trans('auth.management')
+                "title" => $company->name . " - " . trans('auth.management'),
+                "companyTimezone" => $company->timezone
             ]);
     }
     

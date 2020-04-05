@@ -15,6 +15,8 @@ let userName = document.head.querySelector('meta[name="user-name"]');
 let companyName = document.head.querySelector('meta[name="company-name"]');
 let companyUid = document.head.querySelector('meta[name="company-uid"]');
 let apiToken = document.head.querySelector('meta[name="secret"]');
+let companyTimezone = document.head.querySelector('meta[name="company-timezone"]');
+
 if (apiToken) {
     window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ atob(apiToken.content);
 } else {
@@ -134,7 +136,8 @@ new Vue({
             companyName: companyName.content,
             companyUid: companyUid.content,
             apiToken: atob(apiToken.content),
-            roles:null
+            roles:null,
+            companyTimezone: companyTimezone.content
         }
     },
     created(){

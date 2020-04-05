@@ -39,6 +39,7 @@ class DanceCompanySeeder extends Seeder
             'timezone' => 'Europe/Kiev',
             'last_call_hours'=> 3,
             'refuse_in_hours' => 8,
+            'public_available' => true,
             'created_at' => $dateNow,
             'about' => 'Что-то презентативное, короткий текст в две-три строки.
 Деятельность.',
