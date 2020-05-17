@@ -40,11 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        'web2' => [
+            'driver' => 'session',
+            'provider' => 'company_users',
+        ],
         'api' => [
-            'driver' => 'passport',
+            'driver' => 'token',
             'provider' => 'users',
-            'hash' => true,
+            'hash' => false,
         ],
     ],
 
@@ -68,7 +71,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\ORM\Model\User::class,
+        ],
+        'company_users' => [
+            'driver' => 'eloquent',
+            'model' => App\ORM\Model\Dance\CompanyUser::class,
         ],
 
         // 'users' => [
@@ -94,6 +101,11 @@ return [
 
     'passwords' => [
         'users' => [
+            'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'company_users' => [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,

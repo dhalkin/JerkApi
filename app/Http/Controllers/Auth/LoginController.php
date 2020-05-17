@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/webapp';
 
     /**
      * Create a new controller instance.
@@ -62,4 +62,13 @@ class LoginController extends Controller
         return array_merge($request->only($this->username(), 'password'), ['active'=>'1']);
     }
     
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'email';
+    }
 }

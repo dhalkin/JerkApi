@@ -1,0 +1,199 @@
+.tim-row {
+  margin-bottom: 20px;
+}
+
+.tim-white-buttons {
+  background-color: #777777;
+}
+
+.typography-line {
+  padding-left: 25%;
+  margin-bottom: 35px;
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.typography-line span {
+  bottom: 10px;
+  color: #c0c1c2;
+  display: block;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 13px;
+  left: 0;
+  position: absolute;
+  width: 260px;
+  text-transform: none;
+}
+
+.tim-row {
+  padding-top: 60px;
+}
+
+.tim-row h3 {
+  margin-top: 0;
+}
+
+.offline-doc .page-header {
+  display: flex;
+  align-items: center;
+}
+
+.offline-doc .footer {
+  position: absolute;
+  width: 100%;
+  background: transparent;
+  bottom: 0;
+  color: #fff;
+  z-index: 1;
+}
+
+#map {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.demo-iconshtml {
+  font-size: 62.5%;
+}
+
+.demo-icons body {
+  font-size: 1.6rem;
+  font-family: sans-serif;
+  color: #333333;
+  background: white;
+}
+
+.demo-icons a {
+  color: #608CEE;
+  text-decoration: none;
+}
+
+.demo-icons header {
+  text-align: center;
+  padding: 100px 0 0;
+}
+
+.demo-icons header h1 {
+  font-size: 2.8rem;
+}
+
+.demo-icons header p {
+  font-size: 1.4rem;
+  margin-top: 1em;
+}
+
+.demo-icons header a:hover {
+  text-decoration: underline;
+}
+
+.demo-icons .nc-icon {
+  font-size: 34px;
+}
+
+.demo-icons section h2 {
+  border-bottom: 1px solid #e2e2e2;
+  padding: 0 0 1em .2em;
+  margin-bottom: 1em;
+}
+
+.demo-icons ul {
+  padding-left: 0;
+}
+
+.demo-icons ul::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.demo-icons ul li {
+  width: 20%;
+  float: left;
+  padding: 16px 0;
+  text-align: center;
+  border-radius: .25em;
+  -webkit-transition: background 0.2s;
+  -moz-transition: background 0.2s;
+  transition: background 0.2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.demo-icons ul li:hover {
+  background: #f4f4f4;
+}
+
+.demo-icons ul p,
+.demo-icons ul em,
+.demo-icons ul input {
+  display: inline-block;
+  font-size: 1rem;
+  color: #999999;
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.demo-icons ul p {
+  padding: 20px 0 0;
+  font-size: 12px;
+  margin: 0;
+}
+
+.demo-icons ul p::selection,
+.demo-icons ul em::selection {
+  background: #608CEE;
+  color: #efefef;
+}
+
+.demo-icons ul em {
+  font-size: 12px;
+}
+
+.demo-icons ul em::before {
+  content: '[';
+}
+
+.demo-icons ul em::after {
+  content: ']';
+}
+
+.demo-icons ul input {
+  text-align: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  display: none;
+}
+/* experiments with table colors */
+.table-salmon,.table-salmon>td,.table-salmon>th{background-color:#FA8072}
+.table-powderblue,.table-powderblue>td,.table-powderblue>th{background-color:#B0E0E6}
+.table-skyblue,.table-skyblue>td,.table-skyblue>th{background-color:#87CEEB}
+.table-lavender,.table-lavender>td,.table-lavender>th{background-color:#E6E6FA}
+.table-lightpink,.table-lightpink>td,.table-lightpink>th{background-color:#FFB6C1}
+.table-lightsalmon,.table-lightsalmon>td,.table-lightsalmon>th{background-color:#FFA07A}
+.table-khaki,.table-khaki>td,.table-khaki>th{background-color:#F0E68C}
+.table-gold,.table-gold>td,.table-gold>th{background-color:#FFD700}
+.table-lemonchiffon,.table-lemonchiffon>td,.table-lemonchiffon>th{background-color:#FFFACD}
+.table-moccasin,.table-moccasin>td,.table-moccasin>th{background-color:#FFE4B5}
+.table-peachpuff,.table-peachpuff>td,.table-peachpuff>th{background-color:#FFDAB9}
+.table-wheat,.table-wheat>td,.table-wheat>th{background-color:#F5DEB3}
+.table-cornsilk,.table-cornsilk>td,.table-cornsilk>th{background-color:#FFF8DC}
+.table-honeydew,.table-honeydew>td,.table-honeydew>th{background-color:#F0FFF0}
+.table-azure,.table-azure>td,.table-azure>th{background-color:#F0FFFF}
+.table-antiquewhite,.table-antiquewhite>td,.table-antiquewhite>th{background-color:#FAEBD7}
+.table-palegreen,.table-palegreen>td,.table-palegreen>th{background-color:#98FB98}
+.table-lightgreen,.table-lightgreen>td,.table-lightgreen>th{background-color:#90EE90}
