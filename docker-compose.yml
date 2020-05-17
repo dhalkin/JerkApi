@@ -6,42 +6,47 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: digitalocean.com/php
+    image: jerk/application:latest
     container_name: jerk-app
     restart: unless-stopped
     tty: true
     working_dir: /var/www
+    ports:
+      - "127.0.0.1:4488:80/tcp" #service port
     links:
       - db
     volumes:
-      - ./:/var/www
-      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./:/var/www:delegated
+    env_file:
+      - docker-compose.env
     networks:
-      - app-network
+      - jerk-network
 
   #Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: jerk-webserver
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "8088:80"
-      - "4434:433"
-    volumes:
-      - ./:/var/www
-      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - app-network
+#  webserver:
+#    image: nginx:alpine
+#    container_name: jerk-webserver
+#    restart: unless-stopped
+#    tty: true
+#    depends_on:
+#      - app
+#    ports:
+#      - "4488:80"
+#      - "4434:433"
+#    volumes:
+#      - ./:/var/www:delegated
+#      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+#    networks:
+#      - jerk-network
 
   #MySQL Service
   db:
-    image: mysql:5.7.22
+    image: mysql:5.7
     container_name: jerk-db
     restart: unless-stopped
     tty: true
     ports:
-      - "3366:3306"
+      - "127.0.0.1:3366:3306"
     environment:
       MYSQL_DATABASE: jerk
       MYSQL_ROOT_PASSWORD: toor
@@ -49,17 +54,31 @@ services:
       MYSQL_PASSWORD: jerkpassword
       SERVICE_NAME: jerk-mysql
     volumes:
-      - dbdata:/var/lib/mysql/
+      - dbdata:/var/lib/mysql/:delegated
       - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-      - ./data:/var/www/data
+      - ./data:/var/www/data:delegated
     networks:
-      - app-network
+      - jerk-network
+
+  redis:
+    image: 'bitnami/redis:latest'
+    container_name: jerk-redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "127.0.0.1:9736:6379/tcp"
+    volumes:
+      - redis:/bitnami
+    networks:
+      - jerk-network
 
 #Docker Networks
 networks:
-  app-network:
+  jerk-network:
     driver: bridge
 #Volumes
 volumes:
   dbdata:
+    driver: local
+  redis:
     driver: local
