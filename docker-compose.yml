@@ -2,42 +2,42 @@ version: '3'
 services:
 
   #PHP Service
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: jerk/application:latest
-    container_name: jerk-app
-    restart: unless-stopped
-    tty: true
-    working_dir: /var/www
-    ports:
-      - "127.0.0.1:4488:80/tcp" #service port
-    links:
-      - db
-    volumes:
-      - ./:/var/www:delegated
-    env_file:
-      - docker-compose.env
-    networks:
-      - jerk-network
-
-  #Nginx Service
-#  webserver:
-#    image: nginx:alpine
-#    container_name: jerk-webserver
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    image: jerk/application:latest
+#    container_name: jerk-app
 #    restart: unless-stopped
 #    tty: true
-#    depends_on:
-#      - app
+#    working_dir: /var/www
 #    ports:
-#      - "4488:80"
-#      - "4434:433"
+#      - "127.0.0.1:4488:80/tcp" #service port
+#    links:
+#      - db
 #    volumes:
 #      - ./:/var/www:delegated
-#      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+#    env_file:
+#      - docker-compose.env
 #    networks:
 #      - jerk-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: jerk-webserver
+    restart: unless-stopped
+    tty: true
+    depends_on:
+      - app
+    ports:
+      - "4488:80"
+      - "4434:433"
+    volumes:
+      - ./:/var/www:delegated
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - jerk-network
 
   #MySQL Service
   db:
