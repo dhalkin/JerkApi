@@ -32,6 +32,8 @@ Route::group([
     'middleware' => 'auth:api'
 ], function() {
     Route::get('timezones', 'CatalogController@timezones');
+    Route::get('olala', 'CatalogController@olala');
+    Route::put('olala', 'CatalogController@olala');
     
     Route::get('company', 'CompanyController@index');
     Route::post('company', 'CompanyController@storeCompany');

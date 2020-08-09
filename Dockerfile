@@ -1,27 +1,56 @@
-FROM signnow/php:7.3-alpine-1.2.0
+FROM php:7.2-fpm
 
-ARG BUILD_ID=0
-ARG VERSION=0.0.1
+# Copy composer.lock and composer.json
+COPY composer.lock composer.json /var/www/
 
-ENV BUILD_ID=${BUILD_ID} \
-    APPLICATION_VERSION=${VERSION} \
-    DEBIAN_FRONTEND=noninteractive
+# Set working directory
+WORKDIR /var/www
 
-LABEL build_id="${BUILD_ID}" \
-    version="${VERSION}" \
-    description="Jerk Docker Image"
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    default-mysql-client \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
+    git \
+    curl \
+    procps \
+    htop
 
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install extensions
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-install gd
+
+# Install xdebug
+RUN yes | pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini
+
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Add user for laravel application
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
+# Copy existing application directory contents
 COPY . /var/www
 
-RUN cp -R /var/www/docker/nginx/* /etc/nginx/ \
-    && cp /var/www/docker/php/app.ini /etc/php7/conf.d/app.ini \
-    && cp -R /var/www/docker/provision/entrypoint.d/* /entrypoint.d \
-    && ln -s /etc/php7/conf.d/app.ini /etc/php7/php-fpm.d/app.ini
+# Copy existing application directory permissions
+COPY --chown=www:www . /var/www
 
-RUN /usr/bin/crontab /var/www/docker/cron/root
+# Change current user to www
+USER www
 
-RUN bash /var/www/docker/provision/after-build.sh
-
-EXPOSE 80
-
-WORKDIR /var/www
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]

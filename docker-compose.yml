@@ -2,25 +2,22 @@ version: '3'
 services:
 
   #PHP Service
-#  app:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    image: jerk/application:latest
-#    container_name: jerk-app
-#    restart: unless-stopped
-#    tty: true
-#    working_dir: /var/www
-#    ports:
-#      - "127.0.0.1:4488:80/tcp" #service port
-#    links:
-#      - db
-#    volumes:
-#      - ./:/var/www:delegated
-#    env_file:
-#      - docker-compose.env
-#    networks:
-#      - jerk-network
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jerk/php
+    container_name: jerk-app
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    links:
+      - db
+    volumes:
+      - ./:/var/www
+      - ./docker/php/app.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
 
   #Nginx Service
   webserver:
@@ -34,10 +31,10 @@ services:
       - "4488:80"
       - "4434:433"
     volumes:
-      - ./:/var/www:delegated
+      - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - jerk-network
+      - app-network
 
   #MySQL Service
   db:
@@ -46,7 +43,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "127.0.0.1:3366:3306"
+      - "3366:3306"
     environment:
       MYSQL_DATABASE: jerk
       MYSQL_ROOT_PASSWORD: toor
@@ -54,31 +51,17 @@ services:
       MYSQL_PASSWORD: jerkpassword
       SERVICE_NAME: jerk-mysql
     volumes:
-      - dbdata:/var/lib/mysql/:delegated
+      - dbdata:/var/lib/mysql/
       - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-      - ./data:/var/www/data:delegated
+      - ./data:/var/www/data
     networks:
-      - jerk-network
-
-  redis:
-    image: 'bitnami/redis:latest'
-    container_name: jerk-redis
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    ports:
-      - "127.0.0.1:9736:6379/tcp"
-    volumes:
-      - redis:/bitnami
-    networks:
-      - jerk-network
+      - app-network
 
 #Docker Networks
 networks:
-  jerk-network:
+  app-network:
     driver: bridge
 #Volumes
 volumes:
   dbdata:
-    driver: local
-  redis:
     driver: local
