@@ -31,7 +31,7 @@
         "@fullcalendar/timegrid": "^4.3.0",
         "@fullcalendar/vue": "^4.3.1",
         "bootstrap-vue": "^2.7.0",
-        "chart.js": "^2.9.3",
+        "chart.js": "^2.9.4",
         "d3": "^5.15.0",
         "datamaps": "^0.5.9",
         "element-ui": "^2.5.4",
