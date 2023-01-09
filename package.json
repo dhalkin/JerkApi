@@ -35,7 +35,7 @@
         "d3": "^5.15.0",
         "datamaps": "^0.5.9",
         "element-ui": "^2.5.4",
-        "fullcalendar": "^4.0.0-alpha.3",
+        "fullcalendar": "^6.0.2",
         "google-maps": "^4.2.3",
         "nprogress": "^0.2.0",
         "perfect-scrollbar": "0.7.1",
